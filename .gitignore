@@ -1,0 +1,36 @@
+/hospital_managment_app/nbproject/private/
+
+
+# Ignorowanie katalogu build, który zawiera pliki generowane przez Ant
+build/
+
+# Ignorowanie plików klas skompilowanych przez JDK
+*.class
+
+# Ignorowanie plików JAR
+*.jar
+
+# Ignorowanie plików IDE (np. IntelliJ IDEA, Eclipse)
+.idea/
+.project
+.classpath
+.settings/
+
+# Ignorowanie plików systemowych (np. pliki w systemie MacOS)
+.DS_Store
+
+# Ignorowanie plików logów
+*.log
+
+# Ignorowanie plików zależności (np. pliki z narzędzi do zarządzania zależnościami jak Ivy)
+lib/
+ivy.xml
+ivy-cache/
+
+# Ignorowanie plików konfiguracyjnych Maven/Gradle (jeśli nie używasz)
+target/
+.gradle/
+
+# Ignorowanie plików generowanych przez testy jednostkowe
+test-classes/
+
