@@ -53,4 +53,8 @@ public class Pacjent extends Czlowiek {
         }
     }
 
+    public void obliczKoszt(){
+        
+    }
+
 }
