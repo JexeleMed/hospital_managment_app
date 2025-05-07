@@ -12,6 +12,7 @@ abstract class Czlowiek {
     protected String numerTelefonu;
     protected String adresEmail;
     protected String adresZamieszkania;
+    private boolean czyProfilKompletny;
 
     public Czlowiek(String imie, String nazwisko, String pesel){
         idGlobal += idGlobal++; // generowanie nowego ID
@@ -19,6 +20,7 @@ abstract class Czlowiek {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.pesel = pesel;
+        this.czyProfilKompletny = false;
     }
 
     public Czlowiek(String imie, String nazwisko, String pesel, LocalDate dataUrodzenia, String numerTelefonu, String adresEmail, String adresZamieszkania){
@@ -29,6 +31,7 @@ abstract class Czlowiek {
         this.numerTelefonu = numerTelefonu;
         this.adresEmail = adresEmail;
         this.adresZamieszkania = adresZamieszkania;
+        this.czyProfilKompletny = true;
 
     }
 
@@ -36,5 +39,16 @@ abstract class Czlowiek {
         throw new UnsupportedOperationException("Brak danych");
     }
 
+    public void wyswietlPodstawoweInfo(){
+        System.out.println("Imie: " + this.imie);
+        System.out.println("Nazwisko: " + this.nazwisko);
+        System.out.println("Pesel: " + this.pesel);
+        if(this.czyProfilKompletny){
+            System.out.println("Data urodzenia: " + this.dataUrodzenia);
+            System.out.println("Numer telefonu: " + this.numerTelefonu);
+            System.out.println("Adres email: " + this.adresEmail);
+            System.out.println(("Adres zamieszkania: " + this.adresZamieszkania));
+        }
+    }
     public abstract void wyswietlProfil();
 }
