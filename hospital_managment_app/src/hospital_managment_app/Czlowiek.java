@@ -35,4 +35,6 @@ abstract class Czlowiek {
     public Czlowiek(){
         throw new UnsupportedOperationException("Brak danych");
     }
+
+    public abstract void wyswietlProfil();
 }
