@@ -34,3 +34,5 @@ target/
 # Ignorowanie plików generowanych przez testy jednostkowe
 test-classes/
 
+# Ignorowanie iml
+/ProjektObiektowe.iml
