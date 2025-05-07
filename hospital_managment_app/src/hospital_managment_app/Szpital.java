@@ -4,7 +4,8 @@ import java.util.*;
 
 public class Szpital {
 
-    private String nazwa_szpitala;
-    private List<Oddzial> listaOddzialow;
+    protected String nazwa_szpitala;
+    protected List<Oddzial> listaOddzialow;
+
 
 }
