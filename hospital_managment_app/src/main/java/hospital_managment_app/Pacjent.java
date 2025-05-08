@@ -12,7 +12,7 @@ public class Pacjent extends Czlowiek {
     protected String zywienie;
     protected String numerKontaktowyBliskich;
     protected List<Para<String, Double>> rachunek = new ArrayList<>();
-    private boolean profilPacjentaKompletny = false;
+    protected boolean profilPacjentaKompletny = false;
 
     // Konstruktor do zapisania pacjenta do oddzialu
     public Pacjent(String imie, String nazwisko, String pesel,
