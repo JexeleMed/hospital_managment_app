@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class Pacjent extends Czlowiek {
 
-    protected String historiaChoroby;
+    protected List<Para<String, LocalDate>> historiaChoroby = new ArrayList<>();
     protected String grupaKrwi;
     protected List<String> alergie;
     protected List<Para<String, Integer>> perskrypcje; // w mg
@@ -16,14 +16,14 @@ public class Pacjent extends Czlowiek {
 
     // Konstruktor do zapisania pacjenta do oddzialu
     public Pacjent(String imie, String nazwisko, String pesel,
-                   String historiaChoroby, String grupaKrwi,
+                    String grupaKrwi,
                    String alergie, List<Para<String, Integer>> perskrypcje,
                    String zywienie, String numerKontaktowyBliskich,
                    LocalDate dataUrodzenia,
                    String numerTelefonu, String adresEmail, String adresZamieszkania) {
         super(imie, nazwisko, pesel, dataUrodzenia, numerTelefonu, adresEmail, adresZamieszkania);
 
-        this.historiaChoroby = historiaChoroby;
+
         this.grupaKrwi = grupaKrwi;
         this.perskrypcje = perskrypcje;
         this.zywienie = zywienie;
@@ -50,11 +50,22 @@ public class Pacjent extends Czlowiek {
             System.out.println("Perskrypcje: " + perskrypcje);
             System.out.println("Zywienie: " + zywienie);
             System.out.println("Numer kontaktowy bliskich: " + numerKontaktowyBliskich);
+            if(historiaChoroby != null) {
+                System.out.println("Historia choroby: " + historiaChoroby);
+            }
         }
     }
 
-    public void obliczKoszt(){
+    protected void obliczKoszt(){
         
+    }
+
+
+    protected void dodajChorobe(String opis){
+        this.historiaChoroby.add(new Para<>(opis, LocalDate.now()));
+    }
+    protected void dodajChorobe(String opis, LocalDate data){
+        this.historiaChoroby.add(new Para<>(opis, data));
     }
 
 }

@@ -26,7 +26,10 @@ public class Hospital_managment_app {
 
         recepta.add(new Para<>("Paracetamol", 500));
 
-        Pacjent pacjentTestowy = new Pacjent("Jan", "Nowak", "0013762830", "Brak", "0 Rh-", "Phenylephrini hydrochloridum", recepta, "Standardowe", "666666666", data, "431234647", "lalala@gmail.com", "Liliowa 1");
+        Pacjent pacjentTestowy = new Pacjent("Jan", "Nowak", "0013762830", "0 Rh-", "Phenylephrini hydrochloridum", recepta, "Standardowe", "666666666", data, "431234647", "lalala@gmail.com", "Liliowa 1");
+        pacjentTestowy.wyswietlProfil();
+        pacjentTestowy.dodajChorobe("Cukrzyca");
+        pacjentTestowy.dodajChorobe("Bradykardia", LocalDate.parse("2007-12-03"));
         pacjentTestowy.wyswietlProfil();
 
     }
