@@ -32,5 +32,8 @@ public class Hospital_managment_app {
         pacjentTestowy.dodajChorobe("Bradykardia", LocalDate.parse("2007-12-03"));
         pacjentTestowy.wyswietlProfil();
 
+        pacjentTestowy.dodajDoRachunku("Badania laboratoryjne", 2500.00 );
+
+        System.out.println(pacjentTestowy.obliczKoszt());
     }
 }

@@ -11,7 +11,7 @@ public class Pacjent extends Czlowiek {
     protected List<Para<String, Integer>> perskrypcje; // w mg
     protected String zywienie;
     protected String numerKontaktowyBliskich;
-    protected List<Para<String, Float>> rachunek;
+    protected List<Para<String, Double>> rachunek = new ArrayList<>();
     private boolean profilPacjentaKompletny = false;
 
     // Konstruktor do zapisania pacjenta do oddzialu
@@ -56,8 +56,16 @@ public class Pacjent extends Czlowiek {
         }
     }
 
-    protected void obliczKoszt(){
-        
+    protected void dodajDoRachunku(String usluga, Double cena){
+        this.rachunek.add(new Para<>(usluga, cena));
+    }
+
+    protected double obliczKoszt(){
+        double koszt = 0;
+        for(Para<String, Double> p :rachunek){
+            koszt += p.wartosc;
+        }
+        return koszt;
     }
 
 
@@ -67,5 +75,6 @@ public class Pacjent extends Czlowiek {
     protected void dodajChorobe(String opis, LocalDate data){
         this.historiaChoroby.add(new Para<>(opis, data));
     }
+
 
 }
