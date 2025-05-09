@@ -40,7 +40,7 @@ public class Pacjent extends Czlowiek {
 
 
     @Override
-    public void wyswietlProfil() {
+    protected void wyswietlProfil() {
         System.out.println("Profil pacjenta: ");
         super.wyswietlPodstawoweInfo();
         if (profilPacjentaKompletny) {

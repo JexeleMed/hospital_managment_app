@@ -39,7 +39,7 @@ abstract class Czlowiek {
         throw new UnsupportedOperationException("Brak danych");
     }
 
-    public void wyswietlPodstawoweInfo(){
+    protected void wyswietlPodstawoweInfo(){
         System.out.println("Imie: " + this.imie);
         System.out.println("Nazwisko: " + this.nazwisko);
         System.out.println("Pesel: " + this.pesel);
@@ -50,5 +50,5 @@ abstract class Czlowiek {
             System.out.println(("Adres zamieszkania: " + this.adresZamieszkania));
         }
     }
-    public abstract void wyswietlProfil();
+    protected abstract void wyswietlProfil();
 }
