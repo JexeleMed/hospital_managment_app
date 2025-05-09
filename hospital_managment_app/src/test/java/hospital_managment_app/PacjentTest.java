@@ -17,7 +17,7 @@ public class PacjentTest {
         List<Para<String, Integer>> perskrypcje = new ArrayList<>();
         perskrypcje.add(new Para<>("Lek A", 500)); // przykładowa preskrypcja
         pacjent = new Pacjent("Jan", "Kowalski", "12345678901",
-                "A+", "brak", perskrypcje,
+                "A+", "Orzechy", perskrypcje,
                 "wegetariańska", "987654321",
                 LocalDate.of(1985, 5, 15),
                 "123456789", "jan.kowalski@email.com",
@@ -45,9 +45,7 @@ public class PacjentTest {
 
     @Test
     public void testWyswietlProfil() {
-        pacjent.wyswietlProfil(); // Ten test będzie wyświetlał dane w konsoli
-        // W przypadku testów jednostkowych zwykle sprawdza się wyjścia w bardziej zaawansowany sposób,
-        // np. poprzez przechwycenie System.out w strumień, ale w tym przypadku metoda wyświetlająca jest ok.
+        pacjent.wyswietlProfil();
     }
 
     @Test
@@ -55,5 +53,11 @@ public class PacjentTest {
         Pacjent pacjentNaPoczekalnie = new Pacjent("Anna", "Nowak", "98765432101");
         assertNull(pacjentNaPoczekalnie.grupaKrwi);
         assertFalse(pacjentNaPoczekalnie.profilPacjentaKompletny);
+    }
+
+    @Test
+    public void testczyMaAlergieNa(){
+        assertTrue(pacjent.czyMaAlergieNa("Orzechy"));
+        assertFalse(pacjent.czyMaAlergieNa("Paracetamol"));
     }
 }

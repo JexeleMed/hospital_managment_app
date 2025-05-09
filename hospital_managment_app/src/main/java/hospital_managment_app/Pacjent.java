@@ -7,7 +7,7 @@ public class Pacjent extends Czlowiek {
 
     protected List<Para<String, LocalDate>> historiaChoroby = new ArrayList<>();
     protected String grupaKrwi;
-    protected List<String> alergie;
+    protected List<String> alergie = new ArrayList<>();
     protected List<Para<String, Integer>> perskrypcje; // w mg
     protected String zywienie;
     protected String numerKontaktowyBliskich;
@@ -28,7 +28,6 @@ public class Pacjent extends Czlowiek {
         this.perskrypcje = perskrypcje;
         this.zywienie = zywienie;
         this.numerKontaktowyBliskich = numerKontaktowyBliskich;
-        this.alergie = new ArrayList<>();
         this.alergie.add(alergie);  // Dodajemy alergię do listy
         this.profilPacjentaKompletny = true;
 
@@ -75,6 +74,8 @@ public class Pacjent extends Czlowiek {
     protected void dodajChorobe(String opis, LocalDate data){
         this.historiaChoroby.add(new Para<>(opis, data));
     }
-
+    protected boolean czyMaAlergieNa(String subst){
+        return alergie.contains(subst);
+    }
 
 }
