@@ -38,11 +38,15 @@ public class Pacjent extends Czlowiek {
         super(imie, nazwisko, pesel);
     }
 
+    public Pacjent(){
+        super();
+    }
+
 
     @Override
     protected void wyswietlProfil() {
         System.out.println("Profil pacjenta: ");
-        super.wyswietlPodstawoweInfo();
+        this.wyswietlPodstawoweInfo();
         if (profilPacjentaKompletny) {
             System.out.println("Grupa krwi: " + grupaKrwi);
             System.out.println("Alergie: " + alergie);

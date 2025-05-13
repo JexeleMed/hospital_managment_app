@@ -12,7 +12,7 @@ abstract class Czlowiek {
     protected String numerTelefonu;
     protected String adresEmail;
     protected String adresZamieszkania;
-    private boolean czyProfilKompletny;
+    protected boolean czyProfilKompletny;
 
     public Czlowiek(String imie, String nazwisko, String pesel){
         idGlobal++; // generowanie nowego ID
