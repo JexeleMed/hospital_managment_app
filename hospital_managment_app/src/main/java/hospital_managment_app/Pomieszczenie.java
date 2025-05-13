@@ -6,7 +6,7 @@ abstract class Pomieszczenie {
     protected int pojemnoscSali;
     protected int aktualnaPojemnosc;
 
-    public Pomieszczenie() {throw new UnsupportedOperationException("Brak danych")};
+    public Pomieszczenie() {throw new UnsupportedOperationException("Brak danych");}
 
     public Pomieszczenie(int numer, int pietro, int pojemnoscSali){
         this.numer = numer;
