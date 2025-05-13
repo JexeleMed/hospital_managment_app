@@ -15,7 +15,7 @@ abstract class Czlowiek {
     private boolean czyProfilKompletny;
 
     public Czlowiek(String imie, String nazwisko, String pesel){
-        idGlobal += idGlobal++; // generowanie nowego ID
+        idGlobal++; // generowanie nowego ID
         this.idJednostki = idGlobal; // przypisanie ID uzytkownikowi
         this.imie = imie;
         this.nazwisko = nazwisko;
@@ -24,6 +24,8 @@ abstract class Czlowiek {
     }
 
     public Czlowiek(String imie, String nazwisko, String pesel, LocalDate dataUrodzenia, String numerTelefonu, String adresEmail, String adresZamieszkania){
+        idGlobal++; // generowanie nowego ID
+        this.idJednostki = idGlobal; // przypisanie ID uzytkownikowi
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.pesel = pesel;
