@@ -60,4 +60,14 @@ public class PacjentTest {
         assertTrue(pacjent.czyMaAlergieNa("Orzechy"));
         assertFalse(pacjent.czyMaAlergieNa("Paracetamol"));
     }
+
+    @Test
+    public void testPustegoKonstruktora(){
+        try {
+            new Pacjent();
+            fail("Oczekiwano UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            assertEquals("Brak danych", e.getMessage());
+        }
+    }
 }
