@@ -38,4 +38,11 @@ abstract class Pomieszczenie {
             System.out.println("Sala jest już pusta!");
         }
     }
+
+    public void lokalizacja(){
+        System.out.println("Pietro: " + pietro);
+        System.out.println("Numer: " + numer);
+        System.out.println("aktualnaPojemnosc: " + aktualnaPojemnosc);
+        System.out.println("Pojemnosc: " + pojemnoscSali);
+    }
 }
