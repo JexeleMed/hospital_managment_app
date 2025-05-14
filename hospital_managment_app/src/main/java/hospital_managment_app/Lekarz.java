@@ -28,7 +28,7 @@ public class Lekarz extends Personel {
         System.out.println("Profil lekarza: ");
         this.wyswietlPodstawoweInfo();
         System.out.println("Specjalizacja: " + this.specjalizacja);
-        System.out.println("NumerLicencji: " + this.numerLicencjiLekarskiej);
+        System.out.println("Numer licencji: " + this.numerLicencjiLekarskiej);
         this.wyswietlDostepnosc();
 
     }
