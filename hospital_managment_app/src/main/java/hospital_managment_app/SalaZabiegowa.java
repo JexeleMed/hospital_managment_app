@@ -6,7 +6,7 @@ public class SalaZabiegowa extends Pomieszczenie{
     private String opisOperacji;
     private String specjalnaAparatura;
 
-//  Do przejzenia czy mozna uzywac scanera
+//  Wywal scanner, do zapisywania inputu od uzytkownika bedzie specjalny handler jako interfejs uzytkownika
     public void przygotujSale(int numer, int pietro){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Wprowadz opis operacji: ");

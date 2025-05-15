@@ -3,7 +3,7 @@ package hospital_managment_app;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-public class Salahybrydowa extends Pomieszczenie{
+public class SalaHybrydowa extends Pomieszczenie{
     //zamiast z listy na hashampa
     private HashMap<String, LocalDate> listaWypisow = new HashMap<>();
     //zmiana wypisujemy pacjenta po id
@@ -12,7 +12,7 @@ public class Salahybrydowa extends Pomieszczenie{
         System.out.println("Wypisano pacjenta o id: " + id + "w dniu: " + LocalDate.now());
 
     }
-    //zobacz jeszcze na to
+    //zapis wypisow do klasy oddzial
     public void raportujWypis(){
         System.out.println("Lista wypisow pacjentow:");
         listaWypisow.forEach((id, data) ->

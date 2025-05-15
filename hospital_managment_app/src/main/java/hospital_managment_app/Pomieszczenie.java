@@ -5,6 +5,8 @@ abstract class Pomieszczenie {
     protected int pietro;
     protected int pojemnoscSali;
     protected int aktualnaPojemnosc;
+    // Dodaj liste id pacjentow w tej sali
+
 
     public Pomieszczenie() {
         throw new UnsupportedOperationException("Brak danych");
@@ -44,11 +46,12 @@ abstract class Pomieszczenie {
     public void lokalizacja(){
         System.out.println("Pietro: " + pietro);
         System.out.println("Numer: " + numer);
-        System.out.println("aktualnaPojemnosc: " + aktualnaPojemnosc);
+        System.out.println("Aktualna pojemnosc: " + aktualnaPojemnosc);
         System.out.println("Pojemnosc: " + pojemnoscSali);
     }
 
     public void generujRaport(){
+        // Dodaj print pacjentow w tej sali, access po id, ale print imie nazwisko pesel i historia choroby
         System.out.println("Pietro: " + pietro);
         System.out.println("Numer sali: " + numer);
         System.out.println("Pojemnosc sali: " + pojemnoscSali);
