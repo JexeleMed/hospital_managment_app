@@ -45,4 +45,8 @@ abstract class Pomieszczenie {
         System.out.println("aktualnaPojemnosc: " + aktualnaPojemnosc);
         System.out.println("Pojemnosc: " + pojemnoscSali);
     }
+
+//    public String generujRaport(){
+//        TO DO
+//    }
 }

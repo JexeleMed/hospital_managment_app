@@ -1,14 +1,22 @@
 package hospital_managment_app;
 
+import java.util.Scanner;
+
 public class SalaZabiegowa extends Pomieszczenie{
     private String opisOperacji;
     private String specjalnaAparatura;
 
-    public przygotujSale(){
-
+//  Do przejzenia czy mozna uzywac scanera
+    public void przygotujSale(int numer, int pietro){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Wprowadz opis operacji: ");
+        this.opisOperacji = scanner.nextLine();
+        System.out.println("Wprowadz specjalną aparature potrzebną w operacji: ");
+        this.specjalnaAparatura = scanner.nextLine();
+        System.out.println("Zapisano");
     }
 
-    @Override
+
     protected void wyswietlOpis(){
         System.out.println("Sala zabiegowa");
         this.lokalizacja();
