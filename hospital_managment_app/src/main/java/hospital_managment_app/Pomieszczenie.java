@@ -1,11 +1,13 @@
 package hospital_managment_app;
 
+import java.util.*;
+
 abstract class Pomieszczenie {
     protected int numer;
     protected int pietro;
     protected int pojemnoscSali;
     protected int aktualnaPojemnosc;
-    // Dodaj liste id pacjentow w tej sali
+    protected List<Integer> pacjenci = new ArrayList<>();
 
 
     public Pomieszczenie() {
@@ -19,8 +21,9 @@ abstract class Pomieszczenie {
         this.aktualnaPojemnosc = 0;
     }
 
-    public void dodajDoSali() {
+    public void dodajDoSali(int id) {
         if (aktualnaPojemnosc < pojemnoscSali) {
+            pacjenci.add(id);
             aktualnaPojemnosc++;
         } else {
             System.out.println("Sala jest już pełna!");
@@ -50,8 +53,15 @@ abstract class Pomieszczenie {
         System.out.println("Pojemnosc: " + pojemnoscSali);
     }
 
-    public void generujRaport(){
+    public void generujRaport(Map<Integer, Pacjent> pacjentMap){
         // Dodaj print pacjentow w tej sali, access po id, ale print imie nazwisko pesel i historia choroby
+        System.out.println("Pacjenci w sali:");
+        for (Integer id : pacjenci) {
+            Pacjent p = pacjentMap.get(id);
+            if (p != null) {
+                System.out.println("Imie: " + p.imie + ", Nazwisko: " + p.nazwisko);
+            }
+        }
         System.out.println("Pietro: " + pietro);
         System.out.println("Numer sali: " + numer);
         System.out.println("Pojemnosc sali: " + pojemnoscSali);
