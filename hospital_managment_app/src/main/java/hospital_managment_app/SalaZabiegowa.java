@@ -6,14 +6,10 @@ public class SalaZabiegowa extends Pomieszczenie{
     private String opisOperacji;
     private String specjalnaAparatura;
 
-//  Wywal scanner, do zapisywania inputu od uzytkownika bedzie specjalny handler jako interfejs uzytkownika
-    public void przygotujSale(int numer, int pietro){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Wprowadz opis operacji: ");
-        this.opisOperacji = scanner.nextLine();
-        System.out.println("Wprowadz specjalną aparature potrzebną w operacji: ");
-        this.specjalnaAparatura = scanner.nextLine();
-        System.out.println("Zapisano");
+    public SalaZabiegowa(int numer, int pietro, int pojemnoscSali, String opisOperacji, String specjalnaAparatura) {
+        super(numer, pietro, pojemnoscSali);
+        this.opisOperacji = opisOperacji;
+        this.specjalnaAparatura = specjalnaAparatura;
     }
 
     //czy da sie inaczej niz tworzyc metode lokalizacja
@@ -27,9 +23,9 @@ public class SalaZabiegowa extends Pomieszczenie{
     }
 
     @Override
-    public void generujRaport(){
-        super.generujRaport();
-        System.out.println("Opis operacji" + opisOperacji);
-        System.out.println("Specjalistyczna aparatura w pomieszczeniu" + specjalnaAparatura);
+    public void generujRaport(Map<Integer, Pacjent> pacjentMap) {
+        super.generujRaport(pacjentMap);
+        System.out.println("Opis operacji: " + opisOperacji);
+        System.out.println("Specjalistyczna aparatura w pomieszczeniu: " + specjalnaAparatura);
     }
 }
