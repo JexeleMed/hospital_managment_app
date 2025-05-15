@@ -38,11 +38,11 @@ abstract class Pomieszczenie {
         return (aktualnaPojemnosc + iluPacjentow) <= pojemnoscSali;
     }
 
-    public void usunZSali() {
-        if (aktualnaPojemnosc > 0) {
+    public void usunZSali(int id) {
+        if (aktualnaPojemnosc > 0 && pacjenci.remove((Integer) id)) {
             aktualnaPojemnosc--;
         } else {
-            System.out.println("Sala jest już pusta!");
+            System.out.println("Nie znaleziono pacjenta o ID: " + id);
         }
     }
 
@@ -55,11 +55,16 @@ abstract class Pomieszczenie {
 
     public void generujRaport(Map<Integer, Pacjent> pacjentMap){
         // Dodaj print pacjentow w tej sali, access po id, ale print imie nazwisko pesel i historia choroby
-        System.out.println("Pacjenci w sali:");
-        for (Integer id : pacjenci) {
-            Pacjent p = pacjentMap.get(id);
-            if (p != null) {
-                System.out.println("Imie: " + p.imie + ", Nazwisko: " + p.nazwisko);
+        if (pacjenci.isEmpty()) {
+            System.out.println("Brak pacjentów w sali");
+        }
+        else {
+            System.out.println("Pacjenci w sali:");
+            for (Integer id : pacjenci) {
+                Pacjent p = pacjentMap.get(id);
+                if (p != null) {
+                    System.out.println("Imie: " + p.imie + ", Nazwisko: " + p.nazwisko);
+                }
             }
         }
         System.out.println("Pietro: " + pietro);
