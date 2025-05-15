@@ -12,4 +12,11 @@ public class Poczekalnia extends Pomieszczenie{
         //tu wstawic z czyczekanaprzyjecie i czlowiek
 //        priorytetPacjentow.forEach(()) -> System.out.println("ID pacjenta: " + Czlowiek.idGlobal + ", Priorytet: " + );
     }
+
+    @Override
+    public void generujRaport(){
+        super.generujRaport();
+        System.out.println("Czas oczekiwania: " + czasOczekiwania);
+        System.out.println("Liczba pacjentów w poczekalni: "+ priorytetPacjentow.size());
+    }
 }

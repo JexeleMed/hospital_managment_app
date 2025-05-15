@@ -16,7 +16,7 @@ public class SalaZabiegowa extends Pomieszczenie{
         System.out.println("Zapisano");
     }
 
-
+    //czy da sie inaczej niz tworzyc metode lokalizacja
     protected void wyswietlOpis(){
         System.out.println("Sala zabiegowa");
         this.lokalizacja();
@@ -24,5 +24,12 @@ public class SalaZabiegowa extends Pomieszczenie{
         System.out.println(opisOperacji);
         System.out.println("Specjalna aparatura zabiegowej: ");
         System.out.println(specjalnaAparatura);
+    }
+
+    @Override
+    public void generujRaport(){
+        super.generujRaport();
+        System.out.println("Opis operacji" + opisOperacji);
+        System.out.println("Specjalistyczna aparatura w pomieszczeniu" + specjalnaAparatura);
     }
 }

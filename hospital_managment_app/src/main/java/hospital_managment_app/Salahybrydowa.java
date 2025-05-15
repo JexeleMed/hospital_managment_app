@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 public class Salahybrydowa extends Pomieszczenie{
-    //zamiast listy hashampa
+    //zamiast z listy na hashampa
     private HashMap<String, LocalDate> listaWypisow = new HashMap<>();
     //zmiana wypisujemy pacjenta po id
     public void dodajWypis(String id){
@@ -18,5 +18,11 @@ public class Salahybrydowa extends Pomieszczenie{
         listaWypisow.forEach((id, data) ->
                 System.out.println("ID pacjenta: " + id + ", Data wypisu: " + data)
         );
+    }
+
+    @Override
+    public void generujRaport(){
+        super.generujRaport();
+//        co tu dac
     }
 }

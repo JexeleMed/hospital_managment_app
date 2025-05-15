@@ -6,7 +6,9 @@ abstract class Pomieszczenie {
     protected int pojemnoscSali;
     protected int aktualnaPojemnosc;
 
-    public Pomieszczenie() {throw new UnsupportedOperationException("Brak danych");}
+    public Pomieszczenie() {
+        throw new UnsupportedOperationException("Brak danych");
+    }
 
     public Pomieszczenie(int numer, int pietro, int pojemnoscSali){
         this.numer = numer;
@@ -46,7 +48,11 @@ abstract class Pomieszczenie {
         System.out.println("Pojemnosc: " + pojemnoscSali);
     }
 
-//    public String generujRaport(){
-//        TO DO
-//    }
+    public void generujRaport(){
+        System.out.println("Pietro: " + pietro);
+        System.out.println("Numer sali: " + numer);
+        System.out.println("Pojemnosc sali: " + pojemnoscSali);
+        System.out.println("Aktualna Pojemnosc: " + aktualnaPojemnosc);
+        System.out.println("Czy sala jest wolna: " + (czyWolne() ? "TAK" : "NIE"));
+    }
 }
