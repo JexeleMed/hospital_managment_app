@@ -13,6 +13,7 @@ public class Pacjent extends Czlowiek {
     protected String numerKontaktowyBliskich;
     protected List<Para<String, Double>> rachunek = new ArrayList<>();
     protected boolean profilPacjentaKompletny = false;
+    private Integer priorytet;
 
     // Konstruktor do zapisania pacjenta do oddzialu
     public Pacjent(String imie, String nazwisko, String pesel,
@@ -30,6 +31,7 @@ public class Pacjent extends Czlowiek {
         this.numerKontaktowyBliskich = numerKontaktowyBliskich;
         this.alergie.add(alergie);  // Dodajemy alergię do listy
         this.profilPacjentaKompletny = true;
+        this.priorytet = null;
 
     }
 
@@ -42,6 +44,16 @@ public class Pacjent extends Czlowiek {
         super();
     }
 
+    public void ustawPriorytet(int priorytet) {
+        if (priorytet < 1 || priorytet > 10) {
+            throw new IllegalArgumentException("Priorytet musi być między 1 a 10");
+        }
+        this.priorytet = priorytet;
+    }
+
+    public Integer getPriorytet() {
+        return priorytet;
+    }
 
     @Override
     protected void wyswietlProfil() {
