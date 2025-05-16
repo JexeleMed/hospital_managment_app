@@ -54,7 +54,6 @@ abstract class Pomieszczenie {
     }
 
     public void generujRaport(Map<Integer, Pacjent> pacjentMap){
-        // Dodaj print pacjentow w tej sali, access po id, ale print imie nazwisko pesel i historia choroby
         if (pacjenci.isEmpty()) {
             System.out.println("Brak pacjentów w sali");
         }
