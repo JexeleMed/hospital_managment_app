@@ -1,5 +1,5 @@
 package hospital_managment_app;
-
+import java.util.*;
 import java.util.Scanner;
 
 public class SalaZabiegowa extends Pomieszczenie{
