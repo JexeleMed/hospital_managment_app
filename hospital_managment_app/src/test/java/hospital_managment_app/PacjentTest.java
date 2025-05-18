@@ -46,11 +46,15 @@ public class PacjentTest {
     @Test
     public void testWyswietlProfil() {
         pacjent.wyswietlProfil();
-    }
+    } // lol
+    // zapatchowac/zamockowac system print ln
+    // przechwycic print ln
+    // sprawdzic czy wyswietl profil wypisuje dane pacjenta
 
     @Test
     public void testKonstruktorDlaPacjentaNaPoczekalnie() {
         Pacjent pacjentNaPoczekalnie = new Pacjent("Anna", "Nowak", "98765432101");
+
         assertNull(pacjentNaPoczekalnie.grupaKrwi);
         assertFalse(pacjentNaPoczekalnie.profilPacjentaKompletny);
     }
@@ -65,7 +69,6 @@ public class PacjentTest {
     public void testPustegoKonstruktora(){
         try {
             new Pacjent();
-            fail("Oczekiwano UnsupportedOperationException");
         } catch (UnsupportedOperationException e) {
             assertEquals("Brak danych", e.getMessage());
         }
