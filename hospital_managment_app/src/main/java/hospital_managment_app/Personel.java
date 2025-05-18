@@ -35,15 +35,13 @@ abstract class Personel extends Czlowiek {
     }
 
     protected void zaktualizujDostepnosc(){
+        // petla nie dziala
         if(!this.zaplanowaneDyzury.isEmpty()){
             for(Para<Para<LocalDateTime, LocalDateTime>, String> dyzur : this.zaplanowaneDyzury) {
                 LocalDateTime teraz = LocalDateTime.now();
                 LocalDateTime dataStartuDyzuru = dyzur.nazwa.nazwa;
                 LocalDateTime dataZakonczeniaDyzuru = dyzur.nazwa.wartosc;
-                if (teraz.isAfter(dataStartuDyzuru) && teraz.isBefore(dataZakonczeniaDyzuru)) {
-                    this.dostepnosc = true;
-                    break;
-                }
+                this.dostepnosc = teraz.isAfter(dataStartuDyzuru) && teraz.isBefore(dataZakonczeniaDyzuru);
             }
         } else
             this.dostepnosc = false;

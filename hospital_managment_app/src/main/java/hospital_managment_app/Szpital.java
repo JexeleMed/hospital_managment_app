@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Szpital {
 
-    protected static String nazwa_szpitala = "Szpital";
+    protected static String nazwaSzpitala = "Szpital";
     protected List<Oddzial> listaOddzialow;
     protected List<Pacjent> listaPacjentow;
     protected List<Lekarz> listaLekarzy;

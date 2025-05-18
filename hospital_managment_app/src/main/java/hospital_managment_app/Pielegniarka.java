@@ -46,4 +46,8 @@ public class Pielegniarka extends Personel {
         System.out.println("Czy moze podawac leki: " + this.czyMozePodawacLeki);
         this.wyswietlDostepnosc();
     }
+
+    protected boolean czyMozePodawacLeki(){
+        return czyMozePodawacLeki;
+    }
 }
