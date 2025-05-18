@@ -17,23 +17,6 @@ public class Hospital_managment_app {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Hospital managment");
-
-        LocalDate data = LocalDate.now();  // Bieżąca data
-
-
-        List<Para<String, Integer>> recepta = new ArrayList<>();
-
-        recepta.add(new Para<>("Paracetamol", 500));
-
-        Pacjent pacjentTestowy = new Pacjent("Jan", "Nowak", "0013762830", "0 Rh-", "Phenylephrini hydrochloridum", recepta, "Standardowe", "666666666", data, "431234647", "lalala@gmail.com", "Liliowa 1");
-        pacjentTestowy.wyswietlProfil();
-        pacjentTestowy.dodajChorobe("Cukrzyca");
-        pacjentTestowy.dodajChorobe("Bradykardia", LocalDate.parse("2007-12-03"));
-        pacjentTestowy.wyswietlProfil();
-
-        pacjentTestowy.dodajDoRachunku("Badania laboratoryjne", 2500.00 );
-
-        System.out.println(pacjentTestowy.obliczKoszt());
+        
     }
 }
