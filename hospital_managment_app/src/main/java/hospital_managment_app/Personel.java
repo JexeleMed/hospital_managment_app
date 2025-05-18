@@ -40,7 +40,10 @@ abstract class Personel extends Czlowiek {
                 LocalDateTime teraz = LocalDateTime.now();
                 LocalDateTime dataStartuDyzuru = dyzur.nazwa.nazwa;
                 LocalDateTime dataZakonczeniaDyzuru = dyzur.nazwa.wartosc;
-                this.dostepnosc = teraz.isAfter(dataStartuDyzuru) && teraz.isBefore(dataZakonczeniaDyzuru);
+                if (teraz.isAfter(dataStartuDyzuru) && teraz.isBefore(dataZakonczeniaDyzuru)) {
+                    this.dostepnosc = true;
+                    break;
+                }
             }
         } else
             this.dostepnosc = false;
