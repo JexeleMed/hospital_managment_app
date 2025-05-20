@@ -8,4 +8,5 @@ public interface HandlerCsv<T> {
     Optional<T> findById(int id) throws IOException;
     void add(T item) throws IOException;
     void remove(int id) throws IOException;
+    // nowe
 }
