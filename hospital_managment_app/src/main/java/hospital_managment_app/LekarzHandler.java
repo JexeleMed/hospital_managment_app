@@ -61,14 +61,4 @@ public class LekarzHandler implements HandlerCsv<Lekarz> {
         }
     }
 
-    @Override
-    public void add(Lekarz item) throws IOException {
-        // Implement adding logic here
-    }
-
-    @Override
-    public void remove(int id) throws IOException {
-        // Implement removing logic here
-    }
-    //test
 }
