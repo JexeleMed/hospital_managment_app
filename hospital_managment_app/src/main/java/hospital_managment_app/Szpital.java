@@ -5,6 +5,7 @@ import java.util.*;
 public class Szpital {
 
     protected static String nazwaSzpitala = "Szpital";
+    protected List<Pomieszczenie> listaPomieszczen;
     protected List<Oddzial> listaOddzialow;
     protected List<Pacjent> listaPacjentow;
     protected List<Lekarz> listaLekarzy;
@@ -113,5 +114,25 @@ public class Szpital {
         listaLekarzy.removeIf(z -> z.imie.equals(imie) && z.nazwisko.equals(nazwisko));
         listaPielegniarek.removeIf(z -> z.imie.equals(imie) && z.nazwisko.equals(nazwisko));
         System.out.println("Usunieto z bazy.");
+    }
+
+    // Dodawanie pomieszczen
+    public void dodajPomieszczenie(Pomieszczenie p){
+        listaPomieszczen.add(p);
+        System.out.println("Dodano pomieszczenie.");
+    }
+    // Usuwanie pomieszczen
+    public void usunPomieszczenie(int numer, int pietro){
+        listaPomieszczen.removeIf(z -> z.numer == numer && z.pietro == pietro);
+        System.out.println("Usunieto z bazy.");
+    }
+    // Pokazywanie pomieszczen
+    public void pokazPomieszczenie(int numer, int pietro){
+        for(Pomieszczenie p : listaPomieszczen){
+            if(p.numer == numer && p.pietro == pietro){
+                p.lokalizacja();
+                System.out.println("______________________");
+            }
+        }
     }
 }
