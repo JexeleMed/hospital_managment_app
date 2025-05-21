@@ -15,18 +15,6 @@ import java.util.List;
 
 public class LekarzHandler implements HandlerCsv<Lekarz> {
     private static final String FILE_NAME = "lekarze.csv";
-    private static LekarzHandler instance;
-
-    private LekarzHandler() {
-        // Private constructor to prevent instantiation
-    }
-
-    public static LekarzHandler getInstance() {
-        if (instance == null) {
-            instance = new LekarzHandler();
-        }
-        return instance;
-    }
 
     @Override
     public List<Lekarz> loadAll() throws IOException {
