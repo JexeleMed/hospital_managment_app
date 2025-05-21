@@ -10,6 +10,4 @@ import java.util.List;
 public interface HandlerCsv<T> {
     List<T> loadAll() throws IOException;
     void saveAll(List<T> items) throws IOException;
-    void add(T item) throws IOException;
-    void remove(int id) throws IOException;
 }
