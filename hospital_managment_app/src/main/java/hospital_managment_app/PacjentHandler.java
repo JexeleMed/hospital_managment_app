@@ -42,12 +42,4 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
             e.printStackTrace();
         }
     }
-
-    public void add(Pacjent item){
-
-    }
-
-    public void remove(int id){
-
-    }
 }
