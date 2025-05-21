@@ -3,12 +3,13 @@ import java.io.*;
 import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.util.List;
 
 public class PacjentHandler implements HandlerCsv<Pacjent> {
-
+    @Override
     public List<Pacjent> loadAll() {
         List<Pacjent> lista = new ArrayList<>();
         Gson gson = new Gson();
@@ -26,9 +27,9 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
 
         return lista;
     }
-
+    @Override
     public void saveAll(List<Pacjent> pacjenci) {
-        Gson gson = new GsonBuilder().serializeNulls().create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).serializeNulls().create();
 
         try (FileWriter writer = new FileWriter("PacjenciBaza.csv")) {
             writer.append("json\n");
