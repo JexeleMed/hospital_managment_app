@@ -3,6 +3,10 @@ package hospital_managment_app;
 import java.util.*;
 
 public class Szpital {
+    private final PacjentHandler pacjentHandler;
+    private final LekarzHandler lekarzHandler;
+    private final PielegniarkaHandler pielegniarkaHandler;
+    private final PomieszczenieHandler pomieszczenieHandler;
 
     protected static String nazwaSzpitala = "Szpital";
     protected List<Pomieszczenie> listaPomieszczen;
@@ -10,6 +14,25 @@ public class Szpital {
     protected List<Pacjent> listaPacjentow;
     protected List<Lekarz> listaLekarzy;
     protected List<Pielegniarka> listaPielegniarek;
+
+    // Inicjalizacja handlerow
+    public Szpital() {
+        // Initialize handlers
+        pacjentHandler = PacjentHandler.getInstance();
+        lekarzHandler = LekarzHandler.getInstance();
+        pielegniarkaHandler = PielegniarkaHandler.getInstance();
+        pomieszczenieHandler = PomieszczenieHandler.getInstance();
+
+        // Load data
+        try {
+            listaPacjentow = pacjentHandler.loadAll();
+            listaLekarzy = lekarzHandler.loadAll();
+            listaPielegniarek = pielegniarkaHandler.loadAll();
+            listaPomieszczen = pomieszczenieHandler.loadAll();
+        } catch (IOException e) {
+            System.err.println("Error loading data: " + e.getMessage());
+        }
+    }
 
     // Szukanie osob
     public void pokazOsobe(String pesel){
@@ -133,6 +156,17 @@ public class Szpital {
                 p.lokalizacja();
                 System.out.println("______________________");
             }
+        }
+    }
+    // Zapisywanie wszystkich metod
+    public void saveAllData() {
+        try {
+            pacjentHandler.saveAll(listaPacjentow);
+            lekarzHandler.saveAll(listaLekarzy);
+            pielegniarkaHandler.saveAll(listaPielegniarek);
+            pomieszczenieHandler.saveAll(listaPomieszczen);
+        } catch (IOException e) {
+            System.err.println("Error saving data: " + e.getMessage());
         }
     }
 }

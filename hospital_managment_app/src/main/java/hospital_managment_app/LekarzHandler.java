@@ -14,7 +14,18 @@ import java.util.List;
 
 
 public class LekarzHandler implements HandlerCsv<Lekarz> {
+    private static PacjentHandler instance;
     private static final String FILE_NAME = "lekarze.csv";
+
+    private PacjentHandler() {
+
+    }
+    public static PacjentHandler getInstance() {
+        if (instance == null) {
+            instance = new PacjentHandler();
+        }
+        return instance;
+    }
 
     @Override
     public List<Lekarz> loadAll() throws IOException {

@@ -10,6 +10,16 @@ import java.util.List;
 
 public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie>{
     private static final String FILE_NAME = "pomieszczenia.csv";
+    private static PomieszczenieHandler instance;
+
+    private PomieszczenieHandler() {}
+
+    public static PomieszczenieHandler getInstance() {
+        if (instance == null) {
+            instance = new PomieszczenieHandler();
+        }
+        return instance;
+    }
 
     @Override
     public List<Pomieszczenie> loadAll() {

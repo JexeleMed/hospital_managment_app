@@ -9,7 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PielegniarkaHandler implements HandlerCsv<Pielegniarka>{
+
+    private static PielegniarkaHandler instance;
     private static final String FILE_NAME = "pielegniarki.csv";
+
+    private PielegniarkaHandler() {}
+
+    public static PielegniarkaHandler getInstance() {
+        if (instance == null) {
+            instance = new PielegniarkaHandler();
+        }
+        return instance;
+    }
+
     @Override
     public List<Pielegniarka> loadAll() {
         List<Pielegniarka> lista = new ArrayList<>();
