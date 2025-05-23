@@ -14,15 +14,14 @@ import java.util.List;
 
 
 public class LekarzHandler implements HandlerCsv<Lekarz> {
-    private static PacjentHandler instance;
+    private static LekarzHandler instance;
     private static final String FILE_NAME = "lekarze.csv";
 
-    private PacjentHandler() {
+    private LekarzHandler() {}
 
-    }
-    public static PacjentHandler getInstance() {
+    public static LekarzHandler getInstance() { // Fix: Change return type
         if (instance == null) {
-            instance = new PacjentHandler();
+            instance = new LekarzHandler();
         }
         return instance;
     }
@@ -41,7 +40,7 @@ public class LekarzHandler implements HandlerCsv<Lekarz> {
         } catch (IOException e) {
             throw new IOException("Error loading lekarze data", e);
         }
-        return null;
+        return lekarze;
     }
 
     @Override

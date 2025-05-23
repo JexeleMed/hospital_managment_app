@@ -24,7 +24,9 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie>{
     @Override
     public List<Pomieszczenie> loadAll() {
         List<Pomieszczenie> lista = new ArrayList<>();
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieDeserializer())
+                .create();
 
         try(BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
             String line = br.readLine();
@@ -42,7 +44,9 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie>{
 
     @Override
     public void saveAll(List<Pomieszczenie> pomieszczenia) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).serializeNulls().create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieSerializer())
+                .create();
 
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
             writer.append("json\n");

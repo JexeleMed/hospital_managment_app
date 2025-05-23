@@ -17,6 +17,13 @@ public class Szpital {
 
     // Inicjalizacja handlerow
     public Szpital() {
+        // Initialize collections
+        listaPomieszczen = new ArrayList<>();
+        listaOddzialow = new ArrayList<>();
+        listaPacjentow = new ArrayList<>();
+        listaLekarzy = new ArrayList<>();
+        listaPielegniarek = new ArrayList<>();
+
         // Initialize handlers
         pacjentHandler = PacjentHandler.getInstance();
         lekarzHandler = LekarzHandler.getInstance();
