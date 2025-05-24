@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 public class LocalDateAdapter extends TypeAdapter<LocalDate> {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MM yyyy");
 
     @Override
     public void write(JsonWriter jsonWriter, LocalDate localDate) throws IOException {
