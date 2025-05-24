@@ -1,2 +1,2 @@
 json
-{"imie":"Ewa","nazwisko":"Zielinska","pesel":"76543210987","dataUrodzenia":"1985-11-30","numerTelefonu":"765432109","adresEmail":"ewa.zielinska@email.com","adresZamieszkania":"ul. Opieki 3","zakresObowiazkow":"Opieka nad pacjentami","numerLicencji":"P12345","kwalifikacjeDodatkowe":"Specjalizacja w anestezjologii","szczebelWHierachi":2,"czyMozePodawacLeki":true}
+{"idJednostki":2,"imie":"Ewa","nazwisko":"Zielinska","pesel":"76543210987","dataUrodzenia":"1985-11-30","numerTelefonu":"765432109","adresEmail":"ewa.zielinska@email.com","adresZamieszkania":"ul. Opieki 3","zakresObowiazkow":"Opieka nad pacjentami","numerLicencji":"P12345","kwalifikacjeDodatkowe":"Specjalizacja w anestezjologii","szczebelWHierachi":2,"czyMozePodawacLeki":true}
