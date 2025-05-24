@@ -11,7 +11,7 @@ import com.google.gson.*;
 import java.lang.reflect.Type;
 
 public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie>{
-    private static final String FILE_NAME = "pomieszczenia.csv";
+    private static final String FILE_NAME = "PomieszczenieBaza.csv";
     private static PomieszczenieHandler instance;
 
     private PomieszczenieHandler() {}

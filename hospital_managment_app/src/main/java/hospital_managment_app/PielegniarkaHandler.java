@@ -11,7 +11,7 @@ import java.util.List;
 public class PielegniarkaHandler implements HandlerCsv<Pielegniarka>{
 
     private static PielegniarkaHandler instance;
-    private static final String FILE_NAME = "pielegniarki.csv";
+    private static final String FILE_NAME = "PielegniarkiBaza.csv";
 
     private PielegniarkaHandler() {}
 

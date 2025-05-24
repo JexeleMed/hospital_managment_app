@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSerializationContext;
 import java.lang.reflect.Type;
+import hospital_managment_app.Pomieszczenie;
 
 public class PomieszczenieSerializer implements JsonSerializer<Pomieszczenie> {
     @Override

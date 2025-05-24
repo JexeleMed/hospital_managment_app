@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
+import hospital_managment_app.Pomieszczenie;
 
 public class PomieszczenieDeserializer implements JsonDeserializer<Pomieszczenie> {
     @Override

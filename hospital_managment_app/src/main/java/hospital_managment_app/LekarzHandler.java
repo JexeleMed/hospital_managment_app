@@ -15,7 +15,7 @@ import java.util.List;
 
 public class LekarzHandler implements HandlerCsv<Lekarz> {
     private static LekarzHandler instance;
-    private static final String FILE_NAME = "lekarze.csv";
+    private static final String FILE_NAME = "PielegniarkiBaza.csv";
 
     private LekarzHandler() {}
 
