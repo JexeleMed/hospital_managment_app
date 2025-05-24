@@ -1,6 +1,7 @@
 package hospital_managment_app;
 
 import java.util.*;
+import java.io.IOException;
 
 public class Szpital {
     private final PacjentHandler pacjentHandler;

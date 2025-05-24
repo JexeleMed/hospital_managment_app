@@ -30,7 +30,7 @@ public class Hospital_managment_app {
         List<Pacjent> pacjents = new ArrayList<>();
         pacjents.add(pacjent);
 
-        PacjentHandler pacjentHandler = new PacjentHandler();
+        PacjentHandler pacjentHandler = PacjentHandler.getInstance();
 
         pacjentHandler.saveAll(pacjents);
     }

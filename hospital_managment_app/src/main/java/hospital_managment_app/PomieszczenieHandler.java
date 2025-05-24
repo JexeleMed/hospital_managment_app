@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.util.List;
+import com.google.gson.*;
+import java.lang.reflect.Type;
 
 public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie>{
     private static final String FILE_NAME = "pomieszczenia.csv";
