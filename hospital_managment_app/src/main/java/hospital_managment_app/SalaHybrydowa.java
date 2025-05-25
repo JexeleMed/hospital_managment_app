@@ -13,9 +13,14 @@ public class SalaHybrydowa extends Pomieszczenie{
 
     @Override
     public void przypiszPacjenta(Pacjent pacjent) {
-        super.przypiszPacjenta(pacjent);
-        System.out.println("Pacjent przypisany do sali zabiegowej.");
+        if (czyWolne()) {
+            super.przypiszPacjenta(pacjent);
+            System.out.println("Pacjent przypisany do sali hybrydowej.");
+        } else {
+            System.out.println("Sala hybrydowa jest pełna!");
+        }
     }
+
 
     public void dodajWypis(String id){
         oddzial.dodajWypis(id, LocalDate.now());

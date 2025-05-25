@@ -16,12 +16,16 @@ public class Poczekalnia extends Pomieszczenie {
 
     @Override
     public void przypiszPacjenta(Pacjent pacjent) {
-        super.przypiszPacjenta(pacjent);
-        System.out.println("Proszę określić priorytet pacjenta (1-10):");
-        Scanner scanner = new Scanner(System.in);
-        int priorytet = scanner.nextInt();
-        priorytetyPacjentow.put(pacjent.idJednostki, priorytet);
-        System.out.println("Pacjent oczekuje w poczekalni z priorytetem: " + priorytet);
+        if (czyWolne()) {
+            super.przypiszPacjenta(pacjent);
+            System.out.println("Proszę określić priorytet pacjenta (1-10):");
+            Scanner scanner = new Scanner(System.in);
+            int priorytet = scanner.nextInt();
+            priorytetyPacjentow.put(pacjent.idJednostki, priorytet);
+            System.out.println("Pacjent oczekuje w poczekalni z priorytetem: " + priorytet);
+        } else {
+            System.out.println("Poczekalnia jest pełna!");
+        }
     }
 
     @Override

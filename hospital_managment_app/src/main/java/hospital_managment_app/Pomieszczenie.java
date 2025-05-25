@@ -25,14 +25,6 @@ abstract class Pomieszczenie {
         this.aktualnaPojemnosc = 0;
     }
 
-    public void dodajDoSali(int id) {
-        if (aktualnaPojemnosc < pojemnoscSali) {
-            pacjenci.add(id);
-            aktualnaPojemnosc++;
-        } else {
-            System.out.println("Sala jest już pełna!");
-        }
-    }
 
     public boolean czyWolne() {
         return aktualnaPojemnosc < pojemnoscSali;

@@ -14,8 +14,12 @@ public class SalaZabiegowa extends Pomieszczenie{
 
     @Override
     public void przypiszPacjenta(Pacjent pacjent) {
-        super.przypiszPacjenta(pacjent);
-        System.out.println("Pacjent przypisany do sali zabiegowej.");
+        if (czyWolne()) {
+            super.przypiszPacjenta(pacjent);
+            System.out.println("Pacjent przypisany do sali zabiegowej.");
+        } else {
+            System.out.println("Sala zabiegowa jest pełna!");
+        }
     }
 
     protected void wyswietlOpis(){
