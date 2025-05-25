@@ -1,6 +1,7 @@
 package hospital_managment_app;
 
 import java.util.*;
+import java.io.*;
 import java.io.IOException;
 
 public class Szpital {
@@ -8,6 +9,7 @@ public class Szpital {
     private final LekarzHandler lekarzHandler;
     private final PielegniarkaHandler pielegniarkaHandler;
     private final PomieszczenieHandler pomieszczenieHandler;
+    private final PrzypisaniePacjentowHandler przypisanieHandler;
 
     protected static String nazwaSzpitala = "Szpital";
     protected List<Pomieszczenie> listaPomieszczen;
@@ -22,6 +24,7 @@ public class Szpital {
             if (p.idPomieszczenia == idPomieszczenia) {
                 if (p.czyWolne()) {
                     p.przypiszPacjenta(pacjent);
+                    przypisanieHandler.dodajPrzypisanie(pacjent.idJednostki, idPomieszczenia);
                     System.out.println("Przypisano pacjenta " + pacjent.imie + " " + pacjent.nazwisko +
                             " do pomieszczenia ID: " + idPomieszczenia);
                 } else {
@@ -33,39 +36,12 @@ public class Szpital {
         System.out.println("Nie znaleziono pomieszczenia o ID: " + idPomieszczenia);
     }
 
-    // Overloaded metoda do przypisywania pacjenta do pomieszczenia na podstawie numeru i piętra
-    public void przypiszPacjenta(Pacjent pacjent, int numerPomieszczenia, int pietro) {
-        for (Pomieszczenie p : listaPomieszczen) {
-            if (p.numer == numerPomieszczenia && p.pietro == pietro) {
-                przypiszPacjenta(pacjent, p.idPomieszczenia);
-                return;
-            }
-        }
-        System.out.println("Nie znaleziono pomieszczenia o numerze " + numerPomieszczenia +
-                " na piętrze " + pietro);
-    }
-
-    //usuwanie pacjenta z sali
-    public void usunZSali(int idPacjenta, int idPomieszczenia) {
-        for (Pomieszczenie p : listaPomieszczen) {
-            if (p.idPomieszczenia == idPomieszczenia) {
-                p.usunZSali(idPacjenta);
-                System.out.println("Usunięto pacjenta o ID " + idPacjenta +
-                        " z pomieszczenia o ID " + idPomieszczenia);
-                return;
-            }
-        }
-        System.out.println("Nie znaleziono pomieszczenia o ID: " + idPomieszczenia);
-    }
-
-    // Przenoszenie pacjenta z jednej sali do drugiej
-    public void przeniesDoSali(int idPacjenta, int idPomieszczeniaZrodlowego,
-                               int idPomieszczeniaDocelowego) {
+    public void przeniesDoSali(int idPacjenta, int idPomieszczeniaZrodlowego, int idPomieszczeniaDocelowego) {
         Pomieszczenie salaZrodlowa = null;
         Pomieszczenie salaDocelowa = null;
         Pacjent pacjent = null;
 
-        // Find patient
+        // znajdz pacjenta
         for (Pacjent p : listaPacjentow) {
             if (p.idJednostki == idPacjenta) {
                 pacjent = p;
@@ -77,7 +53,7 @@ public class Szpital {
             return;
         }
 
-        // Find rooms
+        // znajdz pomieszczenie zrodlowe i docelowe
         for (Pomieszczenie p : listaPomieszczen) {
             if (p.idPomieszczenia == idPomieszczeniaZrodlowego) {
                 salaZrodlowa = p;
@@ -87,7 +63,7 @@ public class Szpital {
             }
         }
 
-        // Validate findings
+        // sprawdzenie, czy znaleziono sale
         if (salaZrodlowa == null) {
             System.out.println("Nie znaleziono sali źródłowej");
             return;
@@ -97,7 +73,7 @@ public class Szpital {
             return;
         }
 
-        // sprawdzenie czy sala jest wolna
+        // sprawdzenie, czy sala ma wolne miejsca
         if (!salaDocelowa.czyWolne()) {
             System.out.println("Sala docelowa jest pełna");
             return;
@@ -106,6 +82,8 @@ public class Szpital {
         // przeniesienie pacjenta
         salaZrodlowa.usunZSali(idPacjenta);
         salaDocelowa.przypiszPacjenta(pacjent);
+        przypisanieHandler.usunPrzypisanie(idPacjenta);
+        przypisanieHandler.dodajPrzypisanie(idPacjenta, idPomieszczeniaDocelowego);
         System.out.println("Przeniesiono pacjenta o ID " + idPacjenta +
                 " z sali ID " + idPomieszczeniaZrodlowego +
                 " do sali ID " + idPomieszczeniaDocelowego);
@@ -125,6 +103,7 @@ public class Szpital {
         lekarzHandler = LekarzHandler.getInstance();
         pielegniarkaHandler = PielegniarkaHandler.getInstance();
         pomieszczenieHandler = PomieszczenieHandler.getInstance();
+        przypisanieHandler = PrzypisaniePacjentowHandler.getInstance();
 
         // wczytywanie danych z plikow
         try {

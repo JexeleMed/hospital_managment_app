@@ -13,7 +13,7 @@ public class Pacjent extends Czlowiek {
     protected String numerKontaktowyBliskich;
     protected List<Para<String, Double>> rachunek = new ArrayList<>();
     protected boolean profilPacjentaKompletny = false;
-    private Integer priorytet;
+    private Integer priorytet; // od 1 do 10 gdzie 1 to najniższy priorytet, a 10 to najwyższy
 
     // Konstruktor do zapisania pacjenta do oddzialu
     public Pacjent(String imie, String nazwisko, String pesel,
@@ -35,7 +35,6 @@ public class Pacjent extends Czlowiek {
 
     }
 
-    // Konstruktor do zapisania pacjenta na poczekalnie
     public Pacjent(String imie, String nazwisko, String pesel){
         super(imie, nazwisko, pesel);
     }
@@ -44,6 +43,7 @@ public class Pacjent extends Czlowiek {
         super();
     }
 
+    //ustawianie priorytetu pacjenta
     public void ustawPriorytet(int priorytet) {
         if (priorytet < 1 || priorytet > 10) {
             throw new IllegalArgumentException("Priorytet musi być między 1 a 10");

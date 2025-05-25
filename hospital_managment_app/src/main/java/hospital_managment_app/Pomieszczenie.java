@@ -25,7 +25,6 @@ abstract class Pomieszczenie {
         this.aktualnaPojemnosc = 0;
     }
 
-
     public boolean czyWolne() {
         return aktualnaPojemnosc < pojemnoscSali;
     }
