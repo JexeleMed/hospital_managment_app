@@ -12,7 +12,12 @@ public class SalaZabiegowa extends Pomieszczenie{
         this.specjalnaAparatura = specjalnaAparatura;
     }
 
-    //czy da sie inaczej niz tworzyc metode lokalizacja
+    @Override
+    public void przypiszPacjenta(Pacjent pacjent) {
+        super.przypiszPacjenta(pacjent);
+        System.out.println("Pacjent przypisany do sali zabiegowej.");
+    }
+
     protected void wyswietlOpis(){
         System.out.println("Sala zabiegowa");
         this.lokalizacja();

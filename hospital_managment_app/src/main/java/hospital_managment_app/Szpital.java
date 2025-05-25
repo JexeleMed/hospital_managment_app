@@ -16,22 +16,45 @@ public class Szpital {
     protected List<Lekarz> listaLekarzy;
     protected List<Pielegniarka> listaPielegniarek;
 
+    // Przypisywanie pacjentow do sal
+    public void przypiszPacjenta(Pacjent pacjent, Pomieszczenie pomieszczenie) {
+        if (pomieszczenie.czyWolne()) {
+            pomieszczenie.przypiszPacjenta(pacjent);
+            System.out.println("Przypisano pacjenta " + pacjent.imie + " " + pacjent.nazwisko +
+                    " do pomieszczenia nr " + pomieszczenie.numer +
+                    " na piętrze " + pomieszczenie.pietro);
+        } else {
+            System.out.println("Pomieszczenie jest pełne!");
+        }
+    }
+
+    // Overloaded metoda do przypisywania pacjenta do pomieszczenia na podstawie numeru i piętra
+    public void przypiszPacjenta(Pacjent pacjent, int numerPomieszczenia, int pietro) {
+        for (Pomieszczenie p : listaPomieszczen) {
+            if (p.numer == numerPomieszczenia && p.pietro == pietro) {
+                przypiszPacjenta(pacjent, p);
+                return;
+            }
+        }
+        System.out.println("Nie znaleziono pomieszczenia o numerze " + numerPomieszczenia +
+                " na piętrze " + pietro);
+    }
     // Inicjalizacja handlerow
     public Szpital() {
-        // Initialize collections
+        // inicjalizacja kolekcji
         listaPomieszczen = new ArrayList<>();
         listaOddzialow = new ArrayList<>();
         listaPacjentow = new ArrayList<>();
         listaLekarzy = new ArrayList<>();
         listaPielegniarek = new ArrayList<>();
 
-        // Initialize handlers
+        // inizjalizacja handlerow
         pacjentHandler = PacjentHandler.getInstance();
         lekarzHandler = LekarzHandler.getInstance();
         pielegniarkaHandler = PielegniarkaHandler.getInstance();
         pomieszczenieHandler = PomieszczenieHandler.getInstance();
 
-        // Load data
+        // wczytywanie danych z plikow
         try {
             listaPacjentow = pacjentHandler.loadAll();
             listaLekarzy = lekarzHandler.loadAll();

@@ -42,6 +42,15 @@ abstract class Pomieszczenie {
         return (aktualnaPojemnosc + iluPacjentow) <= pojemnoscSali;
     }
 
+    public void przypiszPacjenta(Pacjent pacjent) {
+        if (aktualnaPojemnosc < pojemnoscSali) {
+            pacjenci.add(pacjent.idJednostki);
+            aktualnaPojemnosc++;
+        } else {
+            System.out.println("Sala jest już pełna!");
+        }
+    }
+
     public void usunZSali(int id) {
         if (aktualnaPojemnosc > 0 && pacjenci.remove((Integer) id)) {
             aktualnaPojemnosc--;
