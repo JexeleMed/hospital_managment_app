@@ -3,6 +3,8 @@ package hospital_managment_app;
 import java.util.*;
 
 abstract class Pomieszczenie {
+    protected static int idGlobalPomieszczenia;
+    protected int idPomieszczenia;
     protected int numer;
     protected int pietro;
     protected int pojemnoscSali;
@@ -15,6 +17,8 @@ abstract class Pomieszczenie {
     }
 
     public Pomieszczenie(int numer, int pietro, int pojemnoscSali){
+        idGlobalPomieszczenia++;
+        this.idPomieszczenia = idGlobalPomieszczenia;
         this.numer = numer;
         this.pietro = pietro;
         this.pojemnoscSali = pojemnoscSali;
@@ -54,6 +58,12 @@ abstract class Pomieszczenie {
     }
 
     public void generujRaport(Map<Integer, Pacjent> pacjentMap){
+        System.out.println("Id pomieszczenia: " + idPomieszczenia);
+        System.out.println("Pietro: " + pietro);
+        System.out.println("Numer sali: " + numer);
+        System.out.println("Pojemnosc sali: " + pojemnoscSali);
+        System.out.println("Aktualna Pojemnosc: " + aktualnaPojemnosc);
+        System.out.println("Czy sala jest wolna: " + (czyWolne() ? "TAK" : "NIE"));
         if (pacjenci.isEmpty()) {
             System.out.println("Brak pacjentów w sali");
         }
@@ -66,10 +76,5 @@ abstract class Pomieszczenie {
                 }
             }
         }
-        System.out.println("Pietro: " + pietro);
-        System.out.println("Numer sali: " + numer);
-        System.out.println("Pojemnosc sali: " + pojemnoscSali);
-        System.out.println("Aktualna Pojemnosc: " + aktualnaPojemnosc);
-        System.out.println("Czy sala jest wolna: " + (czyWolne() ? "TAK" : "NIE"));
     }
 }
