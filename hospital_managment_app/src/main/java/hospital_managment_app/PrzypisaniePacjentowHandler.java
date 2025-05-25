@@ -7,7 +7,7 @@ import com.google.gson.*;
 public class PrzypisaniePacjentowHandler implements HandlerCsv<Integer> {
     private static final String FILE_NAME = "PrzypisaniePacjentow.csv";
     private static PrzypisaniePacjentowHandler instance;
-    private Map<Integer, Integer> przypisania; // patientId -> roomId
+    private Map<Integer, Integer> przypisania; // idJednostki -> idPomieszczenia
 
     private PrzypisaniePacjentowHandler() {
         this.przypisania = new HashMap<>();
@@ -39,6 +39,7 @@ public class PrzypisaniePacjentowHandler implements HandlerCsv<Integer> {
 
     @Override
     public List<Integer> loadAll() throws IOException {
+        przypisania.clear();
         File file = new File(FILE_NAME);
         Gson gson = new GsonBuilder().create();
 
@@ -52,9 +53,9 @@ public class PrzypisaniePacjentowHandler implements HandlerCsv<Integer> {
                 if (!line.trim().isEmpty()) {
                     String json = line.replace("\"\"", "\"");
                     JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-                    int patientId = jsonObject.get("idPacjenta").getAsInt();
-                    int roomId = jsonObject.get("idPomieszczenia").getAsInt();
-                    przypisania.put(patientId, roomId);
+                    int idJednostki = jsonObject.get("idJednostki").getAsInt();
+                    int idPomieszczenia = jsonObject.get("idPomieszczenia").getAsInt();
+                    przypisania.put(idJednostki, idPomieszczenia);
                 }
             }
         }
@@ -68,37 +69,33 @@ public class PrzypisaniePacjentowHandler implements HandlerCsv<Integer> {
             Gson gson = new GsonBuilder().create();
             for (Map.Entry<Integer, Integer> entry : przypisania.entrySet()) {
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("idPacjenta", entry.getKey());
+                jsonObject.addProperty("idJednostki", entry.getKey());
                 jsonObject.addProperty("idPomieszczenia", entry.getValue());
-                writer.write(gson.toJson(jsonObject).replace("\"", "\"\""));
+                writer.write(gson.toJson(jsonObject));
                 writer.write("\n");
             }
         }
     }
 
-    public void dodajPrzypisanie(int idPacjenta, int idPomieszczenia) {
-        przypisania.put(idPacjenta, idPomieszczenia);
+    public void dodajPrzypisanie(int idJednostki, int idPomieszczenia) {
+        przypisania.put(idJednostki, idPomieszczenia);
         try {
             saveAll(new ArrayList<>(przypisania.keySet()));
         } catch (IOException e) {
-            System.err.println("Error saving patient assignments: " + e.getMessage());
+            System.err.println("Error saving patient assignment: " + e.getMessage());
         }
     }
 
-    public void usunPrzypisanie(int idPacjenta) {
-        przypisania.remove(idPacjenta);
+    public void usunPrzypisanie(int idJednostki) {
+        przypisania.remove(idJednostki);
         try {
             saveAll(new ArrayList<>(przypisania.keySet()));
         } catch (IOException e) {
-            System.err.println("Error saving patient assignments: " + e.getMessage());
+            System.err.println("Error removing patient assignment: " + e.getMessage());
         }
     }
 
-    public int getPokojPacjenta(int idPacjenta) {
-        return przypisania.getOrDefault(idPacjenta, -1);
-    }
-
-    public Map<Integer, Integer> getPrzypisania() {
-        return new HashMap<>(przypisania);
+    public int getPokojPacjenta(int idJednostki) {
+        return przypisania.getOrDefault(idJednostki, -1);
     }
 }

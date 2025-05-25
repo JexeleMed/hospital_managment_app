@@ -41,7 +41,7 @@ public class Szpital {
         Pomieszczenie salaDocelowa = null;
         Pacjent pacjent = null;
 
-        // znajdz pacjenta
+        // Znajdź pacjenta
         for (Pacjent p : listaPacjentow) {
             if (p.idJednostki == idPacjenta) {
                 pacjent = p;
@@ -53,7 +53,7 @@ public class Szpital {
             return;
         }
 
-        // znajdz pomieszczenie zrodlowe i docelowe
+        // Znajdź pomieszczenie źródłowe i docelowe
         for (Pomieszczenie p : listaPomieszczen) {
             if (p.idPomieszczenia == idPomieszczeniaZrodlowego) {
                 salaZrodlowa = p;
@@ -63,7 +63,7 @@ public class Szpital {
             }
         }
 
-        // sprawdzenie, czy znaleziono sale
+        // Sprawdzenie, czy znaleziono sale
         if (salaZrodlowa == null) {
             System.out.println("Nie znaleziono sali źródłowej");
             return;
@@ -73,20 +73,67 @@ public class Szpital {
             return;
         }
 
-        // sprawdzenie, czy sala ma wolne miejsca
+        // Sprawdzenie, czy sala docelowa ma wolne miejsca
         if (!salaDocelowa.czyWolne()) {
             System.out.println("Sala docelowa jest pełna");
             return;
         }
 
-        // przeniesienie pacjenta
+        // Sprawdzenie, czy pacjent jest w sali źródłowej
+        if (!salaZrodlowa.pacjenci.contains(idPacjenta)) {
+            System.out.println("Pacjent nie znajduje się w sali źródłowej");
+            return;
+        }
+
+        // Przeniesienie pacjenta
         salaZrodlowa.usunZSali(idPacjenta);
         salaDocelowa.przypiszPacjenta(pacjent);
         przypisanieHandler.usunPrzypisanie(idPacjenta);
         przypisanieHandler.dodajPrzypisanie(idPacjenta, idPomieszczeniaDocelowego);
-        System.out.println("Przeniesiono pacjenta o ID " + idPacjenta +
+        System.out.println("Przeniesiono pacjenta " + pacjent.imie + " " + pacjent.nazwisko +
                 " z sali ID " + idPomieszczeniaZrodlowego +
                 " do sali ID " + idPomieszczeniaDocelowego);
+    }
+
+    public void usunZSali(int idPacjenta) {
+        boolean znaleziono = false;
+        for (Pomieszczenie p : listaPomieszczen) {
+            if (p.pacjenci.contains(idPacjenta)) {
+                p.usunZSali(idPacjenta);
+                przypisanieHandler.usunPrzypisanie(idPacjenta);
+                znaleziono = true;
+                System.out.println("Usunięto pacjenta o ID " + idPacjenta + " z sali.");
+                break;
+            }
+        }
+        if (!znaleziono) {
+            System.out.println("Nie znaleziono pacjenta o ID " + idPacjenta + " w żadnej sali.");
+        }
+    }
+
+    public void przypiszPacjenta(Pacjent pacjent, int idPomieszczenia) {
+        // Sprawdź czy pacjent jest już przypisany do jakiejś sali
+        int obecnaSala = przypisanieHandler.getPokojPacjenta(pacjent.idJednostki);
+        if (obecnaSala != -1) {
+            System.out.println("Pacjent " + pacjent.imie + " " + pacjent.nazwisko +
+                    " jest już przypisany do sali o ID: " + obecnaSala);
+            return;
+        }
+
+        for (Pomieszczenie p : listaPomieszczen) {
+            if (p.idPomieszczenia == idPomieszczenia) {
+                if (p.czyWolne()) {
+                    p.przypiszPacjenta(pacjent);
+                    przypisanieHandler.dodajPrzypisanie(pacjent.idJednostki, idPomieszczenia);
+                    System.out.println("Przypisano pacjenta " + pacjent.imie + " " + pacjent.nazwisko +
+                            " do pomieszczenia ID: " + idPomieszczenia);
+                } else {
+                    System.out.println("Pomieszczenie jest pełne!");
+                }
+                return;
+            }
+        }
+        System.out.println("Nie znaleziono pomieszczenia o ID: " + idPomieszczenia);
     }
 
     // Inicjalizacja handlerow
