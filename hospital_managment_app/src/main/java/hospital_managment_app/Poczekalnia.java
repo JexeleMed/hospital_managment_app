@@ -6,53 +6,61 @@ import java.util.*;
 
 public class Poczekalnia extends Pomieszczenie {
     private Duration czasOczekiwania;
-    private Map<Integer, Integer> priorytetyPacjentow; // Map<PatientID, Priority>
 
     public Poczekalnia(int numer, int pietro, int pojemnoscSali) {
         super(numer, pietro, pojemnoscSali);
         this.czasOczekiwania = Duration.ZERO;
-        this.priorytetyPacjentow = new HashMap<>();
     }
 
     @Override
     public void przypiszPacjenta(Pacjent pacjent) {
         if (czyWolne()) {
+            if (pacjent.getPriorytet() == null) {
+                System.out.println("Proszę określić priorytet pacjenta (1-10):");
+                Scanner scanner = new Scanner(System.in);
+                int priorytet = scanner.nextInt();
+                pacjent.ustawPriorytet(priorytet);
+            }
             super.przypiszPacjenta(pacjent);
-            System.out.println("Proszę określić priorytet pacjenta (1-10):");
-            Scanner scanner = new Scanner(System.in);
-            int priorytet = scanner.nextInt();
-            priorytetyPacjentow.put(pacjent.idJednostki, priorytet);
-            System.out.println("Pacjent oczekuje w poczekalni z priorytetem: " + priorytet);
+            System.out.println("Pacjent oczekuje w poczekalni z priorytetem: " + pacjent.getPriorytet());
         } else {
             System.out.println("Poczekalnia jest pełna!");
         }
     }
 
-    @Override
-    public void usunZSali(int id) {
-        super.usunZSali(id);
-        priorytetyPacjentow.remove(id);
-    }
+    public void wyswietlPacjentowPoczekalni(Map<Integer, Pacjent> pacjentMap, PrzypisaniePacjentowHandler przypisanieHandler) {
+        System.out.println("Lista pacjentów w poczekalni (sortowana po priorytecie rosnąco):");
 
-    public void wyswietlKolejke(Map<Integer, Pacjent> pacjentMap) {
-        System.out.println("Lista pacjentów według priorytetu:");
-        pacjenci.stream()
-                .sorted((id1, id2) -> priorytetyPacjentow.get(id2).compareTo(priorytetyPacjentow.get(id1)))
-                .forEach(id -> {
-                    Pacjent p = pacjentMap.get(id);
-                    if (p != null) {
-                        System.out.println("Imię: " + p.imie +
-                                ", Nazwisko: " + p.nazwisko +
-                                ", Priorytet: " + priorytetyPacjentow.get(id));
-                    }
-                });
+        List<Pacjent> pacjenciWPoczekalni = new ArrayList<>();
+
+        // Znajdź wszystkich pacjentów przypisanych do tej poczekalni
+        for (Map.Entry<Integer, Integer> entry : przypisanieHandler.getPrzypisania().entrySet()) {
+            if (entry.getValue() == this.idPomieszczenia) {
+                Pacjent pacjent = pacjentMap.get(entry.getKey());
+                if (pacjent != null) {
+                    pacjenciWPoczekalni.add(pacjent);
+                }
+            }
+        }
+
+        // Sortuj po priorytecie (rosnąco)
+        pacjenciWPoczekalni.sort(Comparator.comparing(
+                p -> p.getPriorytet() != null ? p.getPriorytet() : 0
+        ));
+
+        // Wyświetl posortowaną listę
+        for (Pacjent p : pacjenciWPoczekalni) {
+            System.out.printf("ID: %d, Imię: %s, Nazwisko: %s, Priorytet: %d%n",
+                    p.idJednostki,
+                    p.imie,
+                    p.nazwisko,
+                    p.getPriorytet() != null ? p.getPriorytet() : 0);
+        }
     }
 
     @Override
     public void generujRaport(Map<Integer, Pacjent> pacjentMap) {
         super.generujRaport(pacjentMap);
         System.out.println("Czas oczekiwania: " + czasOczekiwania);
-        System.out.println("\nPacjenci według priorytetu:");
-        wyswietlKolejke(pacjentMap);
     }
 }

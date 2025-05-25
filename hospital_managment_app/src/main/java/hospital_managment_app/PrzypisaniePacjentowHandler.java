@@ -95,6 +95,10 @@ public class PrzypisaniePacjentowHandler implements HandlerCsv<Integer> {
         }
     }
 
+    public Map<Integer, Integer> getPrzypisania() {
+        return new HashMap<>(przypisania);
+    }
+
     public int getPokojPacjenta(int idJednostki) {
         return przypisania.getOrDefault(idJednostki, -1);
     }

@@ -9,13 +9,16 @@ abstract class Pomieszczenie {
     protected int pietro;
     protected int pojemnoscSali;
     protected int aktualnaPojemnosc;
+
+    // Lista przechowująca przypisanych pacjentów
     protected List<Integer> pacjenci = new ArrayList<>();
 
-
+    // Konstruktor domyślny — zablokowany
     public Pomieszczenie() {
         throw new UnsupportedOperationException("Brak danych");
     }
 
+    // Konstruktor ustawiający dane pomieszczenia
     public Pomieszczenie(int numer, int pietro, int pojemnoscSali){
         idGlobalPomieszczenia++;
         this.idPomieszczenia = idGlobalPomieszczenia;
@@ -25,14 +28,17 @@ abstract class Pomieszczenie {
         this.aktualnaPojemnosc = 0;
     }
 
+    // Sprawdzenie, czy w sali jest wolne miejsce
     public boolean czyWolne() {
         return aktualnaPojemnosc < pojemnoscSali;
     }
 
+    // Sprawdzenie, czy w sali jest miejsce dla określonej liczby pacjentów
     public boolean czyWolne(int iluPacjentow) {
         return (aktualnaPojemnosc + iluPacjentow) <= pojemnoscSali;
     }
 
+    // Przypisanie pacjenta do sali
     public void przypiszPacjenta(Pacjent pacjent) {
         if (aktualnaPojemnosc < pojemnoscSali) {
             pacjenci.add(pacjent.idJednostki);
@@ -42,6 +48,7 @@ abstract class Pomieszczenie {
         }
     }
 
+    // Usunięcie pacjenta z sali
     public void usunZSali(int id) {
         if (aktualnaPojemnosc > 0 && pacjenci.remove((Integer) id)) {
             aktualnaPojemnosc--;
@@ -50,6 +57,7 @@ abstract class Pomieszczenie {
         }
     }
 
+    // Wyświetlenie podstawowych informacji o lokalizacji sali
     public void lokalizacja(){
         System.out.println("Pietro: " + pietro);
         System.out.println("Numer: " + numer);
@@ -57,6 +65,7 @@ abstract class Pomieszczenie {
         System.out.println("Pojemnosc: " + pojemnoscSali);
     }
 
+    // Generowanie raportu o sali i pacjentach
     public void generujRaport(Map<Integer, Pacjent> pacjentMap){
         System.out.println("Id pomieszczenia: " + idPomieszczenia);
         System.out.println("Pietro: " + pietro);
