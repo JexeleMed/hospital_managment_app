@@ -5,7 +5,10 @@ import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;   // ← usuń import + try-catch, jeśli nie korzystasz z FlatLaf
 
 public class Hospital_managment_app {
-
-    public static void main(String[] args) {
+    public class Hospital_managment_app {
+        public static void main(String[] args) {
+            Szpital szpital = new Szpital();
+            SwingUtilities.invokeLater(() -> new InterfejGraficzny(szpital));
+        }
     }
 }
