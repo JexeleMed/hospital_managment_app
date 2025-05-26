@@ -1,0 +1,52 @@
+[
+  {
+    "opisOperacji": "Ablacja",
+    "specjalnaAparatura": "Elektroencefalograf",
+    "idPomieszczenia": 1,
+    "numer": 213,
+    "pietro": 2,
+    "pojemnoscSali": 3,
+    "aktualnaPojemnosc": 1,
+    "pacjenci": [
+      1
+    ],
+    "typPomieszczenia": "SalaZabiegowa"
+  },
+  {
+    "opisOperacji": "Operacja zlamanej nogi",
+    "specjalnaAparatura": "Pila",
+    "idPomieszczenia": 2,
+    "numer": 235,
+    "pietro": 2,
+    "pojemnoscSali": 5,
+    "aktualnaPojemnosc": 1,
+    "pacjenci": [
+      2
+    ],
+    "typPomieszczenia": "SalaZabiegowa"
+  },
+  {
+    "oddzial": {
+      "idOddzialu": 1,
+      "nazwa": "Tymczasowy",
+      "personel": [],
+      "sale": []
+    },
+    "idPomieszczenia": 3,
+    "numer": 415,
+    "pietro": 4,
+    "pojemnoscSali": 5,
+    "aktualnaPojemnosc": 0,
+    "pacjenci": [],
+    "typPomieszczenia": "SalaHybrydowa"
+  },
+  {
+    "idPomieszczenia": 4,
+    "numer": 1,
+    "pietro": 1,
+    "pojemnoscSali": 20,
+    "aktualnaPojemnosc": 0,
+    "pacjenci": [],
+    "typPomieszczenia": "Poczekalnia"
+  }
+]

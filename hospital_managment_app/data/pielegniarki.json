@@ -1,0 +1,18 @@
+[
+  {
+    "czyMozePodawacLeki": true,
+    "szczebelWHierachi": 3,
+    "zakresObowiazkow": "Opieka nad chorymi",
+    "kwalifikacjeDodatkowe": "Zmiana bandazy",
+    "numerLicencji": "PIEL44721",
+    "zaplanowaneDyzury": [],
+    "idJednostki": 5,
+    "pesel": "43281237621",
+    "imie": "Michalina",
+    "nazwisko": "Sezam",
+    "dataUrodzenia": "23 01 2000",
+    "numerTelefonu": "472631553",
+    "adresEmail": "misezam@onet.pl",
+    "czyProfilKompletny": true
+  }
+]

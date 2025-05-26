@@ -1,0 +1,38 @@
+[
+  {
+    "historiaChoroby": [],
+    "grupaKrwi": "B+",
+    "alergie": [
+      "Paracetamol"
+    ],
+    "perskrypcje": [
+      {
+        "nazwa": "Amoksycyklina",
+        "wartosc": 100
+      }
+    ],
+    "numerKontaktowyBliskich": "642671332",
+    "rachunek": [],
+    "profilPacjentaKompletny": true,
+    "idJednostki": 1,
+    "pesel": "65123147824",
+    "imie": "Jerzy",
+    "nazwisko": "Karpinski",
+    "dataUrodzenia": "01 12 1965",
+    "numerTelefonu": "431567412",
+    "adresEmail": "jerzy123@gmail.com",
+    "adresZamieszkania": "Fiolkowa 11",
+    "czyProfilKompletny": true
+  },
+  {
+    "historiaChoroby": [],
+    "alergie": [],
+    "rachunek": [],
+    "profilPacjentaKompletny": false,
+    "idJednostki": 2,
+    "pesel": "46521273981",
+    "imie": "Amelia",
+    "nazwisko": "Nizina",
+    "czyProfilKompletny": false
+  }
+]

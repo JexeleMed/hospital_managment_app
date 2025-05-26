@@ -1,0 +1,26 @@
+[
+  {
+    "specjalizacja": "Kardiolog",
+    "numerLicencjiLekarskiej": "LEK3313",
+    "zaplanowaneDyzury": [],
+    "idJednostki": 3,
+    "pesel": "9837164821",
+    "imie": "Konrad",
+    "nazwisko": "Walenrod",
+    "dataUrodzenia": "15 03 1998",
+    "numerTelefonu": "743126442",
+    "adresEmail": "konrad.walendrod@hotmail.com",
+    "adresZamieszkania": "Pilsudskiego 2",
+    "czyProfilKompletny": true
+  },
+  {
+    "specjalizacja": "Ortopeda",
+    "numerLicencjiLekarskiej": "LEK4421",
+    "zaplanowaneDyzury": [],
+    "idJednostki": 4,
+    "pesel": "47162537920",
+    "imie": "Anna",
+    "nazwisko": "Kalarepa",
+    "czyProfilKompletny": false
+  }
+]
