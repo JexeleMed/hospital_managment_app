@@ -20,60 +20,76 @@ public class InterfejGraficzny {
         loop:
         while (true) {
             Action action = menu();
-            switch (action) {
-                case POMIESZCZENIA -> pomieszczeniaGUI.start();
-                case OSOBY -> osobyGUI.main(null);
-                case PRZYPISZ_PACJENTA -> przypiszPacjentaDoSali();
-                case PRZENIES_PACJENTA -> przeniesPacjenta();
-                case USUN_Z_SALI -> usunPacjentaZSali();
-                case SEARCH -> wyszukajOsobe();
-                case EXIT -> {
-                    System.out.println("Do widzenia!");
-                    break loop;
+            try {
+                switch (action) {
+                    case POMIESZCZENIA -> pomieszczeniaGUI.start();
+                    case OSOBY -> osobyGUI.main(null);
+                    case PRZYPISZ_PACJENTA -> przypiszPacjentaDoSali();
+                    case PRZENIES_PACJENTA -> przeniesPacjenta();
+                    case USUN_Z_SALI -> usunPacjentaZSali();
+                    case SEARCH -> wyszukajOsobe();
+                    case EXIT -> {
+                        System.out.println("Do widzenia!");
+                        break loop;
+                    }
                 }
+                szpital.saveAllData();
+                System.out.println();
+            } catch (NumberFormatException e) {
+                System.out.println("Błąd: Wprowadzono nieprawidłowy format liczby!");
+            } catch (Exception e) {
+                System.out.println("Błąd: " + e.getMessage());
             }
-            szpital.saveAllData();
-            System.out.println();
         }
     }
 
     private void przypiszPacjentaDoSali() throws IOException {
-        System.out.println("\n=== PRZYPISYWANIE PACJENTA DO SALI ===");
-        System.out.print("Podaj ID pacjenta: ");
-        int idPacjenta = Integer.parseInt(IN.readLine());
+        try {
+            System.out.println("\n=== PRZYPISYWANIE PACJENTA DO SALI ===");
+            System.out.print("Podaj ID pacjenta: ");
+            int idPacjenta = Integer.parseInt(IN.readLine());
 
-        System.out.print("Podaj ID pomieszczenia: ");
-        int idPomieszczenia = Integer.parseInt(IN.readLine());
+            System.out.print("Podaj ID pomieszczenia: ");
+            int idPomieszczenia = Integer.parseInt(IN.readLine());
 
-        szpital.przypiszPacjenta(
-                szpital.listaPacjentow.stream()
-                        .filter(p -> p.idJednostki == idPacjenta)
-                        .findFirst()
-                        .orElse(null),
-                idPomieszczenia
-        );
+            Pacjent pacjent = szpital.listaPacjentow.stream()
+                    .filter(p -> p.idJednostki == idPacjenta)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono pacjenta o ID: " + idPacjenta));
+
+            szpital.przypiszPacjenta(pacjent, idPomieszczenia);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("ID musi być liczbą całkowitą!");
+        }
     }
 
     private void przeniesPacjenta() throws IOException {
-        System.out.println("\n=== PRZENOSZENIE PACJENTA ===");
-        System.out.print("Podaj ID pacjenta: ");
-        int idPacjenta = Integer.parseInt(IN.readLine());
+        try {
+            System.out.println("\n=== PRZENOSZENIE PACJENTA ===");
+            System.out.print("Podaj ID pacjenta: ");
+            int idPacjenta = Integer.parseInt(IN.readLine());
 
-        System.out.print("Podaj ID sali źródłowej: ");
-        int idZrodlo = Integer.parseInt(IN.readLine());
+            System.out.print("Podaj ID sali źródłowej: ");
+            int idZrodlo = Integer.parseInt(IN.readLine());
 
-        System.out.print("Podaj ID sali docelowej: ");
-        int idCel = Integer.parseInt(IN.readLine());
+            System.out.print("Podaj ID sali docelowej: ");
+            int idCel = Integer.parseInt(IN.readLine());
 
-        szpital.przeniesDoSali(idPacjenta, idZrodlo, idCel);
+            szpital.przeniesDoSali(idPacjenta, idZrodlo, idCel);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("ID musi być liczbą całkowitą!");
+        }
     }
 
     private void usunPacjentaZSali() throws IOException {
-        System.out.println("\n=== USUWANIE PACJENTA Z SALI ===");
-        System.out.print("Podaj ID pacjenta: ");
-        int idPacjenta = Integer.parseInt(IN.readLine());
-
-        szpital.usunZSali(idPacjenta);
+        try {
+            System.out.println("\n=== USUWANIE PACJENTA Z SALI ===");
+            System.out.print("Podaj ID pacjenta: ");
+            int idPacjenta = Integer.parseInt(IN.readLine());
+            szpital.usunZSali(idPacjenta);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("ID musi być liczbą całkowitą!");
+        }
     }
 
     private void wyszukajOsobe() throws IOException {
@@ -85,23 +101,35 @@ public class InterfejGraficzny {
         System.out.print("Wybór: ");
         String wybor = IN.readLine();
 
-        switch (wybor) {
-            case "1" -> {
-                System.out.print("Podaj PESEL: ");
-                szpital.pokazOsobe(IN.readLine());
+        try {
+            switch (wybor) {
+                case "1" -> {
+                    System.out.print("Podaj PESEL: ");
+                    String pesel = IN.readLine();
+                    if (pesel == null || pesel.trim().isEmpty()) {
+                        throw new IllegalArgumentException("PESEL nie może być pusty!");
+                    }
+                    szpital.pokazOsobe(pesel);
+                }
+                case "2" -> {
+                    System.out.print("Podaj imię: ");
+                    String imie = IN.readLine();
+                    System.out.print("Podaj nazwisko: ");
+                    String nazwisko = IN.readLine();
+                    if (imie == null || imie.trim().isEmpty() || nazwisko == null || nazwisko.trim().isEmpty()) {
+                        throw new IllegalArgumentException("Imię i nazwisko nie mogą być puste!");
+                    }
+                    szpital.pokazOsobe(imie, nazwisko);
+                }
+                case "3" -> {
+                    System.out.print("Podaj ID: ");
+                    int id = Integer.parseInt(IN.readLine());
+                    szpital.pokazOsobe(id);
+                }
+                default -> System.out.println("Nieprawidłowa opcja!");
             }
-            case "2" -> {
-                System.out.print("Podaj imię: ");
-                String imie = IN.readLine();
-                System.out.print("Podaj nazwisko: ");
-                String nazwisko = IN.readLine();
-                szpital.pokazOsobe(imie, nazwisko);
-            }
-            case "3" -> {
-                System.out.print("Podaj ID: ");
-                szpital.pokazOsobe(Integer.parseInt(IN.readLine()));
-            }
-            default -> System.out.println("Nieprawidłowa opcja!");
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("ID musi być liczbą całkowitą!");
         }
     }
 
@@ -118,19 +146,25 @@ public class InterfejGraficzny {
                 """);
 
         System.out.print("Wybór: ");
-        return switch (IN.readLine().trim()) {
-            case "1" -> Action.POMIESZCZENIA;
-            case "2" -> Action.OSOBY;
-            case "3" -> Action.PRZYPISZ_PACJENTA;
-            case "4" -> Action.PRZENIES_PACJENTA;
-            case "5" -> Action.USUN_Z_SALI;
-            case "6" -> Action.SEARCH;
-            case "0" -> Action.EXIT;
-            default -> {
-                System.out.println("Nieprawidłowa opcja!");
-                yield menu();
-            }
-        };
+        String input = IN.readLine().trim();
+        try {
+            return switch (input) {
+                case "1" -> Action.POMIESZCZENIA;
+                case "2" -> Action.OSOBY;
+                case "3" -> Action.PRZYPISZ_PACJENTA;
+                case "4" -> Action.PRZENIES_PACJENTA;
+                case "5" -> Action.USUN_Z_SALI;
+                case "6" -> Action.SEARCH;
+                case "0" -> Action.EXIT;
+                default -> {
+                    System.out.println("Nieprawidłowa opcja!");
+                    yield menu();
+                }
+            };
+        } catch (Exception e) {
+            System.out.println("⚠ Błąd: " + e.getMessage());
+            return menu();
+        }
     }
 
     private enum Action {
