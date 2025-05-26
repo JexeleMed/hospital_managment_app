@@ -8,12 +8,12 @@ public class InterfejGraficzny {
     private static final BufferedReader IN = new BufferedReader(new InputStreamReader(System.in));
     private final Szpital szpital;
     private final PomieszczeniaGUI pomieszczeniaGUI;
-    private final PacjentGUI pacjentGUI;
+    private final OsobyGUI osobyGUI;
 
     public InterfejGraficzny() {
         this.szpital = Szpital.getInstance();
         this.pomieszczeniaGUI = new PomieszczeniaGUI();
-        this.pacjentGUI = new PacjentGUI();
+        this.osobyGUI = new OsobyGUI();
     }
 
     public void start() throws IOException {
@@ -22,7 +22,7 @@ public class InterfejGraficzny {
             Action action = menu();
             switch (action) {
                 case POMIESZCZENIA -> pomieszczeniaGUI.start();
-                case PACJENCI -> pacjentGUI.start();
+                case OSOBY -> osobyGUI.main(null);
                 case PRZYPISZ_PACJENTA -> przypiszPacjentaDoSali();
                 case PRZENIES_PACJENTA -> przeniesPacjenta();
                 case USUN_Z_SALI -> usunPacjentaZSali();
@@ -32,8 +32,8 @@ public class InterfejGraficzny {
                     break loop;
                 }
             }
-            szpital.saveAllData(); // Auto-save after each operation
-            System.out.println(); // empty line between operations
+            szpital.saveAllData();
+            System.out.println();
         }
     }
 
@@ -45,16 +45,13 @@ public class InterfejGraficzny {
         System.out.print("Podaj ID pomieszczenia: ");
         int idPomieszczenia = Integer.parseInt(IN.readLine());
 
-        Pacjent pacjent = szpital.listaPacjentow.stream()
-                .filter(p -> p.idJednostki == idPacjenta)
-                .findFirst()
-                .orElse(null);
-
-        if (pacjent != null) {
-            szpital.przypiszPacjenta(pacjent, idPomieszczenia);
-        } else {
-            System.out.println("Nie znaleziono pacjenta o ID: " + idPacjenta);
-        }
+        szpital.przypiszPacjenta(
+                szpital.listaPacjentow.stream()
+                        .filter(p -> p.idJednostki == idPacjenta)
+                        .findFirst()
+                        .orElse(null),
+                idPomieszczenia
+        );
     }
 
     private void przeniesPacjenta() throws IOException {
@@ -112,18 +109,18 @@ public class InterfejGraficzny {
         System.out.println("""
                 \n=== SYSTEM ZARZĄDZANIA SZPITALEM ===
                 1. Zarządzanie pomieszczeniami
-                2. Zarządzanie pacjentami
+                2. Zarządzanie osobami
                 3. Przypisz pacjenta do sali
                 4. Przenieś pacjenta między salami
                 5. Usuń pacjenta z sali
-                6. Wyszukaj osobę
+                6. Szybkie wyszukiwanie osoby
                 0. Wyjście
                 """);
 
         System.out.print("Wybór: ");
         return switch (IN.readLine().trim()) {
             case "1" -> Action.POMIESZCZENIA;
-            case "2" -> Action.PACJENCI;
+            case "2" -> Action.OSOBY;
             case "3" -> Action.PRZYPISZ_PACJENTA;
             case "4" -> Action.PRZENIES_PACJENTA;
             case "5" -> Action.USUN_Z_SALI;
@@ -137,7 +134,7 @@ public class InterfejGraficzny {
     }
 
     private enum Action {
-        POMIESZCZENIA, PACJENCI, PRZYPISZ_PACJENTA, PRZENIES_PACJENTA,
+        POMIESZCZENIA, OSOBY, PRZYPISZ_PACJENTA, PRZENIES_PACJENTA,
         USUN_Z_SALI, SEARCH, EXIT
     }
 }
