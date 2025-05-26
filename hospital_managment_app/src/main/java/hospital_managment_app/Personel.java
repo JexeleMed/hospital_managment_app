@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 abstract class Personel extends Czlowiek {
-    Boolean dostepnosc;
-    List<Para<Para<LocalDateTime, LocalDateTime>, String>> zaplanowaneDyzury = new ArrayList<>();
+    protected Boolean dostepnosc;
+    protected List<Para<Para<LocalDateTime, LocalDateTime>, String>> zaplanowaneDyzury = new ArrayList<>();
 
 
     public Personel(String imie, String nazwisko, String pesel) {

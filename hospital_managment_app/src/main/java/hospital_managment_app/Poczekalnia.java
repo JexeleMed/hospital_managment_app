@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.*;
 
 public class Poczekalnia extends Pomieszczenie {
-    private Duration czasOczekiwania;
+    protected Duration czasOczekiwania;
 
     public Poczekalnia(int numer, int pietro, int pojemnoscSali) {
         super(numer, pietro, pojemnoscSali);
@@ -13,7 +13,7 @@ public class Poczekalnia extends Pomieszczenie {
     }
 
     @Override
-    public void przypiszPacjenta(Pacjent pacjent) {
+    protected void przypiszPacjenta(Pacjent pacjent) {
         if (czyWolne()) {
             if (pacjent.getPriorytet() == null) {
                 System.out.println("Proszę określić priorytet pacjenta (1-10):");
@@ -28,7 +28,7 @@ public class Poczekalnia extends Pomieszczenie {
         }
     }
 
-    public void wyswietlPacjentowPoczekalni(Map<Integer, Pacjent> pacjentMap, PrzypisaniePacjentowHandler przypisanieHandler) {
+    protected void wyswietlPacjentowPoczekalni(Map<Integer, Pacjent> pacjentMap, PrzypisaniePacjentowHandler przypisanieHandler) {
         System.out.println("Lista pacjentów w poczekalni (sortowana po priorytecie rosnąco):");
 
         List<Pacjent> pacjenciWPoczekalni = new ArrayList<>();
@@ -59,7 +59,7 @@ public class Poczekalnia extends Pomieszczenie {
     }
 
     @Override
-    public void generujRaport(Map<Integer, Pacjent> pacjentMap) {
+    protected void generujRaport(Map<Integer, Pacjent> pacjentMap) {
         super.generujRaport(pacjentMap);
         System.out.println("Czas oczekiwania: " + czasOczekiwania);
     }

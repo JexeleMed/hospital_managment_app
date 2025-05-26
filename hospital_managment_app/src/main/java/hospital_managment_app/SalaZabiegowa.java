@@ -3,8 +3,8 @@ import java.util.*;
 import java.util.Scanner;
 
 public class SalaZabiegowa extends Pomieszczenie{
-    private String opisOperacji;
-    private String specjalnaAparatura;
+    protected String opisOperacji;
+    protected String specjalnaAparatura;
 
     // Konstruktor domyślny — zablokowany
     public SalaZabiegowa(int numer, int pietro, int pojemnoscSali, String opisOperacji, String specjalnaAparatura) {
@@ -15,7 +15,7 @@ public class SalaZabiegowa extends Pomieszczenie{
 
     // Metoda do przypisywania pacjenta do sali zabiegowej
     @Override
-    public void przypiszPacjenta(Pacjent pacjent) {
+    protected void przypiszPacjenta(Pacjent pacjent) {
         if (czyWolne()) {
             super.przypiszPacjenta(pacjent);
             System.out.println("Pacjent przypisany do sali zabiegowej.");
@@ -36,7 +36,7 @@ public class SalaZabiegowa extends Pomieszczenie{
 
     // Metoda do generowania raportu z sali zabiegowej
     @Override
-    public void generujRaport(Map<Integer, Pacjent> pacjentMap) {
+    protected void generujRaport(Map<Integer, Pacjent> pacjentMap) {
         super.generujRaport(pacjentMap);
         System.out.println("Opis operacji: " + opisOperacji);
         System.out.println("Specjalistyczna aparatura w pomieszczeniu: " + specjalnaAparatura);

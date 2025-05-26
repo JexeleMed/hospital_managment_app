@@ -44,14 +44,14 @@ public class Pacjent extends Czlowiek {
     }
 
     //ustawianie priorytetu pacjenta
-    public void ustawPriorytet(int priorytet) {
+    protected void ustawPriorytet(int priorytet) {
         if (priorytet < 1 || priorytet > 10) {
             throw new IllegalArgumentException("Priorytet musi być między 1 a 10");
         }
         this.priorytet = priorytet;
     }
 
-    public Integer getPriorytet() {
+    protected Integer getPriorytet() {
         return priorytet;
     }
 

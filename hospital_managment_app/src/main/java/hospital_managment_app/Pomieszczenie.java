@@ -29,17 +29,17 @@ abstract class Pomieszczenie {
     }
 
     // Sprawdzenie, czy w sali jest wolne miejsce
-    public boolean czyWolne() {
+    protected boolean czyWolne() {
         return aktualnaPojemnosc < pojemnoscSali;
     }
 
     // Sprawdzenie, czy w sali jest miejsce dla określonej liczby pacjentów
-    public boolean czyWolne(int iluPacjentow) {
+    protected boolean czyWolne(int iluPacjentow) {
         return (aktualnaPojemnosc + iluPacjentow) <= pojemnoscSali;
     }
 
     // Przypisanie pacjenta do sali
-    public void przypiszPacjenta(Pacjent pacjent) {
+    protected void przypiszPacjenta(Pacjent pacjent) {
         if (aktualnaPojemnosc < pojemnoscSali) {
             pacjenci.add(pacjent.idJednostki);
             aktualnaPojemnosc++;
@@ -49,7 +49,7 @@ abstract class Pomieszczenie {
     }
 
     // Usunięcie pacjenta z sali
-    public void usunZSali(int id) {
+    protected void usunZSali(int id) {
         if (aktualnaPojemnosc > 0 && pacjenci.remove((Integer) id)) {
             aktualnaPojemnosc--;
         } else {
@@ -58,7 +58,7 @@ abstract class Pomieszczenie {
     }
 
     // Wyświetlenie podstawowych informacji o lokalizacji sali
-    public void lokalizacja(){
+    protected void lokalizacja(){
         System.out.println("Pietro: " + pietro);
         System.out.println("Numer: " + numer);
         System.out.println("Aktualna pojemnosc: " + aktualnaPojemnosc);
@@ -66,7 +66,7 @@ abstract class Pomieszczenie {
     }
 
     // Generowanie raportu o sali i pacjentach
-    public void generujRaport(Map<Integer, Pacjent> pacjentMap){
+    protected void generujRaport(Map<Integer, Pacjent> pacjentMap){
         System.out.println("Id pomieszczenia: " + idPomieszczenia);
         System.out.println("Pietro: " + pietro);
         System.out.println("Numer sali: " + numer);

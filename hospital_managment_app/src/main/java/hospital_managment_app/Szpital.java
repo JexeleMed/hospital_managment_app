@@ -18,7 +18,7 @@ public class Szpital {
     protected List<Lekarz> listaLekarzy;
     protected List<Pielegniarka> listaPielegniarek;
 
-    public void przeniesDoSali(int idPacjenta, int idPomieszczeniaZrodlowego, int idPomieszczeniaDocelowego) {
+    protected void przeniesDoSali(int idPacjenta, int idPomieszczeniaZrodlowego, int idPomieszczeniaDocelowego) {
         Pomieszczenie salaZrodlowa = null;
         Pomieszczenie salaDocelowa = null;
         Pacjent pacjent = null;
@@ -77,7 +77,7 @@ public class Szpital {
                 " do sali ID " + idPomieszczeniaDocelowego);
     }
 
-    public void usunZSali(int idPacjenta) {
+    protected void usunZSali(int idPacjenta) {
         boolean znaleziono = false;
         for (Pomieszczenie p : listaPomieszczen) {
             if (p.pacjenci.contains(idPacjenta)) {
@@ -93,7 +93,7 @@ public class Szpital {
         }
     }
 
-    public void przypiszPacjenta(Pacjent pacjent, int idPomieszczenia) {
+    protected void przypiszPacjenta(Pacjent pacjent, int idPomieszczenia) {
         // Sprawdź czy pacjent jest już przypisany do jakiejś sali
         int obecnaSala = przypisanieHandler.getPokojPacjenta(pacjent.idJednostki);
         if (obecnaSala != -1) {
@@ -119,7 +119,7 @@ public class Szpital {
     }
 
     // Inicjalizacja handlerow
-    public Szpital() {
+    protected Szpital() {
         // inicjalizacja kolekcji
         listaPomieszczen = new ArrayList<>();
         listaOddzialow = new ArrayList<>();
@@ -146,7 +146,7 @@ public class Szpital {
     }
 
     // Szukanie osob
-    public void pokazOsobe(String pesel){
+    protected void pokazOsobe(String pesel){
         System.out.println("Pacjenci o tym nr PESEL: ");
         for(Pacjent p : listaPacjentow){
             if(p.pesel.equals(pesel)){
@@ -169,7 +169,7 @@ public class Szpital {
             }
         }
     }
-    public void pokazOsobe(String imie, String nazwisko){
+    protected void pokazOsobe(String imie, String nazwisko){
         System.out.println("Pacjenci o tym imieniu i nazwisku: ");
         for(Pacjent p : listaPacjentow){
             if(p.imie.equals(imie) && p.nazwisko.equals(nazwisko)){
@@ -192,7 +192,7 @@ public class Szpital {
             }
         }
     }
-    public void pokazOsobe(int id){
+    protected void pokazOsobe(int id){
         System.out.println("Pacjenci o tym id: ");
         for(Pacjent p : listaPacjentow){
             if(p.idJednostki == id){
@@ -217,33 +217,33 @@ public class Szpital {
     }
 
     // Dodawanie osob
-    public void dodajOsobe(Pacjent p){
+    protected void dodajOsobe(Pacjent p){
         listaPacjentow.add(p);
         System.out.println("Dodano pacjenta.");
     }
-    public void dodajOsobe(Lekarz l){
+    protected void dodajOsobe(Lekarz l){
         listaLekarzy.add(l);
         System.out.println("Dodano lekarza.");
     }
-    public void dodajOsobe(Pielegniarka p){
+    protected void dodajOsobe(Pielegniarka p){
         listaPielegniarek.add(p);
         System.out.println("Dodano pielegniarke.");
     }
 
     // Usuwanie osob
-    public void usunOsobe(String pesel){
+    protected void usunOsobe(String pesel){
         listaPacjentow.removeIf(z -> z.pesel.equals(pesel));
         listaLekarzy.removeIf(z -> z.pesel.equals(pesel));
         listaPielegniarek.removeIf(z -> z.pesel.equals(pesel));
         System.out.println("Usunieto z bazy.");
     }
-    public void usunOsobe(int id){
+    protected void usunOsobe(int id){
         listaPacjentow.removeIf(z -> z.idJednostki == id);
         listaLekarzy.removeIf(z -> z.idJednostki == id);
         listaPielegniarek.removeIf(z -> z.idJednostki == id);
         System.out.println("Usunieto z bazy.");
     }
-    public void usunOsobe(String imie, String nazwisko){
+    protected void usunOsobe(String imie, String nazwisko){
         listaPacjentow.removeIf(z -> z.imie.equals(imie) && z.nazwisko.equals(nazwisko));
         listaLekarzy.removeIf(z -> z.imie.equals(imie) && z.nazwisko.equals(nazwisko));
         listaPielegniarek.removeIf(z -> z.imie.equals(imie) && z.nazwisko.equals(nazwisko));
@@ -251,17 +251,17 @@ public class Szpital {
     }
 
     // Dodawanie pomieszczen
-    public void dodajPomieszczenie(Pomieszczenie p){
+    protected void dodajPomieszczenie(Pomieszczenie p){
         listaPomieszczen.add(p);
         System.out.println("Dodano pomieszczenie.");
     }
     // Usuwanie pomieszczen
-    public void usunPomieszczenie(int numer, int pietro){
+    protected void usunPomieszczenie(int numer, int pietro){
         listaPomieszczen.removeIf(z -> z.numer == numer && z.pietro == pietro);
         System.out.println("Usunieto z bazy.");
     }
     // Pokazywanie pomieszczen
-    public void pokazPomieszczenie(int numer, int pietro){
+    protected void pokazPomieszczenie(int numer, int pietro){
         for(Pomieszczenie p : listaPomieszczen){
             if(p.numer == numer && p.pietro == pietro){
                 p.lokalizacja();
@@ -270,7 +270,7 @@ public class Szpital {
         }
     }
     // Zapisywanie wszystkich metod
-    public void saveAllData() {
+    protected void saveAllData() {
         try {
             pacjentHandler.saveAll(listaPacjentow);
             lekarzHandler.saveAll(listaLekarzy);

@@ -3,8 +3,8 @@ package hospital_managment_app;
 import java.time.LocalDate;
 
 public class Lekarz extends Personel {
-    private String specjalizacja;
-    private String numerLicencjiLekarskiej;
+    protected String specjalizacja;
+    protected String numerLicencjiLekarskiej;
 
 
     public Lekarz(String imie, String nazwisko, String pesel, String specjalizacja, String numerLicencjiLekarskiej) {
