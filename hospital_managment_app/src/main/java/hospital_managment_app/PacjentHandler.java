@@ -1,18 +1,30 @@
 package hospital_managment_app;
-import java.io.*;
-import java.util.*;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PacjentHandler implements HandlerCsv<Pacjent> {
     private static PacjentHandler instance;
     private static final String FILE_NAME = "PacjenciBaza.csv";
 
-    private PacjentHandler() {}
+    private PacjentHandler() {
+        createFileIfNotExists();
+    }
+
+    private void createFileIfNotExists() {
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write("json\n");
+            } catch (IOException e) {
+                System.err.println("Error creating file: " + e.getMessage());
+            }
+        }
+    }
 
     public static PacjentHandler getInstance() {
         if (instance == null) {
@@ -24,24 +36,38 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
     @Override
     public List<Pacjent> loadAll() {
         List<Pacjent> lista = new ArrayList<>();
-        Gson gson = new Gson();
+        File file = new File(FILE_NAME);
 
-        try(BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line = br.readLine();
+        if (!file.exists()) {
+            return lista;
+        }
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
+
+        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line = br.readLine(); // skip header
             while((line = br.readLine()) != null) {
-                String json = line.replace("\"\"", "\"");
-                Pacjent p = gson.fromJson(json, Pacjent.class);
-                lista.add(p);
+                if (!line.trim().isEmpty()) {
+                    String json = line.replace("\"\"", "\"");
+                    Pacjent p = gson.fromJson(json, Pacjent.class);
+                    lista.add(p);
+                }
             }
         } catch (IOException e){
-            e.printStackTrace();
+            System.err.println("Error loading patients: " + e.getMessage());
         }
 
         return lista;
     }
+
     @Override
     public void saveAll(List<Pacjent> pacjenci) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).serializeNulls().create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .serializeNulls()
+                .create();
 
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
             writer.append("json\n");
@@ -50,9 +76,9 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
                 writer.append(json.replace("\"", "\"\""));
                 writer.append("\n");
             }
-            System.out.println("Zapisano baze pacjentow");
+            System.out.println("Saved patients database");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error saving patients: " + e.getMessage());
         }
     }
 }
