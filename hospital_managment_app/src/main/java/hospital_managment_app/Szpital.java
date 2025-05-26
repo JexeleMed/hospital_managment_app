@@ -3,6 +3,7 @@ package hospital_managment_app;
 import java.util.*;
 import java.io.*;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class Szpital {
     private final PacjentHandler pacjentHandler;
@@ -79,15 +80,34 @@ public class Szpital {
 
     protected void usunZSali(int idPacjenta) {
         boolean znaleziono = false;
+        WypisyHandler wypisyHandler = WypisyHandler.getInstance();
+
         for (Pomieszczenie p : listaPomieszczen) {
             if (p.pacjenci.contains(idPacjenta)) {
-                p.usunZSali(idPacjenta);
-                przypisanieHandler.usunPrzypisanie(idPacjenta);
-                znaleziono = true;
-                System.out.println("Usunięto pacjenta o ID " + idPacjenta + " z sali.");
-                break;
+                // Find patient object
+                Pacjent pacjent = null;
+                for (Pacjent pat : listaPacjentow) {
+                    if (pat.idJednostki == idPacjenta) {
+                        pacjent = pat;
+                        break;
+                    }
+                }
+
+                if (pacjent != null) {
+                    // Add discharge record
+                    wypisyHandler.dodajWypis(pacjent);  // Changed this line
+
+                    // Remove from room and assignments
+                    p.usunZSali(idPacjenta);
+                    przypisanieHandler.usunPrzypisanie(idPacjenta);
+
+                    znaleziono = true;
+                    System.out.println("Usunięto pacjenta o ID " + idPacjenta + " z sali.");
+                    break;
+                }
             }
         }
+
         if (!znaleziono) {
             System.out.println("Nie znaleziono pacjenta o ID " + idPacjenta + " w żadnej sali.");
         }

@@ -13,7 +13,7 @@ public class Pacjent extends Czlowiek {
     protected String numerKontaktowyBliskich;
     protected List<Para<String, Double>> rachunek = new ArrayList<>();
     protected boolean profilPacjentaKompletny = false;
-    private Integer priorytet; // od 1 do 10 gdzie 1 to najniższy priorytet, a 10 to najwyższy
+    protected Integer priorytet; // od 1 do 10 gdzie 1 to najniższy priorytet, a 10 to najwyższy
 
     // Konstruktor do zapisania pacjenta do oddzialu
     public Pacjent(String imie, String nazwisko, String pesel,

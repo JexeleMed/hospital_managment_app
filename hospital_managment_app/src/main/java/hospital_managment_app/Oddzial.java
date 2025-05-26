@@ -1,23 +1,47 @@
 package hospital_managment_app;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.*;
 
 public class Oddzial {
-    protected HashMap<String, LocalDate> listaWypisow;
+    protected int idOddzialu;
+    protected String nazwa;
+    protected List<Integer> personel;
+    protected List<Integer> sale;
+    protected static int idGlobalOddzialu;
 
-    public Oddzial() {
-        this.listaWypisow = new HashMap<>();
+    public Oddzial(String nazwa) {
+        idGlobalOddzialu++;
+        this.idOddzialu = idGlobalOddzialu;
+        this.nazwa = nazwa;
+        this.personel = new ArrayList<>();
+        this.sale = new ArrayList<>();
     }
 
-    protected void dodajWypis(String id, LocalDate data) {
-        listaWypisow.put(id, data);
+    protected void dodajPersonel(int idPracownika) {
+        if (!personel.contains(idPracownika)) {
+            personel.add(idPracownika);
+        }
     }
 
-    protected void raportujWypisy() {
-        System.out.println("Lista wypisów pacjentów:");
-        listaWypisow.forEach((id, data) ->
-                System.out.println("ID pacjenta: " + id + ", Data wypisu: " + data)
-        );
+    protected void usunPersonel(int idPracownika) {
+        personel.remove((Integer) idPracownika);
+    }
+
+    protected void dodajSale(int idSali) {
+        if (!sale.contains(idSali)) {
+            sale.add(idSali);
+        }
+    }
+
+    protected void usunSale(int idSali) {
+        sale.remove((Integer) idSali);
+    }
+
+    protected void wyswietlInformacje() {
+        System.out.println("ID Oddziału: " + idOddzialu);
+        System.out.println("Nazwa: " + nazwa);
+        System.out.println("Liczba personelu: " + personel.size());
+        System.out.println("Liczba sal: " + sale.size());
     }
 }
