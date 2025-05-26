@@ -1,22 +1,27 @@
-<project name="HospitalApp" default="test" basedir=".">
-    <!-- 1. Ścieżki -->
+<project name="HospitalApp" default="package" basedir=".">
+    <!-- ===================== 1. Ustawienia katalogów ===================== -->
     <property name="src.dir"        value="src/main/java"/>
     <property name="test.src.dir"   value="src/test/java"/>
+
     <property name="build.dir"      value="build/classes"/>
     <property name="test.build.dir" value="build/test-classes"/>
+
     <property name="reports.dir"    value="build/reports"/>
     <property name="html.dir"       value="build/reports/html"/>
+
     <property name="lib.dir"        value="lib"/>
 
-    <!-- 2. Classpath z JAR-ami w lib/ -->
+    <!-- katalog artefaktów -->
+    <property name="dist.dir"       value="dist"/>
+
+    <!-- ===================== 2. ClassPath z bibliotekami ================= -->
     <path id="compile.classpath">
-        <!-- Użycie pełnej ścieżki do folderu lib -->
-        <fileset dir="lib">
+        <fileset dir="${lib.dir}">
             <include name="**/*.jar"/>
         </fileset>
     </path>
 
-    <!-- 3. Kompilacja kodu produkcyjnego -->
+    <!-- ===================== 3. Kompilacja kodu produkcyjnego ============ -->
     <target name="compile">
         <echo>=== Kompilacja src/main/java ===</echo>
         <mkdir dir="${build.dir}"/>
@@ -26,7 +31,7 @@
                classpathref="compile.classpath"/>
     </target>
 
-    <!-- 4. Kompilacja testów (zależna od compile) -->
+    <!-- ===================== 4. Kompilacja testów ======================== -->
     <target name="compile-tests" depends="compile">
         <echo>=== Kompilacja src/test/java ===</echo>
         <mkdir dir="${test.build.dir}"/>
@@ -40,11 +45,12 @@
         </javac>
     </target>
 
-    <!-- 5. Uruchomienie testów JUnit 4 i generowanie raportów -->
+    <!-- ===================== 5. Testy JUnit + raporty ==================== -->
     <target name="test" depends="compile-tests">
         <echo>=== Uruchamianie testów ===</echo>
         <mkdir dir="${reports.dir}"/>
         <mkdir dir="${html.dir}"/>
+
         <junit printsummary="yes" haltonfailure="no" fork="yes">
             <classpath>
                 <pathelement path="${build.dir}"/>
@@ -58,43 +64,72 @@
                 </fileset>
             </batchtest>
         </junit>
+
         <junitreport todir="${html.dir}">
             <fileset dir="${html.dir}">
                 <include name="TEST-*.xml"/>
             </fileset>
-         <!--   <report format="frames"/> Do dokonczenia, po odkomentowaniu tworzy pliki w glownym katalogu-->
+            <!-- <report format="frames"/>  -->
         </junitreport>
     </target>
 
-    <!-- 6. Budowanie JAR-a -->
+    <!-- ===================== 6. Budowanie FAT‑JAR‑a ===================== -->
     <target name="jar" depends="compile">
-        <echo>=== Tworzenie JAR-a ===</echo>
-        <mkdir dir="dist"/>
-        <jar destfile="dist/${ant.project.name}.jar" basedir="${build.dir}">
+        <echo>=== Tworzenie FAT‑JAR‑a ===</echo>
+        <mkdir dir="${dist.dir}"/>
+
+        <jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}">
+            <!-- Dołącz wszystkie zależności z lib/ -->
+            <zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>
             <manifest>
-                <!-- Zmień na swoją klasę z metodą main -->
                 <attribute name="Main-Class" value="hospital_managment_app.Hospital_managment_app"/>
             </manifest>
         </jar>
     </target>
 
-    <!-- 7. Uruchomienie aplikacji -->
-    <target name="run" depends="compile">
-        <echo>=== Uruchamianie aplikacji ===</echo>
-        <java classname="hospital_managment_app.Hospital_managment_app" fork="true">
-            <classpath>
-                <pathelement path="${build.dir}"/>
-                <path refid="compile.classpath"/>
-            </classpath>
-        </java>
+    <!-- ===================== 7. Generowanie skryptów startowych ========= -->
+    <target name="make-scripts" depends="jar">
+        <echo>=== Generowanie skryptów run.sh / run.bat ===</echo>
+        <!-- Unix/Linux/macOS script -->
+        <echo file="${dist.dir}/run.sh"><![CDATA[
+#!/usr/bin/env bash
+DIR="$(cd "$(dirname "$0")" && pwd)"
+java -jar "$DIR/HospitalApp.jar"
+]]></echo>
+        <chmod file="${dist.dir}/run.sh" perm="755"/>
+
+        <!-- Windows script -->
+        <echo file="${dist.dir}/run.bat"><![CDATA[
+@echo off
+java -jar "%~dp0HospitalApp.jar"
+pause
+]]></echo>
     </target>
 
-    <!-- 8. Sprzątanie -->
+    <!-- ===================== 8. Pakowanie ZIP‑a ========================= -->
+    <target name="package" depends="make-scripts">
+        <echo>=== Pakowanie ZIP ===</echo>
+        <zip destfile="${dist.dir}/${ant.project.name}.zip">
+            <fileset dir="${dist.dir}">
+                <include name="HospitalApp.jar"/>
+                <include name="run.sh"/>
+                <include name="run.bat"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <!-- ===================== 9. Test lokalny ============================ -->
+    <target name="run" depends="jar">
+        <echo>=== Uruchamianie aplikacji (fat‑jar) ===</echo>
+        <java jar="${dist.dir}/${ant.project.name}.jar" fork="true"/>
+    </target>
+
+    <!-- ===================== 10. Sprzątanie ============================ -->
     <target name="clean">
-        <echo>=== Czyszczenie build/ i dist/ ===</echo>
+        <echo>=== Czyszczenie build/ + dist/ + reports/ ===</echo>
         <delete dir="${build.dir}"/>
         <delete dir="${test.build.dir}"/>
         <delete dir="${reports.dir}"/>
-        <delete dir="dist"/>
+        <delete dir="${dist.dir}"/>
     </target>
 </project>
