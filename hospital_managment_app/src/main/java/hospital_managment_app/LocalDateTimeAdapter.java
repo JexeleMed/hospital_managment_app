@@ -1,3 +1,4 @@
+// Adapter do serializacji LocalDateTime
 package hospital_managment_app;
 
 import com.google.gson.TypeAdapter;

@@ -1,3 +1,4 @@
+// Klasa odpowiadajaca za interfejs graficzny
 package hospital_managment_app;
 
 import java.io.BufferedReader;
@@ -5,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class InterfejGraficzny {
+    // Deklaracja bufora oraz intancjowanie szpitala
     private static final BufferedReader IN = new BufferedReader(new InputStreamReader(System.in));
     private final Szpital szpital;
     private final PomieszczeniaGUI pomieszczeniaGUI;
@@ -16,6 +18,7 @@ public class InterfejGraficzny {
         this.osobyGUI = new OsobyGUI();
     }
 
+    // Petla menu startowego
     public void start() throws IOException {
         loop:
         while (true) {
@@ -43,6 +46,7 @@ public class InterfejGraficzny {
         }
     }
 
+    // Przypisywanie pacjentow do sal
     private void przypiszPacjentaDoSali() throws IOException {
         try {
             System.out.println("\n=== PRZYPISYWANIE PACJENTA DO SALI ===");
@@ -63,6 +67,7 @@ public class InterfejGraficzny {
         }
     }
 
+    // Przenoszenie pacjentow miedzy salami
     private void przeniesPacjenta() throws IOException {
         try {
             System.out.println("\n=== PRZENOSZENIE PACJENTA ===");
@@ -81,6 +86,7 @@ public class InterfejGraficzny {
         }
     }
 
+    //Usuwanie pacjentow z sal
     private void usunPacjentaZSali() throws IOException {
         try {
             System.out.println("\n=== USUWANIE PACJENTA Z SALI ===");
@@ -91,7 +97,7 @@ public class InterfejGraficzny {
             throw new NumberFormatException("ID musi być liczbą całkowitą!");
         }
     }
-
+    // Wyszukiwanie osob
     private void wyszukajOsobe() throws IOException {
         System.out.println("\n=== WYSZUKIWANIE OSOBY ===");
         System.out.println("1. Wyszukaj po PESEL");
@@ -100,7 +106,7 @@ public class InterfejGraficzny {
 
         System.out.print("Wybór: ");
         String wybor = IN.readLine();
-
+        // Rozne sposoby wyszukiwania osob
         try {
             switch (wybor) {
                 case "1" -> {
@@ -133,6 +139,7 @@ public class InterfejGraficzny {
         }
     }
 
+    // Action MENU bazujace na switch i enum
     private Action menu() throws IOException {
         System.out.println("""
                 \n=== SYSTEM ZARZĄDZANIA SZPITALEM ===

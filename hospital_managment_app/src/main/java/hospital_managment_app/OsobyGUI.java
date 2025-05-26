@@ -1,3 +1,4 @@
+// Klasa panelu zarzadzania pacjentami
 package hospital_managment_app;
 
 import java.io.BufferedReader;
@@ -58,7 +59,7 @@ public class OsobyGUI {
             default -> System.out.println("Nieprawidłowa opcja!");
         }
     }
-
+    // Action MENU bazujace na switch i enum
     private Action menu() throws IOException {
         System.out.println("""
                 \n=== ZARZĄDZANIE OSOBAMI ===

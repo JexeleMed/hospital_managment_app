@@ -1,8 +1,10 @@
+// Klasa abstrakcyjna definiujaca archetyp czlowieka
 package hospital_managment_app;
 import java.time.*;
 
 abstract class Czlowiek {
 
+    /* Pola przechowujace info o czlowieku*/
     protected static int idGlobal;
     protected int idJednostki;
     protected String pesel;
@@ -36,13 +38,14 @@ abstract class Czlowiek {
         this.czyProfilKompletny = true;
 
     }
-
+    /* Zarzada ID*/
     public static void updateIdGlobal(int maxId) {
         idGlobal = maxId;
     }
 
     public Czlowiek(){}
 
+    /* Metoda pomocnicza do wyswietlania profilu */
     protected void wyswietlPodstawoweInfo(){
         System.out.println("Imie: " + this.imie);
         System.out.println("Nazwisko: " + this.nazwisko);
@@ -54,5 +57,6 @@ abstract class Czlowiek {
             System.out.println(("Adres zamieszkania: " + this.adresZamieszkania));
         }
     }
+
     protected abstract void wyswietlProfil();
 }

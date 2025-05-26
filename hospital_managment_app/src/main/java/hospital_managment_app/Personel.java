@@ -1,3 +1,4 @@
+// Klasa abstrakcyjna definiujaca archetyp Personelu, dziedziczy po Czlowiek
 package hospital_managment_app;
 
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ abstract class Personel extends Czlowiek {
     protected Boolean dostepnosc;
     protected List<Para<Para<LocalDateTime, LocalDateTime>, String>> zaplanowaneDyzury = new ArrayList<>();
 
-
+    // Konstruktory
     public Personel(String imie, String nazwisko, String pesel) {
         super(imie, nazwisko, pesel);
     }
@@ -20,6 +21,7 @@ abstract class Personel extends Czlowiek {
         super();
     }
 
+    // Planowanie dyzurow
     protected void zaplanujDyzur(LocalDateTime poczatek, LocalDateTime koniec) {
         Para<LocalDateTime, LocalDateTime> daty = new Para<>(poczatek, koniec);
         Para<Para<LocalDateTime, LocalDateTime>, String> zaplanowanyDyzur = new Para<>(daty, "nie podano");
@@ -51,6 +53,8 @@ abstract class Personel extends Czlowiek {
         zaktualizujDostepnosc();
         return dostepnosc;
     }
+
+    // Sprawdzanie dostepnosci
     protected void wyswietlDostepnosc(){
         System.out.print("Dostępny/a: ");
         if(czyDostepny()){

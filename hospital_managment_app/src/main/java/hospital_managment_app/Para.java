@@ -1,3 +1,4 @@
+// Klasa pomocnicza typu dict/mapa
 package hospital_managment_app;
 
 public class Para<T, U> {

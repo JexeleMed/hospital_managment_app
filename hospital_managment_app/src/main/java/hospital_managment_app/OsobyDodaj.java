@@ -1,3 +1,4 @@
+// Klasa pomocnicza do interfejsu uzytkownika
 package hospital_managment_app;
 
 import java.time.LocalDate;
@@ -39,7 +40,7 @@ public class OsobyDodaj {
         String pesel = sc.nextLine().trim();
 
         System.out.print("Czy chcesz wpisać dodatkowe dane? 1 - tak 2 - nie: ");
-        int wpisac = Integer.parseInt(sc.nextLine().trim());  // wczytujemy CAŁĄ linię, unikając problemu ze znakiem nowej linii
+        int wpisac = Integer.parseInt(sc.nextLine().trim());  // wczytanie calej lini
 
         if (wpisac != 1) {
             // Konstruktor uproszczony (tylko wymagane pola)
@@ -55,11 +56,12 @@ public class OsobyDodaj {
         String grupaKrwi = sc.nextLine().trim();
         if (grupaKrwi.isEmpty()) grupaKrwi = null;
 
+        // Alergie
         System.out.print("Alergie (jeśli kilka rozdziel przecinkami, puste jeśli brak): ");
         String alergie = sc.nextLine().trim();
         if (alergie.isEmpty()) alergie = null;
 
-        // Perskrypcje: nazwa + dawka w mg
+        // Recepty
         List<Para<String, Integer>> perskrypcje = new ArrayList<>();
         System.out.println("Dodawanie perskrypcji – pozostaw nazwę pustą, aby zakończyć:");
         while (true) {
@@ -71,27 +73,27 @@ public class OsobyDodaj {
             int dawka = Integer.parseInt(sc.nextLine().trim());
             perskrypcje.add(new Para<>(lek, dawka));
         }
-
+        // Zywienie
         System.out.print("Preferencje żywieniowe (puste jeśli brak): ");
         String zywienie = sc.nextLine().trim();
         if (zywienie.isEmpty()) zywienie = null;
-
+        // Nr do bliskich
         System.out.print("Numer kontaktowy bliskich (puste jeśli brak): ");
         String numerKontaktowyBliskich = sc.nextLine().trim();
         if (numerKontaktowyBliskich.isEmpty()) numerKontaktowyBliskich = null;
-
+        // Data urodzenia
         System.out.print("Data urodzenia (rrrr-mm-dd) lub puste: ");
         String dataUrStr = sc.nextLine().trim();
         LocalDate dataUrodzenia = dataUrStr.isEmpty() ? null : LocalDate.parse(dataUrStr);
-
+        // Nr telefonu pacjenta
         System.out.print("Numer telefonu (puste jeśli brak): ");
         String numerTelefonu = sc.nextLine().trim();
         if (numerTelefonu.isEmpty()) numerTelefonu = null;
-
+        // Adres email pacjenta
         System.out.print("Adres e‑mail (puste jeśli brak): ");
         String adresEmail = sc.nextLine().trim();
         if (adresEmail.isEmpty()) adresEmail = null;
-
+        // Adres zamieszkania pacjenta
         System.out.print("Adres zamieszkania (puste jeśli brak): ");
         String adresZamieszkania = sc.nextLine().trim();
         if (adresZamieszkania.isEmpty()) adresZamieszkania = null;
@@ -123,6 +125,7 @@ public class OsobyDodaj {
         System.out.print("Numer licencji lekarskiej: ");
         String numerLicencji = sc.nextLine().trim();
 
+        // Zapytanie o chec wprowadzenia dodatkowych informacji
         System.out.print("Czy chcesz wpisać dodatkowe dane? 1 - tak 2 - nie: ");
         int wpisac = Integer.parseInt(sc.nextLine().trim());
 
@@ -186,8 +189,10 @@ public class OsobyDodaj {
         System.out.print("Czy pielęgniarka może podawać leki? 1-tak / 0-nie: ");
         Boolean czyMozePodawacLeki = Integer.parseInt(sc.nextLine().trim()) == 1;
 
+        // Zapytanie o chec wprowadzenia dodatkowych informacji
         System.out.print("Czy chcesz wpisać dodatkowe dane kontaktowe? 1-tak / 2-nie: ");
         int wpisac = Integer.parseInt(sc.nextLine().trim());
+
 
         /* --- tylko wymagane pola --- */
         if (wpisac != 1) {

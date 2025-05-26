@@ -1,3 +1,4 @@
+// Klasa glowna - inicjuje cala aplikacje
 package hospital_managment_app;
 
 import java.io.IOException;

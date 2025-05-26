@@ -3,6 +3,7 @@ package hospital_managment_app;
 import java.time.LocalDate;
 
 public class Lekarz extends Personel {
+    /* Pola przechowujace info o Lekarzu*/
     protected String specjalizacja;
     protected String numerLicencjiLekarskiej;
 
@@ -22,7 +23,7 @@ public class Lekarz extends Personel {
     }
 
 
-
+    /* Wyswietlanie profilu*/
     @Override
     protected void wyswietlProfil() {
         System.out.println("Profil lekarza: ");

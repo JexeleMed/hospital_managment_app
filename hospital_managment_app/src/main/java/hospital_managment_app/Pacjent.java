@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 public class Pacjent extends Czlowiek {
 
+    /* */
     protected List<Para<String, LocalDate>> historiaChoroby = new ArrayList<>();
     protected String grupaKrwi;
     protected List<String> alergie = new ArrayList<>();
@@ -41,7 +42,7 @@ public class Pacjent extends Czlowiek {
 
     public Pacjent(){}
 
-    //ustawianie priorytetu pacjenta
+    // Ustawianie priorytetu pacjenta
     protected void ustawPriorytet(int priorytet) {
         if (priorytet < 1 || priorytet > 10) {
             throw new IllegalArgumentException("Priorytet musi być między 1 a 10");
@@ -73,6 +74,7 @@ public class Pacjent extends Czlowiek {
         this.rachunek.add(new Para<>(usluga, cena));
     }
 
+    // Obliczanie kosztu
     protected double obliczKoszt(){
         double koszt = 0;
         for(Para<String, Double> p :rachunek){

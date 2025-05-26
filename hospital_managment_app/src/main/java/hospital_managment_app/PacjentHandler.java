@@ -1,3 +1,4 @@
+/* Klasa serializujaca obiekty klasy Pacjent do plikow json */
 package hospital_managment_app;
 
 import com.google.gson.Gson;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class PacjentHandler implements HandlerCsv<Pacjent> {
 
+    // Definicja scierzek
     private static final String DATA_DIR = "data/";
     private static final String FILE_NAME = DATA_DIR + "pacjenci.json";
     private static PacjentHandler instance;
@@ -19,6 +21,7 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
     private final Gson gson;
     private final Type listType = new TypeToken<List<Pacjent>>(){}.getType();
 
+    // Uzyto autorskich adapterow
     private PacjentHandler() {
         ensureDataDirExists();
         gson = new GsonBuilder()
@@ -28,6 +31,7 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
         ensureFileExists();
     }
 
+    // Sprawdzanie czy istnieje dir
     private void ensureDataDirExists() {
         File dir = new File(DATA_DIR);
         if (!dir.exists()) {
@@ -42,6 +46,7 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
         return instance;
     }
 
+    // Sprawdzanie czy istnieje plik do zapisu
     private void ensureFileExists() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {
@@ -52,7 +57,7 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
             }
         }
     }
-
+    // Ladowanie z pliku
     @Override
     public List<Pacjent> loadAll() {
         try (Reader r = new FileReader(FILE_NAME)) {
@@ -64,6 +69,7 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
         }
     }
 
+    //Zapis do pliku
     @Override
     public void saveAll(List<Pacjent> pacjenci) throws IOException {
         try (Writer w = new FileWriter(FILE_NAME)) {
