@@ -5,11 +5,9 @@ import java.util.Map;
 import java.util.*;
 
 public class Poczekalnia extends Pomieszczenie {
-    protected Duration czasOczekiwania;
 
     public Poczekalnia(int numer, int pietro, int pojemnoscSali) {
         super(numer, pietro, pojemnoscSali);
-        this.czasOczekiwania = Duration.ZERO;
     }
 
     @Override
@@ -61,6 +59,5 @@ public class Poczekalnia extends Pomieszczenie {
     @Override
     protected void generujRaport(Map<Integer, Pacjent> pacjentMap) {
         super.generujRaport(pacjentMap);
-        System.out.println("Czas oczekiwania: " + czasOczekiwania);
     }
 }
