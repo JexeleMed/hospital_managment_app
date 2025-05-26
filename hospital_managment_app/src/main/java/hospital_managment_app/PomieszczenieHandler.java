@@ -1,74 +1,61 @@
 package hospital_managment_app;
-import java.io.*;
-import java.util.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.io.IOException;
-import java.util.List;
-import com.google.gson.*;
-import java.lang.reflect.Type;
 
-public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie>{
-    private static final String FILE_NAME = "PomieszczenieBaza.csv";
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
+
+    private static final String FILE_NAME = "pomieszczenia.json";
     private static PomieszczenieHandler instance;
 
-    private PomieszczenieHandler() {
-        createFileIfNotExists();
-    }
+    /* ---------- konfiguracja GSON ---------- */
+    private final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieSerializer())
+            .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieDeserializer())
+            .setPrettyPrinting()
+            .create();
 
-    private void createFileIfNotExists() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) {
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write("json\n");
-            } catch (IOException e) {
-                System.err.println("Error creating file: " + e.getMessage());
-            }
-        }
-    }
+    private final Type listType = new TypeToken<List<Pomieszczenie>>(){}.getType();
 
-    public static PomieszczenieHandler getInstance() {
-        if (instance == null) {
+    /* --------------- singleton ------------- */
+    private PomieszczenieHandler() { ensureFileExists(); }
+
+    public static synchronized PomieszczenieHandler getInstance() {
+        if (instance == null)
             instance = new PomieszczenieHandler();
-        }
         return instance;
     }
 
+    /* --- utworzenie pustego pliku ([ ]) przy pierwszym uruchomieniu --- */
+    private void ensureFileExists() {
+        File f = new File(FILE_NAME);
+        if (!f.exists()) {
+            try (Writer w = new FileWriter(f)) { w.write("[]"); }
+            catch (IOException e) { System.err.println("Nie mogę utworzyć " + FILE_NAME + ": " + e.getMessage()); }
+        }
+    }
+
+    /* -------------------- API -------------------- */
     @Override
     public List<Pomieszczenie> loadAll() {
-        List<Pomieszczenie> lista = new ArrayList<>();
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieDeserializer())
-                .create();
-
-        try(BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line = br.readLine();
-            while((line = br.readLine()) != null) {
-                String json = line.replace("\"\"", "\"");
-                Pomieszczenie p = gson.fromJson(json, Pomieszczenie.class);
-                lista.add(p);
-            }
-        } catch (IOException e){
-            e.printStackTrace();
+        try (Reader r = new FileReader(FILE_NAME)) {
+            List<Pomieszczenie> list = gson.fromJson(r, listType);
+            return list != null ? list : new ArrayList<>();
+        } catch (IOException e) {
+            System.err.println("Błąd odczytu " + FILE_NAME + ": " + e.getMessage());
+            return new ArrayList<>();
         }
-
-        return lista;
     }
+
     @Override
     public void saveAll(List<Pomieszczenie> pomieszczenia) throws IOException {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieSerializer())
-                .setPrettyPrinting()
-                .create();
-
-        try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            writer.write("json\n");
-            for (Pomieszczenie p : pomieszczenia) {
-                String json = gson.toJson(p);
-                writer.write(json.replace("\"", "\"\"") + "\n");
-            }
+        try (Writer w = new FileWriter(FILE_NAME)) {
+            gson.toJson(pomieszczenia, listType, w);
         }
     }
 }

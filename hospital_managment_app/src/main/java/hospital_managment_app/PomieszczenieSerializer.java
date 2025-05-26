@@ -1,18 +1,19 @@
 package hospital_managment_app;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializer;
-import com.google.gson.JsonSerializationContext;
+import com.google.gson.*;
+
 import java.lang.reflect.Type;
-import hospital_managment_app.Pomieszczenie;
 
 public class PomieszczenieSerializer implements JsonSerializer<Pomieszczenie> {
+
     @Override
-    public JsonElement serialize(Pomieszczenie src, Type typeOfSrc, JsonSerializationContext context) {
-        JsonElement element = context.serialize(src);
-        JsonObject object = element.getAsJsonObject();
-        object.addProperty("type", src.getClass().getSimpleName());
-        return object;
+    public JsonElement serialize(Pomieszczenie src,
+                                 Type typeOfSrc,
+                                 JsonSerializationContext context) {
+
+        JsonObject obj = context.serialize(src).getAsJsonObject();
+        // Pole identyfikujące konkretne pod-klasy
+        obj.addProperty("typPomieszczenia", src.getClass().getSimpleName());
+        return obj;
     }
 }
