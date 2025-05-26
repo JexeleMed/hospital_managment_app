@@ -1,7 +1,7 @@
 package hospital_managment_app;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Oddzial {
     protected int idOddzialu;

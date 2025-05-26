@@ -1,7 +1,8 @@
 package hospital_managment_app;
 
-import java.util.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pacjent extends Czlowiek {
 

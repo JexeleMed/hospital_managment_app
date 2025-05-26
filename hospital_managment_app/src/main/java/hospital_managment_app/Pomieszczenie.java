@@ -1,6 +1,8 @@
 package hospital_managment_app;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 abstract class Pomieszczenie {
     protected static int idGlobalPomieszczenia;

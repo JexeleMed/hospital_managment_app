@@ -1,11 +1,15 @@
 package hospital_managment_app;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 // Klasa odpowiedzialna za zarządzanie przypisaniami pacjentów do pomieszczeń
 public class PrzypisaniePacjentowHandler {

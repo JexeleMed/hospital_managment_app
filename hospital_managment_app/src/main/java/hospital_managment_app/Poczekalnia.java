@@ -1,7 +1,5 @@
 package hospital_managment_app;
 
-import java.time.Duration;
-import java.util.Map;
 import java.util.*;
 
 public class Poczekalnia extends Pomieszczenie {

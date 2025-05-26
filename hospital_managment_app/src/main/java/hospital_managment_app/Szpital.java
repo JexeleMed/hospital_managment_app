@@ -1,9 +1,8 @@
 package hospital_managment_app;
 
-import java.util.*;
-import java.io.*;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Szpital {
     private static Szpital instance;

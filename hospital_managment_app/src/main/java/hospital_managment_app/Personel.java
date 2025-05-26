@@ -3,7 +3,8 @@ package hospital_managment_app;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 abstract class Personel extends Czlowiek {
     protected Boolean dostepnosc;

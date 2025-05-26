@@ -1,6 +1,6 @@
 package hospital_managment_app;
-import java.util.*;
-import java.util.Scanner;
+
+import java.util.Map;
 
 public class SalaZabiegowa extends Pomieszczenie{
     protected String opisOperacji;

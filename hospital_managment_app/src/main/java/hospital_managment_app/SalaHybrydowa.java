@@ -1,6 +1,5 @@
 package hospital_managment_app;
 
-import java.time.LocalDate;
 import java.util.Map;
 
 public class SalaHybrydowa extends Pomieszczenie{

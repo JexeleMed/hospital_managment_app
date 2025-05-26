@@ -1,6 +1,7 @@
 // Klasa abstrakcyjna definiujaca archetyp czlowieka
 package hospital_managment_app;
-import java.time.*;
+
+import java.time.LocalDate;
 
 abstract class Czlowiek {
 

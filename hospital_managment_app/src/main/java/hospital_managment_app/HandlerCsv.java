@@ -1,7 +1,7 @@
 // Kontakr dla Handlerow operujacych na plikach JSON
 package hospital_managment_app;
-import java.io.IOException;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface HandlerCsv<T> {
