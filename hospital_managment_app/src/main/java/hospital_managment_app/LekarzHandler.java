@@ -15,9 +15,22 @@ import java.util.List;
 
 public class LekarzHandler implements HandlerCsv<Lekarz> {
     private static LekarzHandler instance;
-    private static final String FILE_NAME = "PielegniarkiBaza.csv";
+    private static final String FILE_NAME = "LekarzeBaza.csv";
 
-    private LekarzHandler() {}
+    private LekarzHandler() {
+        createFileIfNotExists();
+    }
+
+    private void createFileIfNotExists() {
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write("json\n");
+            } catch (IOException e) {
+                System.err.println("Error creating file: " + e.getMessage());
+            }
+        }
+    }
 
     public static LekarzHandler getInstance() { // Fix: Change return type
         if (instance == null) {
