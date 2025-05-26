@@ -13,7 +13,20 @@ public class PielegniarkaHandler implements HandlerCsv<Pielegniarka>{
     private static PielegniarkaHandler instance;
     private static final String FILE_NAME = "PielegniarkiBaza.csv";
 
-    private PielegniarkaHandler() {}
+    private PielegniarkaHandler() {
+        createFileIfNotExists();
+    }
+
+    private void createFileIfNotExists() {
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write("json\n");
+            } catch (IOException e) {
+                System.err.println("Error creating file: " + e.getMessage());
+            }
+        }
+    }
 
     public static PielegniarkaHandler getInstance() {
         if (instance == null) {

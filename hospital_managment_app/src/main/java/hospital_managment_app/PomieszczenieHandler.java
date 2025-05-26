@@ -14,7 +14,20 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie>{
     private static final String FILE_NAME = "PomieszczenieBaza.csv";
     private static PomieszczenieHandler instance;
 
-    private PomieszczenieHandler() {}
+    private PomieszczenieHandler() {
+        createFileIfNotExists();
+    }
+
+    private void createFileIfNotExists() {
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write("json\n");
+            } catch (IOException e) {
+                System.err.println("Error creating file: " + e.getMessage());
+            }
+        }
+    }
 
     public static PomieszczenieHandler getInstance() {
         if (instance == null) {
