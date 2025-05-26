@@ -80,7 +80,7 @@ public class Szpital {
 
     protected void usunZSali(int idPacjenta) {
         boolean znaleziono = false;
-        WypisyHandler wypisyHandler = WypisyHandler.getInstance();
+        WypisHandler wypisyHandler = WypisHandler.getInstance();
 
         for (Pomieszczenie p : listaPomieszczen) {
             if (p.pacjenci.contains(idPacjenta)) {

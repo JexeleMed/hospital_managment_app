@@ -23,12 +23,6 @@ public class SalaHybrydowa extends Pomieszczenie{
         }
     }
 
-    //metoda do wypisania pacjenta z sali hybrydowej
-    protected void dodajWypis(String id){
-        oddzial.dodajWypis(id, LocalDate.now());
-        System.out.println("Wypisano pacjenta o id: " + id + "w dniu: " + LocalDate.now());
-
-    }
 
     // Metoda do wyświetlania szczegółowego opisu sali hybrydowej podczas generowania raportu
     @Override
