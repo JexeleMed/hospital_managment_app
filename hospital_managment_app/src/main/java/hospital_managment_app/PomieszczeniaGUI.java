@@ -10,10 +10,12 @@ public class PomieszczeniaGUI {
     private static final BufferedReader IN = new BufferedReader(new InputStreamReader(System.in));
     private final Szpital szpital;
 
+    // Konstruktor klasy PomieszczeniaGUI
     public PomieszczeniaGUI() {
         this.szpital = Szpital.getInstance();
     }
 
+    // wyswietl menu i obsłuż wybór użytkownika
     public void start() throws IOException {
         loop:
         while (true) {
@@ -38,6 +40,7 @@ public class PomieszczeniaGUI {
         }
     }
 
+    // wyświetl wszystkie pomieszczenia w szpitalu
     private void pokazWszystkiePomieszczenia() {
         System.out.println("\n=== LISTA POMIESZCZEŃ ===");
         for (Pomieszczenie p : szpital.listaPomieszczen) {
@@ -48,6 +51,7 @@ public class PomieszczeniaGUI {
         }
     }
 
+    // dodaj nowe pomieszczenie do szpitala
     private void dodajPomieszczenie() throws IOException {
         System.out.println("\n=== DODAWANIE POMIESZCZENIA ===");
         System.out.println("Wybierz typ pomieszczenia:");
@@ -91,6 +95,7 @@ public class PomieszczeniaGUI {
         }
     }
 
+    // usuń pomieszczenie z szpitala
     private void usunPomieszczenie() throws IOException {
         System.out.print("Podaj numer sali: ");
         int numer = Integer.parseInt(IN.readLine());
@@ -101,6 +106,7 @@ public class PomieszczeniaGUI {
         szpital.usunPomieszczenie(numer, pietro);
     }
 
+    // generuj raport dla wszystkich pomieszczeń w szpitalu
     private void generujRaport() {
         System.out.println("\n=== RAPORT POMIESZCZEŃ ===");
         Map<Integer, Pacjent> pacjentMap = szpital.listaPacjentow.stream()
@@ -119,6 +125,7 @@ public class PomieszczeniaGUI {
         }
     }
 
+    // wyświetl menu i obsłuż wybór użytkownika
     private Action menu() throws IOException {
         System.out.println("""
                 \n=== ZARZĄDZANIE POMIESZCZENIAMI ===
@@ -143,6 +150,7 @@ public class PomieszczeniaGUI {
         };
     }
 
+    // Enum do obsługi akcji w menu
     private enum Action {
         LIST, ADD, DELETE, REPORT, EXIT
     }

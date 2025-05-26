@@ -6,10 +6,12 @@ import java.util.*;
 
 public class Poczekalnia extends Pomieszczenie {
 
+    // konstruktor klasy Poczekalnia
     public Poczekalnia(int numer, int pietro, int pojemnoscSali) {
         super(numer, pietro, pojemnoscSali);
     }
 
+    // przypisz pacjenta do poczekalni
     @Override
     protected void przypiszPacjenta(Pacjent pacjent) {
         if (czyWolne()) {
@@ -26,6 +28,7 @@ public class Poczekalnia extends Pomieszczenie {
         }
     }
 
+    // wyswietl pacjentów w poczekalni wraz z ich priorytetami
     protected void wyswietlPacjentowPoczekalni(Map<Integer, Pacjent> pacjentMap, PrzypisaniePacjentowHandler przypisanieHandler) {
         System.out.println("Lista pacjentów w poczekalni (sortowana po priorytecie rosnąco):");
 
@@ -56,6 +59,7 @@ public class Poczekalnia extends Pomieszczenie {
         }
     }
 
+    // generuj raport o pacjentach w poczekalni
     @Override
     protected void generujRaport(Map<Integer, Pacjent> pacjentMap) {
         super.generujRaport(pacjentMap);

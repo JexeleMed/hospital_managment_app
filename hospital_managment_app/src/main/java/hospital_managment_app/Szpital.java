@@ -37,6 +37,7 @@ public class Szpital {
         loadAllData();
     }
 
+    // Singleton pattern to ensure only one instance of Szpital
     public static Szpital getInstance() {
         if (instance == null) {
             instance = new Szpital();
@@ -44,6 +45,7 @@ public class Szpital {
         return instance;
     }
 
+    // Metoda do przenoszenia pacjenta z jednej sali do drugiej
     protected void przeniesDoSali(int idPacjenta, int idPomieszczeniaZrodlowego, int idPomieszczeniaDocelowego) {
         Pomieszczenie salaZrodlowa = null;
         Pomieszczenie salaDocelowa = null;
@@ -103,6 +105,7 @@ public class Szpital {
                 " do sali ID " + idPomieszczeniaDocelowego);
     }
 
+    // Metoda do usuwania pacjenta z sali i dodawania go do wypisów
     protected void usunZSali(int idPacjenta) {
         boolean znaleziono = false;
         WypisHandler wypisyHandler = WypisHandler.getInstance();
@@ -138,6 +141,7 @@ public class Szpital {
         }
     }
 
+    // Metoda do przypisywania pacjenta do konkretnej sali
     protected void przypiszPacjenta(Pacjent pacjent, int idPomieszczenia) {
         // Sprawdź czy pacjent jest już przypisany do jakiejś sali
         int obecnaSala = przypisanieHandler.getPokojPacjenta(pacjent.idJednostki);
@@ -146,7 +150,7 @@ public class Szpital {
                     " jest już przypisany do sali o ID: " + obecnaSala);
             return;
         }
-
+        // Sprawdź czy podane ID pomieszczenia istnieje
         for (Pomieszczenie p : listaPomieszczen) {
             if (p.idPomieszczenia == idPomieszczenia) {
                 if (p.czyWolne()) {
@@ -188,6 +192,8 @@ public class Szpital {
             }
         }
     }
+
+    // Pokazywanie osob
     protected void pokazOsobe(String imie, String nazwisko){
         System.out.println("Pacjenci o tym imieniu i nazwisku: ");
         for(Pacjent p : listaPacjentow){
@@ -211,6 +217,8 @@ public class Szpital {
             }
         }
     }
+
+    // Pokazywanie osob po id
     protected void pokazOsobe(int id){
         System.out.println("Pacjenci o tym id: ");
         for(Pacjent p : listaPacjentow){
@@ -300,6 +308,7 @@ public class Szpital {
         }
     }
 
+    // Ładowanie wszystkich danych z plików
     protected void loadAllData() {
         this.listaPacjentow = pacjentHandler.loadAll();
         this.listaLekarzy = lekarzHandler.loadAll();

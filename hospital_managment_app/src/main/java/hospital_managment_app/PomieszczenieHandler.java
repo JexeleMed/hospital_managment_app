@@ -8,25 +8,30 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+// Klasa odpowiedzialna za obsługę zapisu i odczytu danych pomieszczeń
 public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
 
     private static final String DATA_DIR = "data/";
     private static final String FILE_NAME = DATA_DIR + "pomieszczenia.json";
     private static PomieszczenieHandler instance;
 
+    // Narzędzie do konwersji danych (JSON)
     private final Gson gson = new GsonBuilder()
             .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieSerializer())
             .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieDeserializer())
             .setPrettyPrinting()
             .create();
 
+    // Typ danych dla listy obiektów
     private final Type listType = new TypeToken<List<Pomieszczenie>>(){}.getType();
 
+    // Konstruktor – tworzy katalog i plik, jeśli nie istnieją
     private PomieszczenieHandler() {
         ensureDataDirExists();
         ensureFileExists();
     }
 
+    // Sprawdza i tworzy katalog na dane
     private void ensureDataDirExists() {
         File dir = new File(DATA_DIR);
         if (!dir.exists()) {
@@ -34,12 +39,14 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
         }
     }
 
+    // Zwraca jedyną instancję tej klasy (Singleton)
     public static synchronized PomieszczenieHandler getInstance() {
         if (instance == null)
             instance = new PomieszczenieHandler();
         return instance;
     }
 
+    // Sprawdza i tworzy plik z danymi, jeśli nie istnieje
     private void ensureFileExists() {
         File f = new File(FILE_NAME);
         if (!f.exists()) {
@@ -48,6 +55,7 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
         }
     }
 
+    // Wczytuje dane z pliku
     @Override
     public List<Pomieszczenie> loadAll() {
         try (Reader r = new FileReader(FILE_NAME)) {
@@ -59,6 +67,7 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
         }
     }
 
+    // Zapisuje dane do pliku
     @Override
     public void saveAll(List<Pomieszczenie> pomieszczenia) throws IOException {
         try (Writer w = new FileWriter(FILE_NAME)) {

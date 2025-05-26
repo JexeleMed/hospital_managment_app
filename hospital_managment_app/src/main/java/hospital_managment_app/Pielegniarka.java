@@ -13,6 +13,7 @@ public class Pielegniarka extends Personel {
         super();
     }
 
+    // Konstruktor z podstawowymi danymi
     public Pielegniarka(String imie, String nazwisko, String pesel, String zakresObowiazkow, String numerLicencji, String kwalifikacjeDodatkowe, int szczebelWHierachi, Boolean czyMozePodawacLeki) {
         super(imie, nazwisko, pesel);
         this.zakresObowiazkow = zakresObowiazkow;
@@ -25,6 +26,7 @@ public class Pielegniarka extends Personel {
 
     }
 
+    // Konstruktor z pełnymi danymi
     public Pielegniarka(String imie, String nazwisko, String pesel, LocalDate dataUrodzenia, String numerTelefonu, String adresEmail, String adresZamieszkania,
                         String zakresObowiazkow, String numerLicencji, String kwalifikacjeDodatkowe, int szczebelWHierachi, Boolean czyMozePodawacLeki) {
         super(imie, nazwisko, pesel, dataUrodzenia, numerTelefonu, adresEmail, adresZamieszkania);
@@ -35,6 +37,7 @@ public class Pielegniarka extends Personel {
         this.czyMozePodawacLeki = czyMozePodawacLeki;
     }
 
+    // Metoda do przypisywania pacjenta do pielęgniarki
     @Override
     protected void wyswietlProfil() {
         System.out.println("Profil pielegniarki: ");
@@ -47,6 +50,7 @@ public class Pielegniarka extends Personel {
         this.wyswietlDostepnosc();
     }
 
+    // Metoda do wyświetlania szczegółowych informacji o pielęgniarce
     protected boolean czyMozePodawacLeki(){
         return czyMozePodawacLeki;
     }

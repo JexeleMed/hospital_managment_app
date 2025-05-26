@@ -6,11 +6,12 @@ import java.lang.reflect.Type;
 
 public class PomieszczenieDeserializer implements JsonDeserializer<Pomieszczenie> {
 
+    // Deserializuje obiekt Pomieszczenie z formatu JSON
     @Override
     public Pomieszczenie deserialize(JsonElement json,
                                      Type typeOfT,
                                      JsonDeserializationContext ctx) throws JsonParseException {
-
+        // Sprawdzenie, czy przekazany element jest obiektem JSON
         JsonObject jo   = json.getAsJsonObject();
         String  typ     = jo.get("typPomieszczenia").getAsString();
         int     numer   = jo.get("numer").getAsInt();
@@ -19,6 +20,7 @@ public class PomieszczenieDeserializer implements JsonDeserializer<Pomieszczenie
 
         Pomieszczenie pom;
 
+        // Wybór odpowiedniego typu pomieszczenia na podstawie pola "typPomieszczenia"
         switch (typ) {
             case "Poczekalnia" -> pom = new Poczekalnia(numer, pietro, pojSala);
 
