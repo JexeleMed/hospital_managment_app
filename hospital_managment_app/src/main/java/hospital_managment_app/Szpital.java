@@ -155,14 +155,11 @@ public class Szpital {
         przypisanieHandler = PrzypisaniePacjentowHandler.getInstance();
 
         // wczytywanie danych z plikow
-        try {
             listaPacjentow = pacjentHandler.loadAll();
             listaLekarzy = lekarzHandler.loadAll();
             listaPielegniarek = pielegniarkaHandler.loadAll();
             listaPomieszczen = pomieszczenieHandler.loadAll();
-        } catch (IOException e) {
-            System.err.println("Error loading data: " + e.getMessage());
-        }
+
     }
 
     // Szukanie osob
@@ -299,5 +296,18 @@ public class Szpital {
         } catch (IOException e) {
             System.err.println("Error saving data: " + e.getMessage());
         }
+    }
+
+    protected void loadAllData() {
+//        try {
+            this.listaPacjentow = pacjentHandler.loadAll();
+            this.listaLekarzy = lekarzHandler.loadAll();
+            this.listaPielegniarek = pielegniarkaHandler.loadAll();
+//            this.listaPomieszczen = pomieszczenieHandler.loadAll();
+//        } catch (IOException e) {
+//            System.err.println("Error saving data: " + e.getMessage());
+//        }
+
+
     }
 }

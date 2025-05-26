@@ -9,9 +9,7 @@ public class Para<T, U> {
         this.wartosc = wartosc;
         }
 
-    Para() {
-        throw new UnsupportedOperationException("Niepoprawnie zapisany rachunek");
-    }
+    Para() {}
     @Override
     public String toString() {
         return this.nazwa + ": " + this.wartosc;

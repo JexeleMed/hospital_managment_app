@@ -39,9 +39,7 @@ public class Pacjent extends Czlowiek {
         super(imie, nazwisko, pesel);
     }
 
-    public Pacjent(){
-        super();
-    }
+    public Pacjent(){}
 
     //ustawianie priorytetu pacjenta
     protected void ustawPriorytet(int priorytet) {

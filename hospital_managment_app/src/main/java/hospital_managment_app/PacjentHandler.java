@@ -2,79 +2,68 @@ package hospital_managment_app;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.*;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PacjentHandler implements HandlerCsv<Pacjent> {
+
+    private static final String FILE_NAME = "pacjenci.json";
     private static PacjentHandler instance;
-    private static final String FILE_NAME = "PacjenciBaza.csv";
 
-    private PacjentHandler() {
-        createFileIfNotExists();
+    private final Gson gson;
+    private final Type listType = new TypeToken<List<Pacjent>>(){}.getType();
+
+    public PacjentHandler() {
+        gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .setPrettyPrinting()
+                .create();
+        ensureFileExists();
     }
 
-    private void createFileIfNotExists() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) {
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write("json\n");
-            } catch (IOException e) {
-                System.err.println("Error creating file: " + e.getMessage());
-            }
-        }
-    }
-
-    public static PacjentHandler getInstance() {
+    /** Singleton */
+    public static synchronized PacjentHandler getInstance() {
         if (instance == null) {
             instance = new PacjentHandler();
         }
         return instance;
     }
 
-    @Override
-    public List<Pacjent> loadAll() {
-        List<Pacjent> lista = new ArrayList<>();
+    /** Tworzy plik z pustą tablicą, jeśli go brak */
+    private void ensureFileExists() {
         File file = new File(FILE_NAME);
-
         if (!file.exists()) {
-            return lista;
-        }
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                .create();
-
-        try(BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line = br.readLine(); // skip header
-            while((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    String json = line.replace("\"\"", "\"");
-                    Pacjent p = gson.fromJson(json, Pacjent.class);
-                    lista.add(p);
-                }
+            try (Writer w = new FileWriter(file)) {
+                w.write("[]");
+            } catch (IOException e) {
+                System.err.println("Nie mogę utworzyć pliku " + FILE_NAME + ": " + e.getMessage());
             }
-        } catch (IOException e){
-            System.err.println("Error loading patients: " + e.getMessage());
         }
-
-        return lista;
     }
 
+    /** Wczytuje wszystkich pacjentów z pliku */
+    @Override
+    public List<Pacjent> loadAll() {
+        try (Reader r = new FileReader(FILE_NAME)) {
+            List<Pacjent> pacjenci = gson.fromJson(r, listType);
+            // gson zwraca null, gdy w pliku jest "null"
+            return pacjenci != null ? pacjenci : new ArrayList<>();
+        } catch (IOException e) {
+            System.err.println("Błąd odczytu " + FILE_NAME + ": " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    /** Zapisuje listę pacjentów do pliku */
     @Override
     public void saveAll(List<Pacjent> pacjenci) throws IOException {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                .setPrettyPrinting()
-                .create();
-
-        try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            writer.write("json\n");
-            for (Pacjent p : pacjenci) {
-                String json = gson.toJson(p);
-                writer.write(json.replace("\"", "\"\"") + "\n");
-            }
+        try (Writer w = new FileWriter(FILE_NAME)) {
+            gson.toJson(pacjenci, listType, w);
         }
     }
 }

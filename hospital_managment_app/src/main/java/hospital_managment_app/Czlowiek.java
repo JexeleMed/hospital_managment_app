@@ -37,9 +37,7 @@ abstract class Czlowiek {
 
     }
 
-    public Czlowiek(){
-        throw new UnsupportedOperationException("Brak danych");
-    }
+    public Czlowiek(){}
 
     protected void wyswietlPodstawoweInfo(){
         System.out.println("Imie: " + this.imie);

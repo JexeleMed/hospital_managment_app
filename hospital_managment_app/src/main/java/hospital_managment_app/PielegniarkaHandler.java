@@ -2,70 +2,68 @@ package hospital_managment_app;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PielegniarkaHandler implements HandlerCsv<Pielegniarka>{
+public class PielegniarkaHandler implements HandlerCsv<Pielegniarka> {
 
+    private static final String FILE_NAME = "pielegniarki.json";
     private static PielegniarkaHandler instance;
-    private static final String FILE_NAME = "PielegniarkiBaza.csv";
 
-    private PielegniarkaHandler() {
-        createFileIfNotExists();
+    private final Gson gson;
+    private final Type listType = new TypeToken<List<Pielegniarka>>(){}.getType();
+
+    /* ------------  Singleton  ------------ */
+    public PielegniarkaHandler() {
+        gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class,     new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .setPrettyPrinting()
+                .create();
+        ensureFileExists();
     }
 
-    private void createFileIfNotExists() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) {
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write("json\n");
-            } catch (IOException e) {
-                System.err.println("Error creating file: " + e.getMessage());
-            }
-        }
-    }
-
-    public static PielegniarkaHandler getInstance() {
+    public static synchronized PielegniarkaHandler getInstance() {
         if (instance == null) {
             instance = new PielegniarkaHandler();
         }
         return instance;
     }
 
+    /* ------------  Plik  ------------ */
+    private void ensureFileExists() {
+        File f = new File(FILE_NAME);
+        if (!f.exists()) {
+            try (Writer w = new FileWriter(f)) {
+                w.write("[]");               // pusta tablica JSON
+            } catch (IOException e) {
+                System.err.println("Nie mogę utworzyć " + FILE_NAME + ": " + e.getMessage());
+            }
+        }
+    }
+
+    /* ------------  API  ------------ */
     @Override
     public List<Pielegniarka> loadAll() {
-        List<Pielegniarka> lista = new ArrayList<>();
-        Gson gson = new Gson();
-
-        try(BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line = br.readLine();
-            while((line = br.readLine()) != null) {
-                String json = line.replace("\"\"", "\"");
-                Pielegniarka p = gson.fromJson(json, Pielegniarka.class);
-                lista.add(p);
-            }
-        } catch (IOException e){
-            e.printStackTrace();
+        try (Reader r = new FileReader(FILE_NAME)) {
+            List<Pielegniarka> list = gson.fromJson(r, listType);
+            return list != null ? list : new ArrayList<>();
+        } catch (IOException e) {
+            System.err.println("Błąd odczytu " + FILE_NAME + ": " + e.getMessage());
+            return new ArrayList<>();
         }
-
-        return lista;
     }
+
     @Override
     public void saveAll(List<Pielegniarka> pielegniarki) throws IOException {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                .setPrettyPrinting()
-                .create();
-
-        try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            writer.write("json\n");
-            for (Pielegniarka p : pielegniarki) {
-                String json = gson.toJson(p);
-                writer.write(json.replace("\"", "\"\"") + "\n");
-            }
+        try (Writer w = new FileWriter(FILE_NAME)) {
+            gson.toJson(pielegniarki, listType, w);
         }
     }
 }

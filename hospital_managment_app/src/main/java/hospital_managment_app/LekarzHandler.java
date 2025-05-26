@@ -1,74 +1,68 @@
 package hospital_managment_app;
 
-import java.io.IOException;
-import java.lang.reflect.GenericSignatureFormatError;
-
-import java.io.*;
-import java.util.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.io.IOException;
-import java.util.List;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.*;
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalDateTime;
 
 public class LekarzHandler implements HandlerCsv<Lekarz> {
+
+    private static final String FILE_NAME = "lekarze.json";
     private static LekarzHandler instance;
-    private static final String FILE_NAME = "LekarzeBaza.csv";
 
-    private LekarzHandler() {
-        createFileIfNotExists();
+    private final Gson gson;
+    private final Type listType = new TypeToken<List<Lekarz>>(){}.getType();
+
+    /** =====================  Singleton  ===================== */
+    public LekarzHandler() {
+        gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class,     new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+                .setPrettyPrinting()
+                .create();
     }
 
-    private void createFileIfNotExists() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) {
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write("json\n");
-            } catch (IOException e) {
-                System.err.println("Error creating file: " + e.getMessage());
-            }
-        }
-    }
-
-    public static LekarzHandler getInstance() { // Fix: Change return type
+    public static synchronized LekarzHandler getInstance() {
         if (instance == null) {
             instance = new LekarzHandler();
         }
         return instance;
     }
 
-    @Override
-    public List<Lekarz> loadAll() throws IOException {
-        List<Lekarz> lekarze = new ArrayList<>();
-        Gson gson = new Gson();
-        try(BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line = br.readLine();
-            while ((line = br.readLine()) != null) {
-                String json = line.replace("\'", "\'\'");
-                Lekarz l = gson.fromJson(json, Lekarz.class);
-                lekarze.add(l);
+    /** ==================  Pomocnicze metody  ================= */
+    private void ensureFileExists() {
+        File f = new File(FILE_NAME);
+        if (!f.exists()) {
+            try (Writer w = new FileWriter(f)) {
+                w.write("[]");                // pusta tablica JSON
+            } catch (IOException e) {
+                System.err.println("Nie mogę utworzyć " + FILE_NAME + ": " + e.getMessage());
             }
-        } catch (IOException e) {
-            throw new IOException("Error loading lekarze data", e);
         }
-        return lekarze;
+    }
+
+    /** =====================  API publiczne  ================== */
+    @Override
+    public List<Lekarz> loadAll() {
+        try (Reader r = new FileReader(FILE_NAME)) {
+            List<Lekarz> lekarze = gson.fromJson(r, listType);
+            return lekarze != null ? lekarze : new ArrayList<>();
+        } catch (IOException e) {
+            System.err.println("Błąd odczytu " + FILE_NAME + ": " + e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public void saveAll(List<Lekarz> lekarze) throws IOException {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                .setPrettyPrinting()
-                .create();
-
-        try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            writer.write("json\n");
-            for (Lekarz l : lekarze) {
-                String json = gson.toJson(l);
-                writer.write(json.replace("\"", "\"\"") + "\n");
-            }
+        try (Writer w = new FileWriter(FILE_NAME)) {
+            gson.toJson(lekarze, listType, w);
         }
     }
 }
