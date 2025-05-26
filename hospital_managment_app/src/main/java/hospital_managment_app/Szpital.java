@@ -299,15 +299,9 @@ public class Szpital {
     }
 
     protected void loadAllData() {
-//        try {
             this.listaPacjentow = pacjentHandler.loadAll();
             this.listaLekarzy = lekarzHandler.loadAll();
             this.listaPielegniarek = pielegniarkaHandler.loadAll();
-//            this.listaPomieszczen = pomieszczenieHandler.loadAll();
-//        } catch (IOException e) {
-//            System.err.println("Error saving data: " + e.getMessage());
-//        }
-
-
+            this.listaPomieszczen = pomieszczenieHandler.loadAll();
     }
 }

@@ -29,6 +29,7 @@ public class InterfejGraficzny {
         Lekarz lekarzPelny = new Lekarz("Jan", "Szeregowy", "80031767916", LocalDate.of(80, 3, 17), "601765314", "ja.szeregowy@szpital.com", "Gronowa 12", "Onkolog", "Onko3131");
         Pielegniarka pielegniarka = new Pielegniarka("Anna", "Gruszka", "09211684689", "Opieka medyczna", "MED8873", "Dobieranie lekow", 3, true);
         System.out.println("---------Szpital---------");
+        szpital.loadAllData();
 
         while (!koniec) {
             System.out.print("Wybierz (d – dodaj, u – usuń, w – wyświetl, q – koniec): ");
