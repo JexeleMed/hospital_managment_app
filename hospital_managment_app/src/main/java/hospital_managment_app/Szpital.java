@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class Szpital {
+    private static Szpital instance;
     private final PacjentHandler pacjentHandler;
     private final LekarzHandler lekarzHandler;
     private final PielegniarkaHandler pielegniarkaHandler;
@@ -18,6 +19,30 @@ public class Szpital {
     protected List<Pacjent> listaPacjentow;
     protected List<Lekarz> listaLekarzy;
     protected List<Pielegniarka> listaPielegniarek;
+
+    // Private constructor
+    private Szpital() {
+        listaPomieszczen = new ArrayList<>();
+        listaOddzialow = new ArrayList<>();
+        listaPacjentow = new ArrayList<>();
+        listaLekarzy = new ArrayList<>();
+        listaPielegniarek = new ArrayList<>();
+
+        pacjentHandler = PacjentHandler.getInstance();
+        lekarzHandler = LekarzHandler.getInstance();
+        pielegniarkaHandler = PielegniarkaHandler.getInstance();
+        pomieszczenieHandler = PomieszczenieHandler.getInstance();
+        przypisanieHandler = PrzypisaniePacjentowHandler.getInstance();
+
+        loadAllData();
+    }
+
+    public static Szpital getInstance() {
+        if (instance == null) {
+            instance = new Szpital();
+        }
+        return instance;
+    }
 
     protected void przeniesDoSali(int idPacjenta, int idPomieszczeniaZrodlowego, int idPomieszczeniaDocelowego) {
         Pomieszczenie salaZrodlowa = null;
@@ -137,30 +162,7 @@ public class Szpital {
         }
         System.out.println("Nie znaleziono pomieszczenia o ID: " + idPomieszczenia);
     }
-
-    // Inicjalizacja handlerow
-    protected Szpital() {
-        // inicjalizacja kolekcji
-        listaPomieszczen = new ArrayList<>();
-        listaOddzialow = new ArrayList<>();
-        listaPacjentow = new ArrayList<>();
-        listaLekarzy = new ArrayList<>();
-        listaPielegniarek = new ArrayList<>();
-
-        // inizjalizacja handlerow
-        pacjentHandler = PacjentHandler.getInstance();
-        lekarzHandler = LekarzHandler.getInstance();
-        pielegniarkaHandler = PielegniarkaHandler.getInstance();
-        pomieszczenieHandler = PomieszczenieHandler.getInstance();
-        przypisanieHandler = PrzypisaniePacjentowHandler.getInstance();
-
-        // wczytywanie danych z plikow
-            listaPacjentow = pacjentHandler.loadAll();
-            listaLekarzy = lekarzHandler.loadAll();
-            listaPielegniarek = pielegniarkaHandler.loadAll();
-            listaPomieszczen = pomieszczenieHandler.loadAll();
-
-    }
+    
 
     // Szukanie osob
     protected void pokazOsobe(String pesel){
