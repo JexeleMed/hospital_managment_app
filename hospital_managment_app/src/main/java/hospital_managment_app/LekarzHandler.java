@@ -57,19 +57,18 @@ public class LekarzHandler implements HandlerCsv<Lekarz> {
     }
 
     @Override
-    public void saveAll(List<Lekarz> items) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public void saveAll(List<Lekarz> lekarze) throws IOException {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .setPrettyPrinting()
+                .create();
 
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            for (Lekarz l : items) {
+            writer.write("json\n");
+            for (Lekarz l : lekarze) {
                 String json = gson.toJson(l);
-                writer.append(json.replace("\'", "\'\'"));
-                writer.write("\n");
+                writer.write(json.replace("\"", "\"\"") + "\n");
             }
-            System.out.println("Zapisano lekarzy do pliku " + FILE_NAME);
-        } catch (IOException e) {
-            throw new IOException("Error saving lekarze data", e);
         }
     }
-
 }

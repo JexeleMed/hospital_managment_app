@@ -54,19 +54,18 @@ public class PielegniarkaHandler implements HandlerCsv<Pielegniarka>{
         return lista;
     }
     @Override
-    public void saveAll(List<Pielegniarka> pielegniarki) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).serializeNulls().create();
+    public void saveAll(List<Pielegniarka> pielegniarki) throws IOException {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .setPrettyPrinting()
+                .create();
 
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            writer.append("json\n");
+            writer.write("json\n");
             for (Pielegniarka p : pielegniarki) {
                 String json = gson.toJson(p);
-                writer.append(json.replace("\"", "\"\""));
-                writer.append("\n");
+                writer.write(json.replace("\"", "\"\"") + "\n");
             }
-            System.out.println("Zapisano pielegniarki do pliku " + FILE_NAME);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

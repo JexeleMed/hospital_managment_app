@@ -56,23 +56,19 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie>{
 
         return lista;
     }
-
     @Override
-    public void saveAll(List<Pomieszczenie> pomieszczenia) {
+    public void saveAll(List<Pomieszczenie> pomieszczenia) throws IOException {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieSerializer())
+                .setPrettyPrinting()
                 .create();
 
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            writer.append("json\n");
+            writer.write("json\n");
             for (Pomieszczenie p : pomieszczenia) {
                 String json = gson.toJson(p);
-                writer.append(json.replace("\"", "\"\""));
-                writer.append("\n");
+                writer.write(json.replace("\"", "\"\"") + "\n");
             }
-            System.out.println("Zapisano pomieszczenia do pliku " + FILE_NAME);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
