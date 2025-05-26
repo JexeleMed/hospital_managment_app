@@ -1,22 +1,25 @@
 package hospital_managment_app;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.*;
 import java.util.*;
-import com.google.gson.*;
 
-public class PrzypisaniePacjentowHandler implements HandlerCsv<Integer> {
+public class PrzypisaniePacjentowHandler {
     private static final String FILE_NAME = "PrzypisaniePacjentow.csv";
     private static PrzypisaniePacjentowHandler instance;
-    private Map<Integer, Integer> przypisania; // idJednostki -> idPomieszczenia
+    private Map<Integer, Integer> przypisania = new HashMap<>(); // patientId -> roomId
 
     private PrzypisaniePacjentowHandler() {
-        this.przypisania = new HashMap<>();
         createFileIfNotExists();
-        try {
-            loadAll();
-        } catch (IOException e) {
-            System.err.println("Error loading patient assignments: " + e.getMessage());
+        loadPrzypisania();
+    }
+
+    public static PrzypisaniePacjentowHandler getInstance() {
+        if (instance == null) {
+            instance = new PrzypisaniePacjentowHandler();
         }
+        return instance;
     }
 
     private void createFileIfNotExists() {
@@ -30,76 +33,53 @@ public class PrzypisaniePacjentowHandler implements HandlerCsv<Integer> {
         }
     }
 
-    public static PrzypisaniePacjentowHandler getInstance() {
-        if (instance == null) {
-            instance = new PrzypisaniePacjentowHandler();
-        }
-        return instance;
-    }
-
-    @Override
-    public List<Integer> loadAll() throws IOException {
-        przypisania.clear();
-        File file = new File(FILE_NAME);
-        Gson gson = new GsonBuilder().create();
-
-        if (!file.exists()) {
-            return new ArrayList<>();
-        }
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+    private void loadPrzypisania() {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
             String line = br.readLine(); // skip header
             while ((line = br.readLine()) != null) {
                 if (!line.trim().isEmpty()) {
                     String json = line.replace("\"\"", "\"");
-                    JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
-                    int idJednostki = jsonObject.get("idJednostki").getAsInt();
-                    int idPomieszczenia = jsonObject.get("idPomieszczenia").getAsInt();
-                    przypisania.put(idJednostki, idPomieszczenia);
+                    Map<String,Integer> map = new Gson().fromJson(json, Map.class);
+                    przypisania.put(map.get("idPacjenta"), map.get("idPomieszczenia"));
                 }
             }
+        } catch (IOException e) {
+            System.err.println("Error loading assignments: " + e.getMessage());
         }
-        return new ArrayList<>(przypisania.keySet());
     }
 
-    @Override
-    public void saveAll(List<Integer> items) throws IOException {
+    protected void savePrzypisania() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
             writer.write("json\n");
-            Gson gson = new GsonBuilder().create();
             for (Map.Entry<Integer, Integer> entry : przypisania.entrySet()) {
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("idJednostki", entry.getKey());
-                jsonObject.addProperty("idPomieszczenia", entry.getValue());
-                writer.write(gson.toJson(jsonObject));
-                writer.write("\n");
+                Map<String, Integer> map = new HashMap<>();
+                map.put("idPacjenta", entry.getKey());
+                map.put("idPomieszczenia", entry.getValue());
+                String json = gson.toJson(map);
+                writer.write(json.replace("\"", "\"\"") + "\n");
             }
-        }
-    }
-
-    public void dodajPrzypisanie(int idJednostki, int idPomieszczenia) {
-        przypisania.put(idJednostki, idPomieszczenia);
-        try {
-            saveAll(new ArrayList<>(przypisania.keySet()));
         } catch (IOException e) {
-            System.err.println("Error saving patient assignment: " + e.getMessage());
+            System.err.println("Error saving assignments: " + e.getMessage());
         }
     }
 
-    public void usunPrzypisanie(int idJednostki) {
-        przypisania.remove(idJednostki);
-        try {
-            saveAll(new ArrayList<>(przypisania.keySet()));
-        } catch (IOException e) {
-            System.err.println("Error removing patient assignment: " + e.getMessage());
-        }
+    protected Map<Integer, Integer> getPrzypisania() {
+        return przypisania;
     }
 
-    public Map<Integer, Integer> getPrzypisania() {
-        return new HashMap<>(przypisania);
+    protected void dodajPrzypisanie(int idPacjenta, int idPomieszczenia) {
+        przypisania.put(idPacjenta, idPomieszczenia);
+        savePrzypisania();
     }
 
-    public int getPokojPacjenta(int idJednostki) {
-        return przypisania.getOrDefault(idJednostki, -1);
+    protected void usunPrzypisanie(int idPacjenta) {
+        przypisania.remove(idPacjenta);
+        savePrzypisania();
+    }
+
+    protected int getPokojPacjenta(int idPacjenta) {
+        return przypisania.getOrDefault(idPacjenta, -1);
     }
 }

@@ -63,22 +63,18 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
     }
 
     @Override
-    public void saveAll(List<Pacjent> pacjenci) {
+    public void saveAll(List<Pacjent> pacjenci) throws IOException {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                .serializeNulls()
+                .setPrettyPrinting()
                 .create();
 
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
-            writer.append("json\n");
+            writer.write("json\n");
             for (Pacjent p : pacjenci) {
                 String json = gson.toJson(p);
-                writer.append(json.replace("\"", "\"\""));
-                writer.append("\n");
+                writer.write(json.replace("\"", "\"\"") + "\n");
             }
-            System.out.println("Saved patients database");
-        } catch (IOException e) {
-            System.err.println("Error saving patients: " + e.getMessage());
         }
     }
 }
