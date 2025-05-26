@@ -18,24 +18,6 @@ public class Szpital {
     protected List<Lekarz> listaLekarzy;
     protected List<Pielegniarka> listaPielegniarek;
 
-    // Przypisywanie pacjentow do sal
-    public void przypiszPacjenta(Pacjent pacjent, int idPomieszczenia) {
-        for (Pomieszczenie p : listaPomieszczen) {
-            if (p.idPomieszczenia == idPomieszczenia) {
-                if (p.czyWolne()) {
-                    p.przypiszPacjenta(pacjent);
-                    przypisanieHandler.dodajPrzypisanie(pacjent.idJednostki, idPomieszczenia);
-                    System.out.println("Przypisano pacjenta " + pacjent.imie + " " + pacjent.nazwisko +
-                            " do pomieszczenia ID: " + idPomieszczenia);
-                } else {
-                    System.out.println("Pomieszczenie jest pełne!");
-                }
-                return;
-            }
-        }
-        System.out.println("Nie znaleziono pomieszczenia o ID: " + idPomieszczenia);
-    }
-
     public void przeniesDoSali(int idPacjenta, int idPomieszczeniaZrodlowego, int idPomieszczeniaDocelowego) {
         Pomieszczenie salaZrodlowa = null;
         Pomieszczenie salaDocelowa = null;
