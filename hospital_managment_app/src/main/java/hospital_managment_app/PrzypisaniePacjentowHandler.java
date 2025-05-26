@@ -7,16 +7,14 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-/** Zarządza relacją pacjent-pomieszczenie. */
 public class PrzypisaniePacjentowHandler {
 
-    private static final String FILE_NAME = "przypisania.json";
+    private static final String DATA_DIR = "data/";
+    private static final String FILE_NAME = DATA_DIR + "przypisania.json";
     private static PrzypisaniePacjentowHandler instance;
 
-    /** patientId → roomId */
     private final Map<Integer, Integer> przypisania = new HashMap<>();
 
-    /* ---------- konfiguracja GSON ---------- */
     private static final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
@@ -24,10 +22,17 @@ public class PrzypisaniePacjentowHandler {
     private static final Type LIST_TYPE =
             new TypeToken<List<Assignment>>(){}.getType();
 
-    /* ----------  Singleton  ---------- */
     private PrzypisaniePacjentowHandler() {
+        ensureDataDirExists();
         ensureFileExists();
         loadPrzypisania();
+    }
+
+    private void ensureDataDirExists() {
+        File dir = new File(DATA_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
     }
 
     public static synchronized PrzypisaniePacjentowHandler getInstance() {
@@ -36,16 +41,14 @@ public class PrzypisaniePacjentowHandler {
         return instance;
     }
 
-    /* ----------  I/O  ---------- */
     private void ensureFileExists() {
         File f = new File(FILE_NAME);
         if (!f.exists()) {
-            try (Writer w = new FileWriter(f)) { w.write("[]"); }          // pusta tablica
+            try (Writer w = new FileWriter(f)) { w.write("[]"); }
             catch (IOException e) { System.err.println("Nie mogę utworzyć " + FILE_NAME + ": " + e.getMessage()); }
         }
     }
 
-    /** Wczytuje z pliku do mapy. */
     private void loadPrzypisania() {
         try (Reader r = new FileReader(FILE_NAME)) {
             List<Assignment> list = gson.fromJson(r, LIST_TYPE);
@@ -57,7 +60,6 @@ public class PrzypisaniePacjentowHandler {
         }
     }
 
-    /** Zapisuje całą mapę do pliku. */
     private void savePrzypisania() {
         List<Assignment> list = przypisania.entrySet().stream()
                 .map(e -> new Assignment(e.getKey(), e.getValue()))
@@ -70,7 +72,6 @@ public class PrzypisaniePacjentowHandler {
         }
     }
 
-    /* ----------  API publiczne  ---------- */
     public Map<Integer, Integer> getPrzypisania() {
         return Collections.unmodifiableMap(przypisania);
     }
@@ -89,7 +90,6 @@ public class PrzypisaniePacjentowHandler {
         return przypisania.getOrDefault(idPacjenta, -1);
     }
 
-    /* ----------  DTO wewnętrzne  ---------- */
     private static class Assignment {
         int idPacjenta;
         int idPomieszczenia;

@@ -12,13 +12,15 @@ import java.util.List;
 
 public class PacjentHandler implements HandlerCsv<Pacjent> {
 
-    private static final String FILE_NAME = "pacjenci.json";
+    private static final String DATA_DIR = "data/";
+    private static final String FILE_NAME = DATA_DIR + "pacjenci.json";
     private static PacjentHandler instance;
 
     private final Gson gson;
     private final Type listType = new TypeToken<List<Pacjent>>(){}.getType();
 
-    public PacjentHandler() {
+    private PacjentHandler() {
+        ensureDataDirExists();
         gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
                 .setPrettyPrinting()
@@ -26,7 +28,13 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
         ensureFileExists();
     }
 
-    /** Singleton */
+    private void ensureDataDirExists() {
+        File dir = new File(DATA_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+    }
+
     public static synchronized PacjentHandler getInstance() {
         if (instance == null) {
             instance = new PacjentHandler();
@@ -34,7 +42,6 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
         return instance;
     }
 
-    /** Tworzy plik z pustą tablicą, jeśli go brak */
     private void ensureFileExists() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {
@@ -46,12 +53,10 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
         }
     }
 
-    /** Wczytuje wszystkich pacjentów z pliku */
     @Override
     public List<Pacjent> loadAll() {
         try (Reader r = new FileReader(FILE_NAME)) {
             List<Pacjent> pacjenci = gson.fromJson(r, listType);
-            // gson zwraca null, gdy w pliku jest "null"
             return pacjenci != null ? pacjenci : new ArrayList<>();
         } catch (IOException e) {
             System.err.println("Błąd odczytu " + FILE_NAME + ": " + e.getMessage());
@@ -59,7 +64,6 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
         }
     }
 
-    /** Zapisuje listę pacjentów do pliku */
     @Override
     public void saveAll(List<Pacjent> pacjenci) throws IOException {
         try (Writer w = new FileWriter(FILE_NAME)) {

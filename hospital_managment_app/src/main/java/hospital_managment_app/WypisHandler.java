@@ -9,11 +9,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class WypisHandler implements HandlerCsv<Map<String, Object>> {
-    private static final String FILE_NAME = "ListaWypisow.csv";
+    private static final String DATA_DIR = "data/";
+    private static final String FILE_NAME = DATA_DIR + "ListaWypisow.csv";
     private static WypisHandler instance;
 
     private WypisHandler() {
+        ensureDataDirExists();
         createFileIfNotExists();
+    }
+
+    private void ensureDataDirExists() {
+        File dir = new File(DATA_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
     }
 
     public static WypisHandler getInstance() {

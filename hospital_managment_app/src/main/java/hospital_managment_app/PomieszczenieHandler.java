@@ -10,10 +10,10 @@ import java.util.List;
 
 public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
 
-    private static final String FILE_NAME = "pomieszczenia.json";
+    private static final String DATA_DIR = "data/";
+    private static final String FILE_NAME = DATA_DIR + "pomieszczenia.json";
     private static PomieszczenieHandler instance;
 
-    /* ---------- konfiguracja GSON ---------- */
     private final Gson gson = new GsonBuilder()
             .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieSerializer())
             .registerTypeAdapter(Pomieszczenie.class, new PomieszczenieDeserializer())
@@ -22,8 +22,17 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
 
     private final Type listType = new TypeToken<List<Pomieszczenie>>(){}.getType();
 
-    /* --------------- singleton ------------- */
-    private PomieszczenieHandler() { ensureFileExists(); }
+    private PomieszczenieHandler() {
+        ensureDataDirExists();
+        ensureFileExists();
+    }
+
+    private void ensureDataDirExists() {
+        File dir = new File(DATA_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+    }
 
     public static synchronized PomieszczenieHandler getInstance() {
         if (instance == null)
@@ -31,7 +40,6 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
         return instance;
     }
 
-    /* --- utworzenie pustego pliku ([ ]) przy pierwszym uruchomieniu --- */
     private void ensureFileExists() {
         File f = new File(FILE_NAME);
         if (!f.exists()) {
@@ -40,7 +48,6 @@ public class PomieszczenieHandler implements HandlerCsv<Pomieszczenie> {
         }
     }
 
-    /* -------------------- API -------------------- */
     @Override
     public List<Pomieszczenie> loadAll() {
         try (Reader r = new FileReader(FILE_NAME)) {

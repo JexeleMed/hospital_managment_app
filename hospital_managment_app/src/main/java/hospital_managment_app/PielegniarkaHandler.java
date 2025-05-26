@@ -13,20 +13,28 @@ import java.util.List;
 
 public class PielegniarkaHandler implements HandlerCsv<Pielegniarka> {
 
-    private static final String FILE_NAME = "pielegniarki.json";
+    private static final String DATA_DIR = "data/";
+    private static final String FILE_NAME = DATA_DIR + "pielegniarki.json";
     private static PielegniarkaHandler instance;
 
     private final Gson gson;
     private final Type listType = new TypeToken<List<Pielegniarka>>(){}.getType();
 
-    /* ------------  Singleton  ------------ */
     public PielegniarkaHandler() {
+        ensureDataDirExists();
         gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class,     new LocalDateAdapter())
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .setPrettyPrinting()
                 .create();
         ensureFileExists();
+    }
+
+    private void ensureDataDirExists() {
+        File dir = new File(DATA_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
     }
 
     public static synchronized PielegniarkaHandler getInstance() {
@@ -36,19 +44,17 @@ public class PielegniarkaHandler implements HandlerCsv<Pielegniarka> {
         return instance;
     }
 
-    /* ------------  Plik  ------------ */
     private void ensureFileExists() {
         File f = new File(FILE_NAME);
         if (!f.exists()) {
             try (Writer w = new FileWriter(f)) {
-                w.write("[]");               // pusta tablica JSON
+                w.write("[]");
             } catch (IOException e) {
                 System.err.println("Nie mogę utworzyć " + FILE_NAME + ": " + e.getMessage());
             }
         }
     }
 
-    /* ------------  API  ------------ */
     @Override
     public List<Pielegniarka> loadAll() {
         try (Reader r = new FileReader(FILE_NAME)) {

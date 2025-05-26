@@ -37,6 +37,10 @@ abstract class Czlowiek {
 
     }
 
+    public static void updateIdGlobal(int maxId) {
+        idGlobal = maxId;
+    }
+
     public Czlowiek(){}
 
     protected void wyswietlPodstawoweInfo(){

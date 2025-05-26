@@ -301,9 +301,21 @@ public class Szpital {
     }
 
     protected void loadAllData() {
-            this.listaPacjentow = pacjentHandler.loadAll();
-            this.listaLekarzy = lekarzHandler.loadAll();
-            this.listaPielegniarek = pielegniarkaHandler.loadAll();
-            this.listaPomieszczen = pomieszczenieHandler.loadAll();
+        this.listaPacjentow = pacjentHandler.loadAll();
+        this.listaLekarzy = lekarzHandler.loadAll();
+        this.listaPielegniarek = pielegniarkaHandler.loadAll();
+        this.listaPomieszczen = pomieszczenieHandler.loadAll();
+
+        int maxId = 0;
+        for (Pacjent p : listaPacjentow) {
+            if (p.idJednostki > maxId) maxId = p.idJednostki;
+        }
+        for (Lekarz l : listaLekarzy) {
+            if (l.idJednostki > maxId) maxId = l.idJednostki;
+        }
+        for (Pielegniarka n : listaPielegniarek) {
+            if (n.idJednostki > maxId) maxId = n.idJednostki;
+        }
+        Czlowiek.updateIdGlobal(maxId);
     }
 }
