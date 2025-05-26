@@ -1,0 +1,54 @@
+[
+  {
+    "historiaChoroby": [],
+    "grupaKrwi": "A+",
+    "alergie": [
+      "Orzechy"
+    ],
+    "perskrypcje": [
+      {
+        "nazwa": "Lek A",
+        "wartosc": 500
+      }
+    ],
+    "zywienie": "wegetariańska",
+    "numerKontaktowyBliskich": "987654321",
+    "rachunek": [],
+    "profilPacjentaKompletny": true,
+    "idJednostki": 1,
+    "pesel": "12345678901",
+    "imie": "Jan",
+    "nazwisko": "Kowalski",
+    "dataUrodzenia": "15 05 1985",
+    "numerTelefonu": "123456789",
+    "adresEmail": "jan.kowalski@email.com",
+    "adresZamieszkania": "ul. Przykładowa 1",
+    "czyProfilKompletny": true
+  },
+  {
+    "historiaChoroby": [],
+    "grupaKrwi": "A+",
+    "alergie": [
+      "Orzechy"
+    ],
+    "perskrypcje": [
+      {
+        "nazwa": "Lek A",
+        "wartosc": 500
+      }
+    ],
+    "zywienie": "wegetariańska",
+    "numerKontaktowyBliskich": "987654321",
+    "rachunek": [],
+    "profilPacjentaKompletny": true,
+    "idJednostki": 1,
+    "pesel": "12345678901",
+    "imie": "Jan",
+    "nazwisko": "Kowalski",
+    "dataUrodzenia": "15 05 1985",
+    "numerTelefonu": "123456789",
+    "adresEmail": "jan.kowalski@email.com",
+    "adresZamieszkania": "ul. Przykładowa 1",
+    "czyProfilKompletny": true
+  }
+]
