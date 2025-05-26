@@ -7,6 +7,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
+// Klasa odpowiedzialna za zarządzanie przypisaniami pacjentów do pomieszczeń
 public class PrzypisaniePacjentowHandler {
 
     private static final String DATA_DIR = "data/";
@@ -15,13 +16,16 @@ public class PrzypisaniePacjentowHandler {
 
     private final Map<Integer, Integer> przypisania = new HashMap<>();
 
+    // Narzędzie do konwersji danych (JSON)
     private static final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
 
+    // Typ danych dla listy przypisań
     private static final Type LIST_TYPE =
             new TypeToken<List<Assignment>>(){}.getType();
 
+    // Konstruktor – tworzy katalog i plik, jeśli nie istnieją
     private PrzypisaniePacjentowHandler() {
         ensureDataDirExists();
         ensureFileExists();
@@ -35,12 +39,14 @@ public class PrzypisaniePacjentowHandler {
         }
     }
 
+    // Zwraca jedyną instancję tej klasy (Singleton)
     public static synchronized PrzypisaniePacjentowHandler getInstance() {
         if (instance == null)
             instance = new PrzypisaniePacjentowHandler();
         return instance;
     }
 
+    // Sprawdza i tworzy plik z danymi, jeśli nie istnieje
     private void ensureFileExists() {
         File f = new File(FILE_NAME);
         if (!f.exists()) {
@@ -49,6 +55,7 @@ public class PrzypisaniePacjentowHandler {
         }
     }
 
+    // Wczytuje dane z pliku
     private void loadPrzypisania() {
         try (Reader r = new FileReader(FILE_NAME)) {
             List<Assignment> list = gson.fromJson(r, LIST_TYPE);
@@ -60,6 +67,7 @@ public class PrzypisaniePacjentowHandler {
         }
     }
 
+    // Zapisuje dane do pliku
     private void savePrzypisania() {
         List<Assignment> list = przypisania.entrySet().stream()
                 .map(e -> new Assignment(e.getKey(), e.getValue()))
@@ -72,24 +80,29 @@ public class PrzypisaniePacjentowHandler {
         }
     }
 
+    // Zwraca niezmienną mapę przypisań pacjentów do pomieszczeń
     public Map<Integer, Integer> getPrzypisania() {
         return Collections.unmodifiableMap(przypisania);
     }
 
+    // Metody do zarządzania przypisaniami pacjentów do pomieszczeń
     public void dodajPrzypisanie(int idPacjenta, int idPomieszczenia) {
         przypisania.put(idPacjenta, idPomieszczenia);
         savePrzypisania();
     }
 
+    // Usuwa przypisanie pacjenta do pomieszczenia
     public void usunPrzypisanie(int idPacjenta) {
         przypisania.remove(idPacjenta);
         savePrzypisania();
     }
 
+    // Zwraca ID pomieszczenia, do którego przypisany jest pacjent
     public int getPokojPacjenta(int idPacjenta) {
         return przypisania.getOrDefault(idPacjenta, -1);
     }
 
+    // Zwraca ID pacjenta przypisanego do danego pomieszczenia
     private static class Assignment {
         int idPacjenta;
         int idPomieszczenia;
