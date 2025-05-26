@@ -1,0 +1,231 @@
+package hospital_managment_app;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class OsobyDodaj {
+    Szpital szpital = Szpital.getInstance();
+    Scanner sc = new Scanner(System.in);
+
+
+    public void osobyDodaj() {
+        System.out.print("""
+                Co chcesz dodać?
+                  1 – Pacjent
+                  2 – Lekarz
+                  3 – Pielęgniarka
+                Wpisz 1, 2 lub 3 i zatwierdź:""");
+
+        String wybor = sc.nextLine().trim();   // wczytujemy cały wiersz i obcinamy białe znaki
+
+        switch (wybor) {
+            case "1", "pacjent", "Pacjent" -> dodajPacjenta();
+            case "2", "lekarz",  "Lekarz"  -> dodajLekarza();
+            case "3", "pielęgniarka", "Pielegniarka", "Pielęgniarka" -> dodajPielegniarke();
+            default -> System.out.println("⚠ Nie rozpoznano opcji: " + wybor);
+        }
+    }
+
+    protected void dodajPacjenta() {
+        System.out.println("Podaj dane pacjenta:");
+
+        System.out.print("Imię: ");
+        String imie = sc.nextLine().trim();
+        System.out.print("Nazwisko: ");
+        String nazwisko = sc.nextLine().trim();
+        System.out.print("PESEL: ");
+        String pesel = sc.nextLine().trim();
+
+        System.out.print("Czy chcesz wpisać dodatkowe dane? 1 - tak 2 - nie: ");
+        int wpisac = Integer.parseInt(sc.nextLine().trim());  // wczytujemy CAŁĄ linię, unikając problemu ze znakiem nowej linii
+
+        if (wpisac != 1) {
+            // Konstruktor uproszczony (tylko wymagane pola)
+            Pacjent pacjent = new Pacjent(imie, nazwisko, pesel);
+            szpital.dodajOsobe(pacjent);
+            return;
+        }
+
+        // =========================
+        // Pytania o dane opcjonalne
+        // =========================
+        System.out.print("Grupa krwi (puste jeśli nieznana): ");
+        String grupaKrwi = sc.nextLine().trim();
+        if (grupaKrwi.isEmpty()) grupaKrwi = null;
+
+        System.out.print("Alergie (jeśli kilka rozdziel przecinkami, puste jeśli brak): ");
+        String alergie = sc.nextLine().trim();
+        if (alergie.isEmpty()) alergie = null;
+
+        // Perskrypcje: nazwa + dawka w mg
+        List<Para<String, Integer>> perskrypcje = new ArrayList<>();
+        System.out.println("Dodawanie perskrypcji – pozostaw nazwę pustą, aby zakończyć:");
+        while (true) {
+            System.out.print("Nazwa leku: ");
+            String lek = sc.nextLine().trim();
+            if (lek.isEmpty()) break;
+
+            System.out.print("Dawka w mg: ");
+            int dawka = Integer.parseInt(sc.nextLine().trim());
+            perskrypcje.add(new Para<>(lek, dawka));
+        }
+
+        System.out.print("Preferencje żywieniowe (puste jeśli brak): ");
+        String zywienie = sc.nextLine().trim();
+        if (zywienie.isEmpty()) zywienie = null;
+
+        System.out.print("Numer kontaktowy bliskich (puste jeśli brak): ");
+        String numerKontaktowyBliskich = sc.nextLine().trim();
+        if (numerKontaktowyBliskich.isEmpty()) numerKontaktowyBliskich = null;
+
+        System.out.print("Data urodzenia (rrrr-mm-dd) lub puste: ");
+        String dataUrStr = sc.nextLine().trim();
+        LocalDate dataUrodzenia = dataUrStr.isEmpty() ? null : LocalDate.parse(dataUrStr);
+
+        System.out.print("Numer telefonu (puste jeśli brak): ");
+        String numerTelefonu = sc.nextLine().trim();
+        if (numerTelefonu.isEmpty()) numerTelefonu = null;
+
+        System.out.print("Adres e‑mail (puste jeśli brak): ");
+        String adresEmail = sc.nextLine().trim();
+        if (adresEmail.isEmpty()) adresEmail = null;
+
+        System.out.print("Adres zamieszkania (puste jeśli brak): ");
+        String adresZamieszkania = sc.nextLine().trim();
+        if (adresZamieszkania.isEmpty()) adresZamieszkania = null;
+
+        // =========================
+        // Utworzenie kompletnego pacjenta
+        // =========================
+        Pacjent pacjent = new Pacjent(
+                imie, nazwisko, pesel,
+                grupaKrwi,
+                alergie, perskrypcje,
+                zywienie, numerKontaktowyBliskich,
+                dataUrodzenia,
+                numerTelefonu, adresEmail, adresZamieszkania);
+
+        szpital.dodajOsobe(pacjent);
+    }
+    protected void dodajLekarza() {
+        System.out.println("Podaj dane lekarza:");
+
+        System.out.print("Imię: ");
+        String imie = sc.nextLine().trim();
+        System.out.print("Nazwisko: ");
+        String nazwisko = sc.nextLine().trim();
+        System.out.print("PESEL: ");
+        String pesel = sc.nextLine().trim();
+        System.out.print("Specjalizacja: ");
+        String specjalizacja = sc.nextLine().trim();
+        System.out.print("Numer licencji lekarskiej: ");
+        String numerLicencji = sc.nextLine().trim();
+
+        System.out.print("Czy chcesz wpisać dodatkowe dane? 1 - tak 2 - nie: ");
+        int wpisac = Integer.parseInt(sc.nextLine().trim());
+
+        if (wpisac != 1) {
+            Lekarz lekarz = new Lekarz(imie, nazwisko, pesel, specjalizacja, numerLicencji);
+            szpital.dodajOsobe(lekarz);
+            return;
+        }
+
+        // ======= Dane opcjonalne =======
+        System.out.print("Data urodzenia (rrrr‑mm‑dd) lub puste: ");
+        String dataUrStr = sc.nextLine().trim();
+        LocalDate dataUrodzenia = dataUrStr.isEmpty() ? null : LocalDate.parse(dataUrStr);
+
+        System.out.print("Numer telefonu (puste jeśli brak): ");
+        String numerTelefonu = sc.nextLine().trim();
+        if (numerTelefonu.isEmpty()) numerTelefonu = null;
+
+        System.out.print("Adres e‑mail (puste jeśli brak): ");
+        String adresEmail = sc.nextLine().trim();
+        if (adresEmail.isEmpty()) adresEmail = null;
+
+        System.out.print("Adres zamieszkania (puste jeśli brak): ");
+        String adresZamieszkania = sc.nextLine().trim();
+        if (adresZamieszkania.isEmpty()) adresZamieszkania = null;
+
+        Lekarz lekarz = new Lekarz(
+                imie, nazwisko, pesel,
+                dataUrodzenia,
+                numerTelefonu, adresEmail, adresZamieszkania,
+                specjalizacja, numerLicencji);
+
+        szpital.dodajOsobe(lekarz);
+    }
+    /*--------------------------------------------------------------
+     *  DODAWANIE PIELĘGNIARKI
+     *--------------------------------------------------------------*/
+    protected void dodajPielegniarke() {
+        System.out.println("Podaj dane pielęgniarki:");
+
+        System.out.print("Imię: ");
+        String imie = sc.nextLine().trim();
+        System.out.print("Nazwisko: ");
+        String nazwisko = sc.nextLine().trim();
+        System.out.print("PESEL: ");
+        String pesel = sc.nextLine().trim();
+
+        System.out.print("Zakres obowiązków: ");
+        String zakresObowiazkow = sc.nextLine().trim();
+
+        System.out.print("Numer licencji pielęgniarskiej: ");
+        String numerLicencji = sc.nextLine().trim();
+
+        System.out.print("Kwalifikacje dodatkowe (puste jeśli brak): ");
+        String kwalifikacjeDodatkowe = sc.nextLine().trim();
+        if (kwalifikacjeDodatkowe.isEmpty()) kwalifikacjeDodatkowe = null;
+
+        System.out.print("Szczebel w hierarchii (liczba całkowita): ");
+        int szczebelWHierarchii = Integer.parseInt(sc.nextLine().trim());
+
+        System.out.print("Czy pielęgniarka może podawać leki? 1-tak / 0-nie: ");
+        Boolean czyMozePodawacLeki = Integer.parseInt(sc.nextLine().trim()) == 1;
+
+        System.out.print("Czy chcesz wpisać dodatkowe dane kontaktowe? 1-tak / 2-nie: ");
+        int wpisac = Integer.parseInt(sc.nextLine().trim());
+
+        /* --- tylko wymagane pola --- */
+        if (wpisac != 1) {
+            Pielegniarka p = new Pielegniarka(
+                    imie, nazwisko, pesel,
+                    zakresObowiazkow, numerLicencji,
+                    kwalifikacjeDodatkowe, szczebelWHierarchii,
+                    czyMozePodawacLeki);
+            szpital.dodajOsobe(p);
+            return;
+        }
+
+        /* --- dane opcjonalne --- */
+        System.out.print("Data urodzenia (rrrr-mm-dd) lub puste: ");
+        String dataUrStr = sc.nextLine().trim();
+        LocalDate dataUrodzenia = dataUrStr.isEmpty() ? null : LocalDate.parse(dataUrStr);
+
+        System.out.print("Numer telefonu (puste jeśli brak): ");
+        String numerTelefonu = sc.nextLine().trim();
+        if (numerTelefonu.isEmpty()) numerTelefonu = null;
+
+        System.out.print("Adres e-mail (puste jeśli brak): ");
+        String adresEmail = sc.nextLine().trim();
+        if (adresEmail.isEmpty()) adresEmail = null;
+
+        System.out.print("Adres zamieszkania (puste jeśli brak): ");
+        String adresZamieszkania = sc.nextLine().trim();
+        if (adresZamieszkania.isEmpty()) adresZamieszkania = null;
+
+        Pielegniarka pielegniarka = new Pielegniarka(
+                imie, nazwisko, pesel,
+                dataUrodzenia, numerTelefonu, adresEmail, adresZamieszkania,
+                zakresObowiazkow, numerLicencji, kwalifikacjeDodatkowe,
+                szczebelWHierarchii, czyMozePodawacLeki);
+
+        szpital.dodajOsobe(pielegniarka);
+    }
+
+
+
+}
