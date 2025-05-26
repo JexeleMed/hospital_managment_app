@@ -20,8 +20,14 @@ public class PomieszczeniaGUI {
             Action action = menu();
             switch (action) {
                 case LIST -> pokazWszystkiePomieszczenia();
-                case ADD -> dodajPomieszczenie();
-                case DELETE -> usunPomieszczenie();
+                case ADD -> {
+                    dodajPomieszczenie();
+                    szpital.saveAllData(); // Auto-save after adding
+                }
+                case DELETE -> {
+                    usunPomieszczenie();
+                    szpital.saveAllData(); // Auto-save after deleting
+                }
                 case REPORT -> generujRaport();
                 case EXIT -> {
                     System.out.println("Wyjście z zarządzania pomieszczeniami.");
