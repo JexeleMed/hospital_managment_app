@@ -53,7 +53,7 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
             try (Writer w = new FileWriter(file)) {
                 w.write("[]");
             } catch (IOException e) {
-                System.err.println("Nie mogę utworzyć pliku " + FILE_NAME + ": " + e.getMessage());
+                System.err.println("Nie moge utworzyc pliku " + FILE_NAME + ": " + e.getMessage());
             }
         }
     }
@@ -64,7 +64,7 @@ public class PacjentHandler implements HandlerCsv<Pacjent> {
             List<Pacjent> pacjenci = gson.fromJson(r, listType);
             return pacjenci != null ? pacjenci : new ArrayList<>();
         } catch (IOException e) {
-            System.err.println("Błąd odczytu " + FILE_NAME + ": " + e.getMessage());
+            System.err.println("Blad odczytu " + FILE_NAME + ": " + e.getMessage());
             return new ArrayList<>();
         }
     }

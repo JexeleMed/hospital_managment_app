@@ -50,7 +50,7 @@ public class Szpital {
         Pomieszczenie salaDocelowa = null;
         Pacjent pacjent = null;
 
-        // Znajdź pacjenta
+        // Znajdz pacjenta
         for (Pacjent p : listaPacjentow) {
             if (p.idJednostki == idPacjenta) {
                 pacjent = p;
@@ -62,7 +62,7 @@ public class Szpital {
             return;
         }
 
-        // Znajdź pomieszczenie źródłowe i docelowe
+        // Znajdz pomieszczenie zrodlowe i docelowe
         for (Pomieszczenie p : listaPomieszczen) {
             if (p.idPomieszczenia == idPomieszczeniaZrodlowego) {
                 salaZrodlowa = p;
@@ -74,7 +74,7 @@ public class Szpital {
 
         // Sprawdzenie, czy znaleziono sale
         if (salaZrodlowa == null) {
-            System.out.println("Nie znaleziono sali źródłowej");
+            System.out.println("Nie znaleziono sali zrodlowej");
             return;
         }
         if (salaDocelowa == null) {
@@ -84,13 +84,13 @@ public class Szpital {
 
         // Sprawdzenie, czy sala docelowa ma wolne miejsca
         if (!salaDocelowa.czyWolne()) {
-            System.out.println("Sala docelowa jest pełna");
+            System.out.println("Sala docelowa jest pelna");
             return;
         }
 
-        // Sprawdzenie, czy pacjent jest w sali źródłowej
+        // Sprawdzenie, czy pacjent jest w sali zrodlowej
         if (!salaZrodlowa.pacjenci.contains(idPacjenta)) {
-            System.out.println("Pacjent nie znajduje się w sali źródłowej");
+            System.out.println("Pacjent nie znajduje sie w sali zrodlowej");
             return;
         }
 
@@ -104,7 +104,7 @@ public class Szpital {
                 " do sali ID " + idPomieszczeniaDocelowego);
     }
 
-    // Metoda do usuwania pacjenta z sali i dodawania go do wypisów
+    // Metoda do usuwania pacjenta z sali i dodawania go do wypisow
     protected void usunZSali(int idPacjenta) {
         boolean znaleziono = false;
         WypisHandler wypisyHandler = WypisHandler.getInstance();
@@ -129,27 +129,27 @@ public class Szpital {
                     przypisanieHandler.usunPrzypisanie(idPacjenta);
 
                     znaleziono = true;
-                    System.out.println("Usunięto pacjenta o ID " + idPacjenta + " z sali.");
+                    System.out.println("Usunieto pacjenta o ID " + idPacjenta + " z sali.");
                     break;
                 }
             }
         }
 
         if (!znaleziono) {
-            System.out.println("Nie znaleziono pacjenta o ID " + idPacjenta + " w żadnej sali.");
+            System.out.println("Nie znaleziono pacjenta o ID " + idPacjenta + " w zadnej sali.");
         }
     }
 
     // Metoda do przypisywania pacjenta do konkretnej sali
     protected void przypiszPacjenta(Pacjent pacjent, int idPomieszczenia) {
-        // Sprawdź czy pacjent jest już przypisany do jakiejś sali
+        // Sprawdz czy pacjent jest juz przypisany do jakiejs sali
         int obecnaSala = przypisanieHandler.getPokojPacjenta(pacjent.idJednostki);
         if (obecnaSala != -1) {
             System.out.println("Pacjent " + pacjent.imie + " " + pacjent.nazwisko +
-                    " jest już przypisany do sali o ID: " + obecnaSala);
+                    " jest juz przypisany do sali o ID: " + obecnaSala);
             return;
         }
-        // Sprawdź czy podane ID pomieszczenia istnieje
+        // Sprawdz czy podane ID pomieszczenia istnieje
         for (Pomieszczenie p : listaPomieszczen) {
             if (p.idPomieszczenia == idPomieszczenia) {
                 if (p.czyWolne()) {
@@ -158,14 +158,14 @@ public class Szpital {
                     System.out.println("Przypisano pacjenta " + pacjent.imie + " " + pacjent.nazwisko +
                             " do pomieszczenia ID: " + idPomieszczenia);
                 } else {
-                    System.out.println("Pomieszczenie jest pełne!");
+                    System.out.println("Pomieszczenie jest pelne!");
                 }
                 return;
             }
         }
         System.out.println("Nie znaleziono pomieszczenia o ID: " + idPomieszczenia);
     }
-    
+
 
     // Szukanie osob
     protected void pokazOsobe(String pesel){
@@ -307,7 +307,7 @@ public class Szpital {
         }
     }
 
-    // Ładowanie wszystkich danych z plików
+    // Ladowanie wszystkich danych z plikow
     protected void loadAllData() {
         this.listaPacjentow = pacjentHandler.loadAll();
         this.listaLekarzy = lekarzHandler.loadAll();

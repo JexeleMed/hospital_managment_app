@@ -33,11 +33,11 @@ public class OsobyGUI {
 
     private void usunOsobe() throws IOException {
         System.out.println("\n=== USUWANIE OSOBY ===");
-        System.out.println("1. Usuń po PESEL");
-        System.out.println("2. Usuń po imieniu i nazwisku");
-        System.out.println("3. Usuń po ID");
+        System.out.println("1. Usun po PESEL");
+        System.out.println("2. Usun po imieniu i nazwisku");
+        System.out.println("3. Usun po ID");
 
-        System.out.print("Wybór: ");
+        System.out.print("Wybor: ");
         String wybor = IN.readLine();
 
         switch (wybor) {
@@ -46,7 +46,7 @@ public class OsobyGUI {
                 szpital.usunOsobe(IN.readLine());
             }
             case "2" -> {
-                System.out.print("Podaj imię: ");
+                System.out.print("Podaj imie: ");
                 String imie = IN.readLine();
                 System.out.print("Podaj nazwisko: ");
                 String nazwisko = IN.readLine();
@@ -56,25 +56,25 @@ public class OsobyGUI {
                 System.out.print("Podaj ID: ");
                 szpital.usunOsobe(Integer.parseInt(IN.readLine()));
             }
-            default -> System.out.println("Nieprawidłowa opcja!");
+            default -> System.out.println("Nieprawidlowa opcja!");
         }
     }
     // Action MENU bazujace na switch i enum
     private Action menu() throws IOException {
         System.out.println("""
-                \n=== ZARZĄDZANIE OSOBAMI ===
-                1. Dodaj osobę
-                2. Usuń osobę
-                0. Wyjście
+                \n=== ZARZADZANIE OSOBAMI ===
+                1. Dodaj osobe
+                2. Usun osobe
+                0. Wyjscie
                 """);
 
-        System.out.print("Wybór: ");
+        System.out.print("Wybor: ");
         return switch (IN.readLine().trim()) {
             case "1" -> Action.DODAJ;
             case "2" -> Action.USUN;
             case "0" -> Action.EXIT;
             default -> {
-                System.out.println("Nieprawidłowa opcja!");
+                System.out.println("Nieprawidlowa opcja!");
                 yield menu();
             }
         };

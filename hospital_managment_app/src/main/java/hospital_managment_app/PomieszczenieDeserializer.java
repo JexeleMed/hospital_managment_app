@@ -20,7 +20,7 @@ public class PomieszczenieDeserializer implements JsonDeserializer<Pomieszczenie
 
         Pomieszczenie pom;
 
-        // Wybór odpowiedniego typu pomieszczenia na podstawie pola "typPomieszczenia"
+        // Wybor odpowiedniego typu pomieszczenia na podstawie pola "typPomieszczenia"
         switch (typ) {
             case "Poczekalnia" -> pom = new Poczekalnia(numer, pietro, pojSala);
 
@@ -31,7 +31,7 @@ public class PomieszczenieDeserializer implements JsonDeserializer<Pomieszczenie
             }
 
             case "SalaHybrydowa" -> {
-                // jeśli w JSON-ie nie ma info o oddziale – tworzymy tymczasowy
+                // jesli w JSON-ie nie ma info o oddziale – tworzymy tymczasowy
                 Oddzial oddz = jo.has("oddzialNazwa")
                         ? new Oddzial(jo.get("oddzialNazwa").getAsString())
                         : new Oddzial("Tymczasowy");
@@ -41,7 +41,7 @@ public class PomieszczenieDeserializer implements JsonDeserializer<Pomieszczenie
             default -> throw new JsonParseException("Nieznany typ: " + typ);
         }
 
-        // Wspólne pola
+        // Wspolne pola
         if (jo.has("aktualnaPojemnosc"))
             pom.aktualnaPojemnosc = jo.get("aktualnaPojemnosc").getAsInt();
 

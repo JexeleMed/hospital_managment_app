@@ -39,9 +39,9 @@ public class InterfejGraficzny {
                 szpital.saveAllData();
                 System.out.println();
             } catch (NumberFormatException e) {
-                System.out.println("Błąd: Wprowadzono nieprawidłowy format liczby!");
+                System.out.println("Blad: Wprowadzono nieprawidlowy format liczby!");
             } catch (Exception e) {
-                System.out.println("Błąd: " + e.getMessage());
+                System.out.println("Blad: " + e.getMessage());
             }
         }
     }
@@ -63,7 +63,7 @@ public class InterfejGraficzny {
 
             szpital.przypiszPacjenta(pacjent, idPomieszczenia);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("ID musi być liczbą całkowitą!");
+            throw new NumberFormatException("ID musi byc liczba calkowita!");
         }
     }
 
@@ -74,7 +74,7 @@ public class InterfejGraficzny {
             System.out.print("Podaj ID pacjenta: ");
             int idPacjenta = Integer.parseInt(IN.readLine());
 
-            System.out.print("Podaj ID sali źródłowej: ");
+            System.out.print("Podaj ID sali zrodlowej: ");
             int idZrodlo = Integer.parseInt(IN.readLine());
 
             System.out.print("Podaj ID sali docelowej: ");
@@ -82,7 +82,7 @@ public class InterfejGraficzny {
 
             szpital.przeniesDoSali(idPacjenta, idZrodlo, idCel);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("ID musi być liczbą całkowitą!");
+            throw new NumberFormatException("ID musi byc liczba calkowita!");
         }
     }
 
@@ -94,7 +94,7 @@ public class InterfejGraficzny {
             int idPacjenta = Integer.parseInt(IN.readLine());
             szpital.usunZSali(idPacjenta);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("ID musi być liczbą całkowitą!");
+            throw new NumberFormatException("ID musi byc liczba calkowita!");
         }
     }
     // Wyszukiwanie osob
@@ -104,7 +104,7 @@ public class InterfejGraficzny {
         System.out.println("2. Wyszukaj po imieniu i nazwisku");
         System.out.println("3. Wyszukaj po ID");
 
-        System.out.print("Wybór: ");
+        System.out.print("Wybor: ");
         String wybor = IN.readLine();
         // Rozne sposoby wyszukiwania osob
         try {
@@ -113,17 +113,17 @@ public class InterfejGraficzny {
                     System.out.print("Podaj PESEL: ");
                     String pesel = IN.readLine();
                     if (pesel == null || pesel.trim().isEmpty()) {
-                        throw new IllegalArgumentException("PESEL nie może być pusty!");
+                        throw new IllegalArgumentException("PESEL nie moze byc pusty!");
                     }
                     szpital.pokazOsobe(pesel);
                 }
                 case "2" -> {
-                    System.out.print("Podaj imię: ");
+                    System.out.print("Podaj imie: ");
                     String imie = IN.readLine();
                     System.out.print("Podaj nazwisko: ");
                     String nazwisko = IN.readLine();
                     if (imie == null || imie.trim().isEmpty() || nazwisko == null || nazwisko.trim().isEmpty()) {
-                        throw new IllegalArgumentException("Imię i nazwisko nie mogą być puste!");
+                        throw new IllegalArgumentException("Imie i nazwisko nie moga byc puste!");
                     }
                     szpital.pokazOsobe(imie, nazwisko);
                 }
@@ -132,27 +132,27 @@ public class InterfejGraficzny {
                     int id = Integer.parseInt(IN.readLine());
                     szpital.pokazOsobe(id);
                 }
-                default -> System.out.println("Nieprawidłowa opcja!");
+                default -> System.out.println("Nieprawidlowa opcja!");
             }
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("ID musi być liczbą całkowitą!");
+            throw new NumberFormatException("ID musi byc liczba calkowita!");
         }
     }
 
     // Action MENU bazujace na switch i enum
     private Action menu() throws IOException {
         System.out.println("""
-                \n=== SYSTEM ZARZĄDZANIA SZPITALEM ===
-                1. Zarządzanie pomieszczeniami
-                2. Zarządzanie osobami
+                \n=== SYSTEM ZARZADZANIA SZPITALEM ===
+                1. Zarzadzanie pomieszczeniami
+                2. Zarzadzanie osobami
                 3. Przypisz pacjenta do sali
-                4. Przenieś pacjenta między salami
-                5. Usuń pacjenta z sali
+                4. Przenies pacjenta miedzy salami
+                5. Usun pacjenta z sali
                 6. Szybkie wyszukiwanie osoby
-                0. Wyjście
+                0. Wyjscie
                 """);
 
-        System.out.print("Wybór: ");
+        System.out.print("Wybor: ");
         String input = IN.readLine().trim();
         try {
             return switch (input) {
@@ -164,12 +164,12 @@ public class InterfejGraficzny {
                 case "6" -> Action.SEARCH;
                 case "0" -> Action.EXIT;
                 default -> {
-                    System.out.println("Nieprawidłowa opcja!");
+                    System.out.println("Nieprawidlowa opcja!");
                     yield menu();
                 }
             };
         } catch (Exception e) {
-            System.out.println("⚠ Błąd: " + e.getMessage());
+            System.out.println("⚠ Blad: " + e.getMessage());
             return menu();
         }
     }

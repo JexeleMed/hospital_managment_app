@@ -26,7 +26,7 @@ public class Oddzial {
         }
     }
 
-    // usuń personel
+    // usun personel
     protected void usunPersonel(int idPracownika) {
         personel.remove((Integer) idPracownika);
     }
@@ -38,14 +38,14 @@ public class Oddzial {
         }
     }
 
-    // usuń sale
+    // usun sale
     protected void usunSale(int idSali) {
         sale.remove((Integer) idSali);
     }
 
     // wyswietl informacje o oddziale
     protected void wyswietlInformacje() {
-        System.out.println("ID Oddziału: " + idOddzialu);
+        System.out.println("ID Oddzialu: " + idOddzialu);
         System.out.println("Nazwa: " + nazwa);
         System.out.println("Liczba personelu: " + personel.size());
         System.out.println("Liczba sal: " + sale.size());

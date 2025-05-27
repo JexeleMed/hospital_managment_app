@@ -13,13 +13,13 @@ public class OsobyDodaj {
 
     public void osobyDodaj() {
         System.out.print("""
-                Co chcesz dodać?
+                Co chcesz dodac?
                   1 – Pacjent
                   2 – Lekarz
-                  3 – Pielęgniarka
-                Wpisz 1, 2 lub 3 i zatwierdź:""");
+                  3 – Pielegniarka
+                Wpisz 1, 2 lub 3 i zatwierdz:""");
 
-        String wybor = sc.nextLine().trim();   // wczytujemy cały wiersz i obcinamy białe znaki
+        String wybor = sc.nextLine().trim();   // wczytujemy caly wiersz i obcinamy biale znaki
 
         switch (wybor) {
             case "1", "pacjent", "Pacjent" -> dodajPacjenta();
@@ -32,14 +32,14 @@ public class OsobyDodaj {
     protected void dodajPacjenta() {
         System.out.println("Podaj dane pacjenta:");
 
-        System.out.print("Imię: ");
+        System.out.print("Imie: ");
         String imie = sc.nextLine().trim();
         System.out.print("Nazwisko: ");
         String nazwisko = sc.nextLine().trim();
         System.out.print("PESEL: ");
         String pesel = sc.nextLine().trim();
 
-        System.out.print("Czy chcesz wpisać dodatkowe dane? 1 - tak 2 - nie: ");
+        System.out.print("Czy chcesz wpisac dodatkowe dane? 1 - tak 2 - nie: ");
         int wpisac = Integer.parseInt(sc.nextLine().trim());  // wczytanie calej lini
 
         if (wpisac != 1) {
@@ -52,18 +52,18 @@ public class OsobyDodaj {
         // =========================
         // Pytania o dane opcjonalne
         // =========================
-        System.out.print("Grupa krwi (puste jeśli nieznana): ");
+        System.out.print("Grupa krwi (puste jesli nieznana): ");
         String grupaKrwi = sc.nextLine().trim();
         if (grupaKrwi.isEmpty()) grupaKrwi = null;
 
         // Alergie
-        System.out.print("Alergie (jeśli kilka rozdziel przecinkami, puste jeśli brak): ");
+        System.out.print("Alergie (jesli kilka rozdziel przecinkami, puste jesli brak): ");
         String alergie = sc.nextLine().trim();
         if (alergie.isEmpty()) alergie = null;
 
         // Recepty
         List<Para<String, Integer>> perskrypcje = new ArrayList<>();
-        System.out.println("Dodawanie perskrypcji – pozostaw nazwę pustą, aby zakończyć:");
+        System.out.println("Dodawanie perskrypcji – pozostaw nazwe pusta, aby zakonczyc:");
         while (true) {
             System.out.print("Nazwa leku: ");
             String lek = sc.nextLine().trim();
@@ -74,11 +74,11 @@ public class OsobyDodaj {
             perskrypcje.add(new Para<>(lek, dawka));
         }
         // Zywienie
-        System.out.print("Preferencje żywieniowe (puste jeśli brak): ");
+        System.out.print("Preferencje zywieniowe (puste jesli brak): ");
         String zywienie = sc.nextLine().trim();
         if (zywienie.isEmpty()) zywienie = null;
         // Nr do bliskich
-        System.out.print("Numer kontaktowy bliskich (puste jeśli brak): ");
+        System.out.print("Numer kontaktowy bliskich (puste jesli brak): ");
         String numerKontaktowyBliskich = sc.nextLine().trim();
         if (numerKontaktowyBliskich.isEmpty()) numerKontaktowyBliskich = null;
         // Data urodzenia
@@ -86,15 +86,15 @@ public class OsobyDodaj {
         String dataUrStr = sc.nextLine().trim();
         LocalDate dataUrodzenia = dataUrStr.isEmpty() ? null : LocalDate.parse(dataUrStr);
         // Nr telefonu pacjenta
-        System.out.print("Numer telefonu (puste jeśli brak): ");
+        System.out.print("Numer telefonu (puste jesli brak): ");
         String numerTelefonu = sc.nextLine().trim();
         if (numerTelefonu.isEmpty()) numerTelefonu = null;
         // Adres email pacjenta
-        System.out.print("Adres e‑mail (puste jeśli brak): ");
+        System.out.print("Adres e‑mail (puste jesli brak): ");
         String adresEmail = sc.nextLine().trim();
         if (adresEmail.isEmpty()) adresEmail = null;
         // Adres zamieszkania pacjenta
-        System.out.print("Adres zamieszkania (puste jeśli brak): ");
+        System.out.print("Adres zamieszkania (puste jesli brak): ");
         String adresZamieszkania = sc.nextLine().trim();
         if (adresZamieszkania.isEmpty()) adresZamieszkania = null;
 
@@ -114,7 +114,7 @@ public class OsobyDodaj {
     protected void dodajLekarza() {
         System.out.println("Podaj dane lekarza:");
 
-        System.out.print("Imię: ");
+        System.out.print("Imie: ");
         String imie = sc.nextLine().trim();
         System.out.print("Nazwisko: ");
         String nazwisko = sc.nextLine().trim();
@@ -126,7 +126,7 @@ public class OsobyDodaj {
         String numerLicencji = sc.nextLine().trim();
 
         // Zapytanie o chec wprowadzenia dodatkowych informacji
-        System.out.print("Czy chcesz wpisać dodatkowe dane? 1 - tak 2 - nie: ");
+        System.out.print("Czy chcesz wpisac dodatkowe dane? 1 - tak 2 - nie: ");
         int wpisac = Integer.parseInt(sc.nextLine().trim());
 
         if (wpisac != 1) {
@@ -140,15 +140,15 @@ public class OsobyDodaj {
         String dataUrStr = sc.nextLine().trim();
         LocalDate dataUrodzenia = dataUrStr.isEmpty() ? null : LocalDate.parse(dataUrStr);
 
-        System.out.print("Numer telefonu (puste jeśli brak): ");
+        System.out.print("Numer telefonu (puste jesli brak): ");
         String numerTelefonu = sc.nextLine().trim();
         if (numerTelefonu.isEmpty()) numerTelefonu = null;
 
-        System.out.print("Adres e‑mail (puste jeśli brak): ");
+        System.out.print("Adres e‑mail (puste jesli brak): ");
         String adresEmail = sc.nextLine().trim();
         if (adresEmail.isEmpty()) adresEmail = null;
 
-        System.out.print("Adres zamieszkania (puste jeśli brak): ");
+        System.out.print("Adres zamieszkania (puste jesli brak): ");
         String adresZamieszkania = sc.nextLine().trim();
         if (adresZamieszkania.isEmpty()) adresZamieszkania = null;
 
@@ -161,36 +161,36 @@ public class OsobyDodaj {
         szpital.dodajOsobe(lekarz);
     }
     /*--------------------------------------------------------------
-     *  DODAWANIE PIELĘGNIARKI
+     *  DODAWANIE PIELEGNIARKI
      *--------------------------------------------------------------*/
     protected void dodajPielegniarke() {
-        System.out.println("Podaj dane pielęgniarki:");
+        System.out.println("Podaj dane pielegniarki:");
 
-        System.out.print("Imię: ");
+        System.out.print("Imie: ");
         String imie = sc.nextLine().trim();
         System.out.print("Nazwisko: ");
         String nazwisko = sc.nextLine().trim();
         System.out.print("PESEL: ");
         String pesel = sc.nextLine().trim();
 
-        System.out.print("Zakres obowiązków: ");
+        System.out.print("Zakres obowiazkow: ");
         String zakresObowiazkow = sc.nextLine().trim();
 
-        System.out.print("Numer licencji pielęgniarskiej: ");
+        System.out.print("Numer licencji pielegniarskiej: ");
         String numerLicencji = sc.nextLine().trim();
 
-        System.out.print("Kwalifikacje dodatkowe (puste jeśli brak): ");
+        System.out.print("Kwalifikacje dodatkowe (puste jesli brak): ");
         String kwalifikacjeDodatkowe = sc.nextLine().trim();
         if (kwalifikacjeDodatkowe.isEmpty()) kwalifikacjeDodatkowe = null;
 
-        System.out.print("Szczebel w hierarchii (liczba całkowita): ");
+        System.out.print("Szczebel w hierarchii (liczba calkowita): ");
         int szczebelWHierarchii = Integer.parseInt(sc.nextLine().trim());
 
-        System.out.print("Czy pielęgniarka może podawać leki? 1-tak / 0-nie: ");
+        System.out.print("Czy pielegniarka moze podawac leki? 1-tak / 0-nie: ");
         Boolean czyMozePodawacLeki = Integer.parseInt(sc.nextLine().trim()) == 1;
 
         // Zapytanie o chec wprowadzenia dodatkowych informacji
-        System.out.print("Czy chcesz wpisać dodatkowe dane kontaktowe? 1-tak / 2-nie: ");
+        System.out.print("Czy chcesz wpisac dodatkowe dane kontaktowe? 1-tak / 2-nie: ");
         int wpisac = Integer.parseInt(sc.nextLine().trim());
 
 
@@ -210,15 +210,15 @@ public class OsobyDodaj {
         String dataUrStr = sc.nextLine().trim();
         LocalDate dataUrodzenia = dataUrStr.isEmpty() ? null : LocalDate.parse(dataUrStr);
 
-        System.out.print("Numer telefonu (puste jeśli brak): ");
+        System.out.print("Numer telefonu (puste jesli brak): ");
         String numerTelefonu = sc.nextLine().trim();
         if (numerTelefonu.isEmpty()) numerTelefonu = null;
 
-        System.out.print("Adres e-mail (puste jeśli brak): ");
+        System.out.print("Adres e-mail (puste jesli brak): ");
         String adresEmail = sc.nextLine().trim();
         if (adresEmail.isEmpty()) adresEmail = null;
 
-        System.out.print("Adres zamieszkania (puste jeśli brak): ");
+        System.out.print("Adres zamieszkania (puste jesli brak): ");
         String adresZamieszkania = sc.nextLine().trim();
         if (adresZamieszkania.isEmpty()) adresZamieszkania = null;
 

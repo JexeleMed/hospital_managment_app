@@ -16,13 +16,13 @@ public class PacjentTest {
     @Before
     public void setUp() {
         List<Para<String, Integer>> perskrypcje = new ArrayList<>();
-        perskrypcje.add(new Para<>("Lek A", 500)); // przykładowa preskrypcja
+        perskrypcje.add(new Para<>("Lek A", 500)); // przykladowa preskrypcja
         pacjent = new Pacjent("Jan", "Kowalski", "12345678901",
                 "A+", "Orzechy", perskrypcje,
-                "wegetariańska", "987654321",
+                "wegetarianska", "987654321",
                 LocalDate.of(1985, 5, 15),
                 "123456789", "jan.kowalski@email.com",
-                "ul. Przykładowa 1");
+                "ul. Przykladowa 1");
     }
 
     @Test

@@ -12,15 +12,15 @@ abstract class Pomieszczenie {
     protected int pojemnoscSali;
     protected int aktualnaPojemnosc;
 
-    // Lista przechowująca przypisanych pacjentów
+    // Lista przechowujaca przypisanych pacjentow
     protected List<Integer> pacjenci = new ArrayList<>();
 
-    // Konstruktor domyślny — zablokowany
+    // Konstruktor domyslny — zablokowany
     public Pomieszczenie() {
         throw new UnsupportedOperationException("Brak danych");
     }
 
-    // Konstruktor ustawiający dane pomieszczenia
+    // Konstruktor ustawiajacy dane pomieszczenia
     public Pomieszczenie(int numer, int pietro, int pojemnoscSali){
         idGlobalPomieszczenia++;
         this.idPomieszczenia = idGlobalPomieszczenia;
@@ -35,7 +35,7 @@ abstract class Pomieszczenie {
         return aktualnaPojemnosc < pojemnoscSali;
     }
 
-    // Sprawdzenie, czy w sali jest miejsce dla określonej liczby pacjentów
+    // Sprawdzenie, czy w sali jest miejsce dla okreslonej liczby pacjentow
     protected boolean czyWolne(int iluPacjentow) {
         return (aktualnaPojemnosc + iluPacjentow) <= pojemnoscSali;
     }
@@ -46,11 +46,11 @@ abstract class Pomieszczenie {
             pacjenci.add(pacjent.idJednostki);
             aktualnaPojemnosc++;
         } else {
-            System.out.println("Sala jest już pełna!");
+            System.out.println("Sala jest juz pelna!");
         }
     }
 
-    // Usunięcie pacjenta z sali
+    // Usuniecie pacjenta z sali
     protected void usunZSali(int id) {
         if (aktualnaPojemnosc > 0 && pacjenci.remove((Integer) id)) {
             aktualnaPojemnosc--;
@@ -59,7 +59,7 @@ abstract class Pomieszczenie {
         }
     }
 
-    // Wyświetlenie podstawowych informacji o lokalizacji sali
+    // Wyswietlenie podstawowych informacji o lokalizacji sali
     protected void lokalizacja(){
         System.out.println("Pietro: " + pietro);
         System.out.println("Numer: " + numer);
@@ -76,7 +76,7 @@ abstract class Pomieszczenie {
         System.out.println("Aktualna Pojemnosc: " + aktualnaPojemnosc);
         System.out.println("Czy sala jest wolna: " + (czyWolne() ? "TAK" : "NIE"));
         if (pacjenci.isEmpty()) {
-            System.out.println("Brak pacjentów w sali");
+            System.out.println("Brak pacjentow w sali");
         }
         else {
             System.out.println("Pacjenci w sali:");

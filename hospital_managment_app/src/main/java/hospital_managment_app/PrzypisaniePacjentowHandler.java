@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// Klasa odpowiedzialna za zarządzanie przypisaniami pacjentów do pomieszczeń
+// Klasa odpowiedzialna za zarzadzanie przypisaniami pacjentow do pomieszczen
 public class PrzypisaniePacjentowHandler {
 
     private static final String DATA_DIR = "data/";
@@ -20,16 +20,16 @@ public class PrzypisaniePacjentowHandler {
 
     private final Map<Integer, Integer> przypisania = new HashMap<>();
 
-    // Narzędzie do konwersji danych (JSON)
+    // Narzedzie do konwersji danych (JSON)
     private static final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
 
-    // Typ danych dla listy przypisań
+    // Typ danych dla listy przypisan
     private static final Type LIST_TYPE =
             new TypeToken<List<Assignment>>(){}.getType();
 
-    // Konstruktor – tworzy katalog i plik, jeśli nie istnieją
+    // Konstruktor – tworzy katalog i plik, jesli nie istnieja
     private PrzypisaniePacjentowHandler() {
         ensureDataDirExists();
         ensureFileExists();
@@ -43,19 +43,19 @@ public class PrzypisaniePacjentowHandler {
         }
     }
 
-    // Zwraca jedyną instancję tej klasy (Singleton)
+    // Zwraca jedyna instancje tej klasy (Singleton)
     public static synchronized PrzypisaniePacjentowHandler getInstance() {
         if (instance == null)
             instance = new PrzypisaniePacjentowHandler();
         return instance;
     }
 
-    // Sprawdza i tworzy plik z danymi, jeśli nie istnieje
+    // Sprawdza i tworzy plik z danymi, jesli nie istnieje
     private void ensureFileExists() {
         File f = new File(FILE_NAME);
         if (!f.exists()) {
             try (Writer w = new FileWriter(f)) { w.write("[]"); }
-            catch (IOException e) { System.err.println("Nie mogę utworzyć " + FILE_NAME + ": " + e.getMessage()); }
+            catch (IOException e) { System.err.println("Nie moge utworzyc " + FILE_NAME + ": " + e.getMessage()); }
         }
     }
 
@@ -67,7 +67,7 @@ public class PrzypisaniePacjentowHandler {
                 list.forEach(a -> przypisania.put(a.idPacjenta, a.idPomieszczenia));
             }
         } catch (IOException e) {
-            System.err.println("Błąd odczytu " + FILE_NAME + ": " + e.getMessage());
+            System.err.println("Blad odczytu " + FILE_NAME + ": " + e.getMessage());
         }
     }
 
@@ -80,16 +80,16 @@ public class PrzypisaniePacjentowHandler {
         try (Writer w = new FileWriter(FILE_NAME)) {
             gson.toJson(list, LIST_TYPE, w);
         } catch (IOException e) {
-            System.err.println("Błąd zapisu " + FILE_NAME + ": " + e.getMessage());
+            System.err.println("Blad zapisu " + FILE_NAME + ": " + e.getMessage());
         }
     }
 
-    // Zwraca niezmienną mapę przypisań pacjentów do pomieszczeń
+    // Zwraca niezmienna mape przypisan pacjentow do pomieszczen
     public Map<Integer, Integer> getPrzypisania() {
         return Collections.unmodifiableMap(przypisania);
     }
 
-    // Metody do zarządzania przypisaniami pacjentów do pomieszczeń
+    // Metody do zarzadzania przypisaniami pacjentow do pomieszczen
     public void dodajPrzypisanie(int idPacjenta, int idPomieszczenia) {
         przypisania.put(idPacjenta, idPomieszczenia);
         savePrzypisania();
@@ -101,7 +101,7 @@ public class PrzypisaniePacjentowHandler {
         savePrzypisania();
     }
 
-    // Zwraca ID pomieszczenia, do którego przypisany jest pacjent
+    // Zwraca ID pomieszczenia, do ktorego przypisany jest pacjent
     public int getPokojPacjenta(int idPacjenta) {
         return przypisania.getOrDefault(idPacjenta, -1);
     }

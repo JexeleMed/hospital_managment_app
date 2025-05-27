@@ -14,7 +14,7 @@ public class Poczekalnia extends Pomieszczenie {
     protected void przypiszPacjenta(Pacjent pacjent) {
         if (czyWolne()) {
             if (pacjent.getPriorytet() == null) {
-                System.out.println("Proszę określić priorytet pacjenta (1-10):");
+                System.out.println("Prosze okreslic priorytet pacjenta (1-10):");
                 Scanner scanner = new Scanner(System.in);
                 int priorytet = scanner.nextInt();
                 pacjent.ustawPriorytet(priorytet);
@@ -22,17 +22,17 @@ public class Poczekalnia extends Pomieszczenie {
             super.przypiszPacjenta(pacjent);
             System.out.println("Pacjent oczekuje w poczekalni z priorytetem: " + pacjent.getPriorytet());
         } else {
-            System.out.println("Poczekalnia jest pełna!");
+            System.out.println("Poczekalnia jest pelna!");
         }
     }
 
-    // wyswietl pacjentów w poczekalni wraz z ich priorytetami
+    // wyswietl pacjentow w poczekalni wraz z ich priorytetami
     protected void wyswietlPacjentowPoczekalni(Map<Integer, Pacjent> pacjentMap, PrzypisaniePacjentowHandler przypisanieHandler) {
-        System.out.println("Lista pacjentów w poczekalni (sortowana po priorytecie rosnąco):");
+        System.out.println("Lista pacjentow w poczekalni (sortowana po priorytecie rosnaco):");
 
         List<Pacjent> pacjenciWPoczekalni = new ArrayList<>();
 
-        // Znajdź wszystkich pacjentów przypisanych do tej poczekalni
+        // Znajdz wszystkich pacjentow przypisanych do tej poczekalni
         for (Map.Entry<Integer, Integer> entry : przypisanieHandler.getPrzypisania().entrySet()) {
             if (entry.getValue() == this.idPomieszczenia) {
                 Pacjent pacjent = pacjentMap.get(entry.getKey());
@@ -42,14 +42,14 @@ public class Poczekalnia extends Pomieszczenie {
             }
         }
 
-        // Sortuj po priorytecie (rosnąco)
+        // Sortuj po priorytecie (rosnaco)
         pacjenciWPoczekalni.sort(Comparator.comparing(
                 p -> p.getPriorytet() != null ? p.getPriorytet() : 0
         ));
 
-        // Wyświetl posortowaną listę
+        // Wyswietl posortowana liste
         for (Pacjent p : pacjenciWPoczekalni) {
-            System.out.printf("ID: %d, Imię: %s, Nazwisko: %s, Priorytet: %d%n",
+            System.out.printf("ID: %d, Imie: %s, Nazwisko: %s, Priorytet: %d%n",
                     p.idJednostki,
                     p.imie,
                     p.nazwisko,

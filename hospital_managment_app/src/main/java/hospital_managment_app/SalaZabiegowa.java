@@ -6,7 +6,7 @@ public class SalaZabiegowa extends Pomieszczenie{
     protected String opisOperacji;
     protected String specjalnaAparatura;
 
-    // Konstruktor domyślny — zablokowany
+    // Konstruktor domyslny — zablokowany
     public SalaZabiegowa(int numer, int pietro, int pojemnoscSali, String opisOperacji, String specjalnaAparatura) {
         super(numer, pietro, pojemnoscSali);
         this.opisOperacji = opisOperacji;
@@ -20,11 +20,11 @@ public class SalaZabiegowa extends Pomieszczenie{
             super.przypiszPacjenta(pacjent);
             System.out.println("Pacjent przypisany do sali zabiegowej.");
         } else {
-            System.out.println("Sala zabiegowa jest pełna!");
+            System.out.println("Sala zabiegowa jest pelna!");
         }
     }
 
-    // Metoda do wyświetlania szczegółowego opisu sali zabiegowej
+    // Metoda do wyswietlania szczegolowego opisu sali zabiegowej
     protected void wyswietlOpis(){
         System.out.println("Sala zabiegowa");
         this.lokalizacja();

@@ -5,7 +5,7 @@ import java.util.Map;
 public class SalaHybrydowa extends Pomieszczenie{
     protected Oddzial oddzial;
 
-    // Konstruktor domyślny — zablokowany
+    // Konstruktor domyslny — zablokowany
     public SalaHybrydowa(int numer, int pietro, int pojemnoscSali, Oddzial oddzial) {
         super(numer, pietro, pojemnoscSali);
         this.oddzial = oddzial;
@@ -18,12 +18,12 @@ public class SalaHybrydowa extends Pomieszczenie{
             super.przypiszPacjenta(pacjent);
             System.out.println("Pacjent przypisany do sali hybrydowej.");
         } else {
-            System.out.println("Sala hybrydowa jest pełna!");
+            System.out.println("Sala hybrydowa jest pelna!");
         }
     }
 
 
-    // Metoda do wyświetlania szczegółowego opisu sali hybrydowej podczas generowania raportu
+    // Metoda do wyswietlania szczegolowego opisu sali hybrydowej podczas generowania raportu
     @Override
     protected void generujRaport(Map<Integer, Pacjent> pacjentMap){
         super.generujRaport(pacjentMap);

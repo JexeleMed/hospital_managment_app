@@ -16,13 +16,13 @@ public class WypisHandler implements HandlerCsv<Map<String, Object>> {
     private static final String FILE_NAME = DATA_DIR + "ListaWypisow.csv";
     private static WypisHandler instance;
 
-    // Konstruktor – tworzy katalog i plik, jeśli nie istnieją
+    // Konstruktor – tworzy katalog i plik, jesli nie istnieja
     private WypisHandler() {
         ensureDataDirExists();
         createFileIfNotExists();
     }
 
-    // Sprawdza i tworzy katalog na dane, jeśli nie istnieje
+    // Sprawdza i tworzy katalog na dane, jesli nie istnieje
     private void ensureDataDirExists() {
         File dir = new File(DATA_DIR);
         if (!dir.exists()) {
@@ -30,7 +30,7 @@ public class WypisHandler implements HandlerCsv<Map<String, Object>> {
         }
     }
 
-    // Zwraca jedyną instancję tej klasy (Singleton)
+    // Zwraca jedyna instancje tej klasy (Singleton)
     public static WypisHandler getInstance() {
         if (instance == null) {
             instance = new WypisHandler();
@@ -38,7 +38,7 @@ public class WypisHandler implements HandlerCsv<Map<String, Object>> {
         return instance;
     }
 
-    // Tworzy plik, jeśli nie istnieje, z nagłówkiem "json"
+    // Tworzy plik, jesli nie istnieje, z naglowkiem "json"
     private void createFileIfNotExists() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {
@@ -50,7 +50,7 @@ public class WypisHandler implements HandlerCsv<Map<String, Object>> {
         }
     }
 
-    // Wczytuje wszystkie wypisy pacjentów z pliku w formacie CSV
+    // Wczytuje wszystkie wypisy pacjentow z pliku w formacie CSV
     @Override
     public List<Map<String, Object>> loadAll() throws IOException {
         List<Map<String, Object>> wypisy = new ArrayList<>();
@@ -72,7 +72,7 @@ public class WypisHandler implements HandlerCsv<Map<String, Object>> {
         return wypisy;
     }
 
-    // Zapisuje listę wypisów do pliku w formacie CSV
+    // Zapisuje liste wypisow do pliku w formacie CSV
     @Override
     public void saveAll(List<Map<String, Object>> wypisy) throws IOException {
         Gson gson = new GsonBuilder()

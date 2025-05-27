@@ -57,14 +57,14 @@ abstract class Personel extends Czlowiek {
 
     // Sprawdzanie dostepnosci
     protected void wyswietlDostepnosc(){
-        System.out.print("Dostępny/a: ");
+        System.out.print("Dostepny/a: ");
         if(czyDostepny()){
             System.out.print("Tak");
         } else {
             System.out.print("Nie");
         }
         System.out.println();
-        System.out.println("Planowany dyżur: ");
+        System.out.println("Planowany dyzur: ");
         for(Para<Para<LocalDateTime, LocalDateTime>, String> dyzur : this.zaplanowaneDyzury){
             System.out.println(dyzur);
         }

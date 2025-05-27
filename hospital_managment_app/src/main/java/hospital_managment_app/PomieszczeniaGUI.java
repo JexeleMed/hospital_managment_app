@@ -14,7 +14,7 @@ public class PomieszczeniaGUI {
         this.szpital = Szpital.getInstance();
     }
 
-    // wyswietl menu i obsłuż wybór użytkownika
+    // wyswietl menu i obsluz wybor uzytkownika
     public void start() throws IOException {
         loop:
         while (true) {
@@ -31,7 +31,7 @@ public class PomieszczeniaGUI {
                 }
                 case REPORT -> generujRaport();
                 case EXIT -> {
-                    System.out.println("Wyjście z zarządzania pomieszczeniami.");
+                    System.out.println("Wyjscie z zarzadzania pomieszczeniami.");
                     break loop;
                 }
             }
@@ -39,9 +39,9 @@ public class PomieszczeniaGUI {
         }
     }
 
-    // wyświetl wszystkie pomieszczenia w szpitalu
+    // wyswietl wszystkie pomieszczenia w szpitalu
     private void pokazWszystkiePomieszczenia() {
-        System.out.println("\n=== LISTA POMIESZCZEŃ ===");
+        System.out.println("\n=== LISTA POMIESZCZEN ===");
         for (Pomieszczenie p : szpital.listaPomieszczen) {
             System.out.println("\nID: " + p.idPomieszczenia);
             p.lokalizacja();
@@ -58,16 +58,16 @@ public class PomieszczeniaGUI {
         System.out.println("2. Sala Hybrydowa");
         System.out.println("3. Poczekalnia");
 
-        System.out.print("Wybór: ");
+        System.out.print("Wybor: ");
         String wybor = IN.readLine();
 
         System.out.print("Numer sali: ");
         int numer = Integer.parseInt(IN.readLine());
 
-        System.out.print("Piętro: ");
+        System.out.print("Pietro: ");
         int pietro = Integer.parseInt(IN.readLine());
 
-        System.out.print("Pojemność sali: ");
+        System.out.print("Pojemnosc sali: ");
         int pojemnosc = Integer.parseInt(IN.readLine());
 
         Pomieszczenie pomieszczenie = null;
@@ -81,33 +81,33 @@ public class PomieszczeniaGUI {
                 pomieszczenie = new SalaZabiegowa(numer, pietro, pojemnosc, opisOperacji, aparatura);
             }
             case "2" -> {
-                Oddzial oddzial = new Oddzial("Oddział ogólny"); // You might want to add oddzial selection
+                Oddzial oddzial = new Oddzial("Oddzial ogolny"); // You might want to add oddzial selection
                 pomieszczenie = new SalaHybrydowa(numer, pietro, pojemnosc, oddzial);
             }
             case "3" -> pomieszczenie = new Poczekalnia(numer, pietro, pojemnosc);
-            default -> System.out.println("Nieprawidłowy wybór!");
+            default -> System.out.println("Nieprawidlowy wybor!");
         }
 
         if (pomieszczenie != null) {
             szpital.dodajPomieszczenie(pomieszczenie);
-            System.out.println("Pomieszczenie dodane pomyślnie.");
+            System.out.println("Pomieszczenie dodane pomyslnie.");
         }
     }
 
-    // usuń pomieszczenie z szpitala
+    // usun pomieszczenie z szpitala
     private void usunPomieszczenie() throws IOException {
         System.out.print("Podaj numer sali: ");
         int numer = Integer.parseInt(IN.readLine());
 
-        System.out.print("Podaj piętro: ");
+        System.out.print("Podaj pietro: ");
         int pietro = Integer.parseInt(IN.readLine());
 
         szpital.usunPomieszczenie(numer, pietro);
     }
 
-    // generuj raport dla wszystkich pomieszczeń w szpitalu
+    // generuj raport dla wszystkich pomieszczen w szpitalu
     private void generujRaport() {
-        System.out.println("\n=== RAPORT POMIESZCZEŃ ===");
+        System.out.println("\n=== RAPORT POMIESZCZEN ===");
         Map<Integer, Pacjent> pacjentMap = szpital.listaPacjentow.stream()
                 .collect(java.util.stream.Collectors.toMap(p -> p.idJednostki, p -> p));
 
@@ -116,7 +116,7 @@ public class PomieszczeniaGUI {
             p.generujRaport(pacjentMap);
 
             if (p instanceof Poczekalnia) {
-                System.out.println("\nLista oczekujących pacjentów:");
+                System.out.println("\nLista oczekujacych pacjentow:");
                 ((Poczekalnia) p).wyswietlPacjentowPoczekalni(pacjentMap, PrzypisaniePacjentowHandler.getInstance());
             }
 
@@ -124,18 +124,18 @@ public class PomieszczeniaGUI {
         }
     }
 
-    // wyświetl menu i obsłuż wybór użytkownika
+    // wyswietl menu i obsluz wybor uzytkownika
     private Action menu() throws IOException {
         System.out.println("""
-                \n=== ZARZĄDZANIE POMIESZCZENIAMI ===
-                1. Wyświetl wszystkie pomieszczenia
+                \n=== ZARZADZANIE POMIESZCZENIAMI ===
+                1. Wyswietl wszystkie pomieszczenia
                 2. Dodaj pomieszczenie
-                3. Usuń pomieszczenie
+                3. Usun pomieszczenie
                 4. Generuj raport
-                0. Wyjście
+                0. Wyjscie
                 """);
 
-        System.out.print("Wybór: ");
+        System.out.print("Wybor: ");
         return switch (IN.readLine().trim()) {
             case "1" -> Action.LIST;
             case "2" -> Action.ADD;
@@ -143,13 +143,13 @@ public class PomieszczeniaGUI {
             case "4" -> Action.REPORT;
             case "0" -> Action.EXIT;
             default -> {
-                System.out.println("Nieprawidłowa opcja!");
+                System.out.println("Nieprawidlowa opcja!");
                 yield menu();
             }
         };
     }
 
-    // Enum do obsługi akcji w menu
+    // Enum do obslugi akcji w menu
     private enum Action {
         LIST, ADD, DELETE, REPORT, EXIT
     }

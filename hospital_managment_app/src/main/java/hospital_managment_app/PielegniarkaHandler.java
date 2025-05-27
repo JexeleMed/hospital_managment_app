@@ -20,7 +20,7 @@ public class PielegniarkaHandler implements HandlerCsv<Pielegniarka> {
     private final Gson gson;
     private final Type listType = new TypeToken<List<Pielegniarka>>(){}.getType();
 
-    // Konstruktor – tworzy katalog i plik, jeśli nie istnieją
+    // Konstruktor – tworzy katalog i plik, jesli nie istnieja
     public PielegniarkaHandler() {
         ensureDataDirExists();
         gson = new GsonBuilder()
@@ -31,7 +31,7 @@ public class PielegniarkaHandler implements HandlerCsv<Pielegniarka> {
         ensureFileExists();
     }
 
-    // Sprawdza i tworzy katalog na dane, jeśli nie istnieje
+    // Sprawdza i tworzy katalog na dane, jesli nie istnieje
     private void ensureDataDirExists() {
         File dir = new File(DATA_DIR);
         if (!dir.exists()) {
@@ -39,7 +39,7 @@ public class PielegniarkaHandler implements HandlerCsv<Pielegniarka> {
         }
     }
 
-    // Zwraca jedyną instancję tej klasy (Singleton)
+    // Zwraca jedyna instancje tej klasy (Singleton)
     public static synchronized PielegniarkaHandler getInstance() {
         if (instance == null) {
             instance = new PielegniarkaHandler();
@@ -47,14 +47,14 @@ public class PielegniarkaHandler implements HandlerCsv<Pielegniarka> {
         return instance;
     }
 
-    // Sprawdza i tworzy plik z danymi, jeśli nie istnieje
+    // Sprawdza i tworzy plik z danymi, jesli nie istnieje
     private void ensureFileExists() {
         File f = new File(FILE_NAME);
         if (!f.exists()) {
             try (Writer w = new FileWriter(f)) {
                 w.write("[]");
             } catch (IOException e) {
-                System.err.println("Nie mogę utworzyć " + FILE_NAME + ": " + e.getMessage());
+                System.err.println("Nie moge utworzyc " + FILE_NAME + ": " + e.getMessage());
             }
         }
     }
@@ -66,7 +66,7 @@ public class PielegniarkaHandler implements HandlerCsv<Pielegniarka> {
             List<Pielegniarka> list = gson.fromJson(r, listType);
             return list != null ? list : new ArrayList<>();
         } catch (IOException e) {
-            System.err.println("Błąd odczytu " + FILE_NAME + ": " + e.getMessage());
+            System.err.println("Blad odczytu " + FILE_NAME + ": " + e.getMessage());
             return new ArrayList<>();
         }
     }

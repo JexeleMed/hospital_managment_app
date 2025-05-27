@@ -10,7 +10,7 @@ public class Hospital_managment_app {
             InterfejGraficzny interfejs = new InterfejGraficzny();
             interfejs.start();
         } catch (IOException e) {
-            System.err.println("Błąd podczas uruchamiania aplikacji: " + e.getMessage());
+            System.err.println("Blad podczas uruchamiania aplikacji: " + e.getMessage());
             e.printStackTrace();
         }
     }
